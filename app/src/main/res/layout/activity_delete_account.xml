@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.DeleteAccountActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/deleteAccount_toolbar"
+        android:layout_width="423dp"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginEnd="8dp"
+        android:background="@color/darkOrange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageButton
+        android:id="@+id/deleteAccount_ibtn_back"
+        android:layout_width="52dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/transparent"
+        android:contentDescription="@string/profile_ibtn_back_hint"
+        android:src="?attr/homeAsUpIndicator"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.028"
+        app:layout_constraintStart_toStartOf="@+id/deleteAccount_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/deleteAccount_toolbar"
+        tools:srcCompat="?attr/homeAsUpIndicator" />
+
+    <TextView
+        android:id="@+id/deleteAccount_tv_deleteAccount"
+        android:layout_width="327dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="228dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/deleteAccount_tv_deleteAccount_hint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/deleteAccount_btn_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/deleteAccount_btn_yes_hint"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/deleteAccount_btn_no"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteAccount_tv_deleteAccount" />
+
+    <Button
+        android:id="@+id/deleteAccount_btn_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="92dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/deleteAccount_btn_no_hint"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.749"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/deleteAccount_tv_deleteAccount" />
+</android.support.constraint.ConstraintLayout>

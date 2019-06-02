@@ -1,0 +1,175 @@
+<resources>
+    <string name="app_name">TeamManagement</string>
+    <string name="login_btn_hint">Autentificare</string>
+    <string name="login_et_email_hint">Email</string>
+    <string name="login_et_password_hint">Parolă</string>
+    <string name="login_tv_hint"><u>Nu ai cont? Înregistrează-te!</u></string>
+    <string name="signUp_email_hint">Email</string>
+    <string name="signUp_confirmEmail_hint">Confirmă email</string>
+    <string name="signUp_password_hint">Parolă</string>
+    <string name="signUp_confirmPassword_hint">Confirmă parolă</string>
+    <string name="signUp_btn_Step2Register_hint">Înainte</string>
+    <string name="login_title_hint">Autentificare</string>
+    <string name="signUp_emailError_hint">Email incorect: exemplu@gmail.com</string>
+    <string name="signUp_passwordError_hint">Parola a fost greșit intordusă</string>
+    <string name="signUp_passwordError_tooShort_hint">Parola este prea scurtă</string>
+    <string name="signUp_passwordError_oneDigitOneLetter_hint">Parola trebuie să conțină cel putin o literă și cel puțin o cifră</string>
+    <string name="Home_profilePictureIcon_hint">Fotografie de profil</string>
+    <string name="Home_ib_profile_hint">Profil</string>
+    <string name="Home_ib_friends_hint">Prieteni</string>
+    <string name="Home_ib_Map_hint">Hartă</string>
+    <string name="Home_ib_teams_hint">Echipe</string>
+    <string name="Home_ib_Contact_hint">Contact</string>
+    <string name="Faq_tv_hint">Intrebări frecvente</string>
+    <string name="profile_img_profile_hint">Imagine de profil</string>
+    <string name="profile_tv_userName_hint">Nume utilizator</string>
+    <string name="profile_tv_feedback_hint">Feedback</string>
+    <string name="profile_tv_sports_hint">Sporturi practicate</string>
+    <string name="profile_tv_userName_comment_hint">Nume utilizator</string>
+    <string name="profile_tv_comment_hint">Comentariu</string>
+    <string name="profile_tv_moreFeedback_hint"><u>Mai multe</u></string>
+    <string name="profile_tv_settings_hint">Setări</string>
+    <string name="profile_btn_logOut">Deloghează-te</string>
+    <string name="profile_tv_rating_hint">0</string>
+    <string name="login_iv_logo_hint">Logo aplicație</string>
+    <string name="login_tv_appName_hint">SocialTeam</string>
+    <string name="signUp_et_firstName_hint">Prenume</string>
+    <string name="signUp_et_lastName_hint">Nume</string>
+    <string name="signUp_btn_upload_hint">Alege</string>
+    <string name="signUp_iv_profilePicture_hint">ImagineProfil</string>
+    <string name="register2_btn_save_hint">Salvează</string>
+    <string name="register2_ibtn_addSport_hint">Adaugă sport nou</string>
+    <string name="help_ibtn_back_hint">Înapoi la pagina principală</string>
+    <string name="register2_btn_back_hint">Înapoi</string>
+    <string name="profile_ibtn_more_hint">More</string>
+    <string name="profile_title_hint">Profil</string>
+    <string name="profile_titleToolbar_hint">Profil</string>
+    <string name="profile_ibtn_back_hint">Înapoi</string>
+    <string name="profile_ibtn_edit_hint">Editează</string>
+    <string name="register1_btn_back_hint">Anulează</string>
+    <string name="editProfile_tv_title_hint">Editează Profil</string>
+    <string name="editProfile_ibtn_edit_hint">Editează</string>
+    <string name="editProfile_ibtn_back_hint">Înapoi</string>
+    <string name="editProfile_et_lastName_hint">Nume</string>
+    <string name="editProfile_et_firstName_hint">Prenume</string>
+    <string name="editProfile_tv_sports_hint">Sporturi practicate</string>
+    <string name="editProfile_ibtn_addSport_hint">Adaugă sport</string>
+    <string name="editProfile_ibtn_removeSport_hint">Șterge sport</string>
+    <string name="editProfile_btn_cancel_hint">Anulează</string>
+    <string name="editProfile_btn_save_hint">Salvează</string>
+    <string name="settings_et_changePassword_hint">Schimbă parola</string>
+    <string name="settings_ibtn_more_hint">Mai mult</string>
+    <string name="settings_et_disableAccount_hint">Dezactivează cont</string>
+    <string name="settings_et_deleteAccount_hint">Șterge cont</string>
+    <string name="settings_ibtn_moreChangePassword_hint">Mai multe</string>
+    <string name="settings_tv_changePassword_hint">Schimbă parola</string>
+    <string name="settings_tv_disableAccount_hint">Dezactivează cont</string>
+    <string name="settings_tv_deleteAccount_hint">Șterge cont</string>
+    <string name="changePassword_tid_newPassword_hint">Parola nouă</string>
+    <string name="changePassword_til_confirmNewPassword_hint">Confirmă parola nouă</string>
+    <string name="changePassword_til_oldPassword_hint">Parola veche</string>
+    <string name="changePassword_btn_save_hint">Salvează</string>
+    <string name="confirmPassword_error_hint">Parolele nu se potrivesc</string>
+    <string name="changePassword_titleToolbar_hint">Schimbare parolă</string>
+    <string name="settings_titleToolbar_hint">Setări</string>
+    <string name="disableAccount_tv_disableAccount_hint">Dezactivarea contului nu reprezintă ștergerea completă a informațiilor din baza noastră de date. Contul dezactivat pnu mai poate fi vizualizat de către ceilalți utilizatori. Reaztivarea acestuia se face odată cu o nouă autentificare. Sunteți sigur că doriți să dezactivați contul?</string>
+    <string name="deleteAccount_tv_deleteAccount_hint">Ștergerea contului reprezintă ștergerea completă a informațiilor din baza noastră de date. Contul șters nu mai poate fi vizualizat de către ceilalți utilizatori și nu poate fi recuperat. Sunteți sigur că doriți să ștergeți acest cont?</string>
+    <string name="deleteAccount_btn_no_hint">Nu</string>
+    <string name="deleteAccount_btn_yes_hint">Da</string>
+    <string name="disableAccount_btn_no_hint">Nu</string>
+    <string name="disableAccount_btn_yes_hint">Da</string>
+    <string name="feedback_ibtn_back_hint">Înapoi</string>
+    <string name="feedback_tv_title_hint">Recenzii</string>
+    <string name="register1_firstNameLength_error_hint">Prenumele trebuie să aibă cel puțin 3 litere</string>
+    <string name="register1_firstNameCapitalLetter_error_hint">Prima literă trebuie să fie literă mare</string>
+    <string name="register1_lastNameLength_error_hint">Numele de familie trebuie să aibă cel puțin 3 litere</string>
+    <string name="register1_firstNameLetters_error_hint">Singurele caractere permise sunt literele</string>
+    <string name="lv_feedback_tv_userName_hint">Nume utilizator</string>
+    <string name="lv_feedback_ibtn_more_hint">Mai multe</string>
+    <string name="lv_feedback_tv_comment_hint">Comentariu</string>
+    <string name="addSportDialog_cancel_hint">Anulează</string>
+    <string name="addSportDialog_addSport_hint">Adaugă sport</string>
+    <string name="addSportDialog_title_hint">Adaugă sport</string>
+    <string name="register1_passwordDoesNotMatch_hint">Password doesn\'t match</string>
+    <string name="register2_addSport_hint">Adaugă sport</string>
+    <string name="list_item_sports_tv_level_hint">Nivel</string>
+    <string name="list_item_sports_tv_sport_hint">Sport</string>
+    <string name="editProfile_tid_email_hint">Email</string>
+    <string name="spn_prompt_sport">Selectează sportul</string>
+    <string name="spn_prompt_level">Selectează nivelul tău</string>
+    <string name="addSportDialog_error_classCastException">must implement AddSportDialogListener</string>
+    <string name="editProfile_alertDialog_listEmpty_hint">OK</string>
+    <string name="bottom_dialog_report_btn_report_hint">Raportează</string>
+    <string name="bottom_dialog_report_btn_cancel_hint">Anulează</string>
+    <string name="profile_tag_bottomDialog_hint">bottomDialog</string>
+    <string name="bottomDialogReport_title_report">Raport</string>
+    <string name="bottomDialogReport_message_alertDialog_report">Constatarea a fost înregistrată și urmează să fie verificată de către echipa noastră.</string>
+    <string name="bottomDialogReport_positiveBtn_alertDialog_hint">OK</string>
+    <string name="editProfile_uploadType">image/*</string>
+    <string name="editProfile_title_alertDialog_sportList">Lista sporturi</string>
+    <string name="editProfile_message_alertDialog_sportList">Nu există niciun sport în listă</string>
+    <string name="loading_iv_socialTeam_hint">SocialTeam</string>
+    <string name="faq_sp_default_hint">Nu există conexiune la internet.</string>
+    <string name="register1_key_firstName_hint">FirstName</string>
+    <string name="register1_key_lastName_hint">LastName</string>
+    <string name="register1_key_email_hint">Email</string>
+    <string name="register1_key_password_hint">Password</string>
+    <string name="register1_key_confirmPassword_hint">ConfirmPassword</string>
+    <string name="search_iv_search_hint">Căutare</string>
+    <string name="search_iet_search_hint">Căutare sportivi</string>
+    <string name="register1_userName_hint">Nume utilizator</string>
+    <string name="searchUser_search_actionBar_hint">Căutare sportivi</string>
+    <string-array name="dialog_sports">
+        <item>Selectează sportul</item>
+        <item>Alergat</item>
+        <item>Alpinism</item>
+        <item>Arte Martiale</item>
+        <item>Balet</item>
+        <item>Baschet</item>
+        <item>Baseball</item>
+        <item>Batminton</item>
+        <item>Bob</item>
+        <item>Bowling</item>
+        <item>Box</item>
+        <item>Caiac-canoe</item>
+        <item>Canotaj</item>
+        <item>Ciclism</item>
+        <item>Culturism</item>
+        <item>Dans sportiv</item>
+        <item>Darts</item>
+        <item>Echitație</item>
+        <item>Fitness</item>
+        <item>Fotbal</item>
+        <item>Golf</item>
+        <item>Handbal</item>
+        <item>Hochei</item>
+        <item>Înot</item>
+        <item>Judo</item>
+        <item>Karate</item>
+        <item>Karting</item>
+        <item>Kick-Boxing</item>
+        <item>Patinaj artistic</item>
+        <item>Pescuit</item>
+        <item>Pilates</item>
+        <item>Polo</item>
+        <item>Scrimă</item>
+        <item>Snooker</item>
+        <item>Șah</item>
+        <item>Taekwondo</item>
+        <item>Tenis de câmp</item>
+        <item>Tenis de masă</item>
+        <item>Tir cu arcul</item>
+        <item>Triatlon</item>
+        <item>Volei</item>
+        <item>Yoga</item>
+    </string-array>
+    <string-array name="dialog_level">
+        <item>Selectează nivelul tău</item>
+        <item>Începător</item>
+        <item>Elementar</item>
+        <item>Intermediar</item>
+        <item>Post-intermediar</item>
+        <item>Avansat</item>
+        <item>Expert</item>
+    </string-array>
+</resources>

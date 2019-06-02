@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/orange"
+    tools:context=".activities.HomeActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/home_ib_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/profile"
+            android:contentDescription="@string/Home_ib_profile_hint"
+            tools:ignore="NestedWeights" />
+
+        <ImageButton
+            android:id="@+id/home_ib_friends"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/friends"
+            android:contentDescription="@string/Home_ib_friends_hint" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/home_ib_map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:contentDescription="@string/Home_ib_Map_hint"
+            android:background="@drawable/map"
+            tools:ignore="NestedWeights" />
+
+
+        <ImageButton
+            android:id="@+id/home_ib_teams"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/teams"
+            android:contentDescription="@string/Home_ib_teams_hint" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/home_ib_faq"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:contentDescription="@string/Home_ib_teams_hint"
+            android:background="@drawable/faq"
+            tools:ignore="NestedWeights" />
+        <ImageButton
+            android:id="@+id/home_ib_contact"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0"
+            android:background="@drawable/contact"
+            android:contentDescription="@string/Home_ib_Contact_hint" />
+
+    </LinearLayout>
+
+</LinearLayout>

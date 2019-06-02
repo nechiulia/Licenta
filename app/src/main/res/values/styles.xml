@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.Design.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/darkOrange</item>
+    </style >
+    <style name="BlackText" parent="Theme.Design.NoActionBar">
+        <item name="android:textColor">@color/grey</item>
+        <item name="colorPrimary">@color/darkOrange</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="colorAccent">@color/darkGrey</item>
+        <item name="android:actionBarItemBackground">@color/darkOrange</item>
+        <item name="android:statusBarColor">@color/darkOrange</item>
+    </style>
+    <style name="BlackTextDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    </style>
+    <style name="BlackTextAction" parent="Theme.Design">
+    <item name="android:textColor">@color/grey</item>
+    <item name="colorPrimary">@color/darkOrange</item>
+    <item name="android:windowBackground">@color/white</item>
+    <item name="colorAccent">@color/darkGrey</item>
+    <item name="android:actionBarItemBackground">@color/darkOrange</item>
+    <item name="android:statusBarColor">@color/darkOrange</item>
+</style>
+
+
+</resources>
