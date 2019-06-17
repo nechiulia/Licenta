@@ -17,7 +17,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements Serializable {
     ImageButton btn_profile;
-    ImageButton btn_friends;
+    ImageButton btn_users;
     ImageButton btn_map;
     ImageButton btn_teams;
     ImageButton btn_faq;
@@ -35,61 +35,83 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
 
         initComponents();
 
-        btn_profile.setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void initComponents(){
+        btn_profile=findViewById(R.id.home_ibtn_profile);
+        btn_users=findViewById(R.id.home_ibtn_users);
+        btn_map=findViewById(R.id.home_ibtn_map);
+        btn_teams=findViewById(R.id.home_ibtn_teams);
+        btn_faq=findViewById(R.id.home_ibtn_faq);
+        btn_contact=findViewById(R.id.home_ibtn_contact);
+
+        btn_profile.setOnClickListener(clickProfile());
+        btn_users.setOnClickListener(clickUsers());
+        btn_map.setOnClickListener(clickMaps());
+        btn_teams.setOnClickListener(clickTeams());
+        btn_faq.setOnClickListener(clickFaq());
+        btn_contact.setOnClickListener(clickContact());
+
+    }
+
+    private View.OnClickListener clickProfile() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), MyProfileActivity.class);
                 startActivity(intent);
             }
-        });
-        btn_friends.setOnClickListener(new View.OnClickListener() {
+        };
+    }
+
+    private View.OnClickListener clickUsers() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), SearchUserActivity.class);
                 startActivity(intent);
             }
-        });
+        };
+    }
 
-        btn_map.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener clickMaps() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), MapActivity.class);
+                intent = new Intent(getApplicationContext(), MapsActivity.class);
                 startActivity(intent);
             }
-        });
+        };
+    }
 
-        btn_teams.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener clickTeams() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), TeamsActivity.class);
                 startActivity(intent);
             }
-        });
+        };
+    }
 
-        btn_faq.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener clickFaq() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), FaqActivity.class);
                 startActivity(intent);
             }
-        });
+        };
+    }
 
-        btn_contact.setOnClickListener(new View.OnClickListener() {
+    private View.OnClickListener clickContact() {
+        return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 intent = new Intent(getApplicationContext(), ContactActivity.class);
                 startActivity(intent);
             }
-        });
-    }
-
-    private void initComponents(){
-        btn_profile=findViewById(R.id.home_ib_profile);
-        btn_friends=findViewById(R.id.home_ib_friends);
-        btn_map=findViewById(R.id.home_ib_map);
-        btn_teams=findViewById(R.id.home_ib_teams);
-        btn_faq=findViewById(R.id.home_ib_faq);
-        btn_contact=findViewById(R.id.home_ib_contact);
+        };
     }
 
 }

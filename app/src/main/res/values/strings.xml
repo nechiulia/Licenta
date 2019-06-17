@@ -4,19 +4,19 @@
     <string name="login_et_email_hint">Email</string>
     <string name="login_et_password_hint">Parolă</string>
     <string name="login_tv_hint"><u>Nu ai cont? Înregistrează-te!</u></string>
-    <string name="signUp_email_hint">Email</string>
-    <string name="signUp_confirmEmail_hint">Confirmă email</string>
-    <string name="signUp_password_hint">Parolă</string>
-    <string name="signUp_confirmPassword_hint">Confirmă parolă</string>
-    <string name="signUp_btn_Step2Register_hint">Înainte</string>
+    <string name="register_email_hint">Email</string>
+    <string name="register_confirmEmail_hint">Confirmă email</string>
+    <string name="register_password_hint">Parolă</string>
+    <string name="register_confirmPassword_hint">Confirmă parolă</string>
+    <string name="register_btn_Step2Register_hint">Înainte</string>
     <string name="login_title_hint">Autentificare</string>
-    <string name="signUp_emailError_hint">Email incorect: exemplu@gmail.com</string>
-    <string name="signUp_passwordError_hint">Parola a fost greșit intordusă</string>
-    <string name="signUp_passwordError_tooShort_hint">Parola este prea scurtă</string>
-    <string name="signUp_passwordError_oneDigitOneLetter_hint">Parola trebuie să conțină cel putin o literă și cel puțin o cifră</string>
+    <string name="register_emailError_hint">Email incorect: exemplu@gmail.com</string>
+    <string name="register_passwordError_hint">Parola a fost greșit intordusă</string>
+    <string name="register_passwordError_tooShort_hint">Parola este prea scurtă</string>
+    <string name="register_passwordError_oneDigitOneLetter_hint">Parola trebuie să conțină cel putin o literă și cel puțin o cifră</string>
     <string name="Home_profilePictureIcon_hint">Fotografie de profil</string>
     <string name="Home_ib_profile_hint">Profil</string>
-    <string name="Home_ib_friends_hint">Prieteni</string>
+    <string name="Home_ib_users_hint">Prieteni</string>
     <string name="Home_ib_Map_hint">Hartă</string>
     <string name="Home_ib_teams_hint">Echipe</string>
     <string name="Home_ib_Contact_hint">Contact</string>
@@ -33,10 +33,10 @@
     <string name="profile_tv_rating_hint">0</string>
     <string name="login_iv_logo_hint">Logo aplicație</string>
     <string name="login_tv_appName_hint">SocialTeam</string>
-    <string name="signUp_et_firstName_hint">Prenume</string>
-    <string name="signUp_et_lastName_hint">Nume</string>
-    <string name="signUp_btn_upload_hint">Alege</string>
-    <string name="signUp_iv_profilePicture_hint">ImagineProfil</string>
+    <string name="register_et_firstName_hint">Prenume</string>
+    <string name="register_et_lastName_hint">Nume</string>
+    <string name="register_btn_upload_hint">Alege</string>
+    <string name="register_iv_profilePicture_hint">ImagineProfil</string>
     <string name="register2_btn_save_hint">Salvează</string>
     <string name="register2_ibtn_addSport_hint">Adaugă sport nou</string>
     <string name="help_ibtn_back_hint">Înapoi la pagina principală</string>
@@ -79,7 +79,7 @@
     <string name="disableAccount_btn_no_hint">Nu</string>
     <string name="disableAccount_btn_yes_hint">Da</string>
     <string name="feedback_ibtn_back_hint">Înapoi</string>
-    <string name="feedback_tv_title_hint">Recenzii</string>
+    <string name="feedback_tv_title_hint">Feedback</string>
     <string name="register1_firstNameLength_error_hint">Prenumele trebuie să aibă cel puțin 3 litere</string>
     <string name="register1_firstNameCapitalLetter_error_hint">Prima literă trebuie să fie literă mare</string>
     <string name="register1_lastNameLength_error_hint">Numele de familie trebuie să aibă cel puțin 3 litere</string>
@@ -119,10 +119,18 @@
     <string name="search_iet_search_hint">Căutare sportivi</string>
     <string name="register1_userName_hint">Nume utilizator</string>
     <string name="searchUser_search_actionBar_hint">Căutare sportivi</string>
+    <string name="registerLocation_tid_LocationName_hint">Numele locatiei</string>
+    <string name="registerLocation_til_streetName_hint">Strada</string>
+    <string name="registerLocation_tid_streetNumber_hint">Numărul</string>
+    <string name="registerLocation_tid_email_hint">Email</string>
+    <string name="registerLocation_tid_password_hint">Parolă</string>
+    <string name="registerLocation_tid_confirmPassword_hint">Confirmă parola</string>
+    <string name="registerLocation_btn_back_hint">Înapoi</string>
+    <string name="registerLocation_btn_save_hint">Salvează</string>
+    <string name="login_tv_registerLocation_hint"><u>Inregistrează-ti locația!</u></string>
     <string-array name="dialog_sports">
         <item>Selectează sportul</item>
         <item>Alergat</item>
-        <item>Alpinism</item>
         <item>Arte Martiale</item>
         <item>Balet</item>
         <item>Baschet</item>
@@ -172,4 +180,33 @@
         <item>Avansat</item>
         <item>Expert</item>
     </string-array>
+    <string-array name="location_type">
+        <item>Selectează tipul locației</item>
+        <item>Sala de fitness</item>
+        <item>Complex sportiv</item>
+        <item>Bazin înot</item>
+        <item>Studio de dans</item>
+        <item>Bază sportivă</item>
+        <item>Patinoar</item>
+        <item>Club echitație</item>
+        <item>Teren exterior</item>
+        <item>Dojo</item>
+        <item>Altceva</item>
+    </string-array>
+    <string name="title_activity_maps">Map</string>
+    <string name="maps_tv_locations_hint">Locații</string>
+    <string name="menu_search_search_titile_hint">Căutare</string>
+    <string name="maps_searchLocation_et_hint">Căutare locație</string>
+    <string name="map_searchIcon_hint">SearchIcon</string>
+    <string name="maps_et_searchBar_hint">Căutare locație</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_home_admin">HomeAdminActivity</string>
+    <string name="homeAdmin_ic_report_hint">Rapoarte</string>
+    <string name="homeAdmin_ic_newLocation_hint">Locații noi</string>
+    <string name="homeAdmin_ic_settings_hint">Setări</string>
+    <string name="fragment_settings_lougOut_hint">Delogare</string>
+
 </resources>

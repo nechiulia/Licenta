@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/home_ib_profile"
+            android:id="@+id/home_ibtn_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -24,12 +24,12 @@
             tools:ignore="NestedWeights" />
 
         <ImageButton
-            android:id="@+id/home_ib_friends"
+            android:id="@+id/home_ibtn_users"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
             android:background="@drawable/friends"
-            android:contentDescription="@string/Home_ib_friends_hint" />
+            android:contentDescription="@string/Home_ib_users_hint" />
     </LinearLayout>
 
     <LinearLayout
@@ -39,7 +39,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/home_ib_map"
+            android:id="@+id/home_ibtn_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
@@ -49,7 +49,7 @@
 
 
         <ImageButton
-            android:id="@+id/home_ib_teams"
+            android:id="@+id/home_ibtn_teams"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
@@ -65,7 +65,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/home_ib_faq"
+            android:id="@+id/home_ibtn_faq"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.0"
@@ -73,7 +73,7 @@
             android:background="@drawable/faq"
             tools:ignore="NestedWeights" />
         <ImageButton
-            android:id="@+id/home_ib_contact"
+            android:id="@+id/home_ibtn_contact"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.0"

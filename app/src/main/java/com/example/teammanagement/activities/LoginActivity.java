@@ -15,6 +15,8 @@ public class LoginActivity extends AppCompatActivity {
     TextInputEditText iet_email;
     TextInputEditText iet_password;
     TextView tv_register;
+    TextView tv_registerLocation;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,21 +26,6 @@ public class LoginActivity extends AppCompatActivity {
 
         initComponents();
 
-        btn_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),LoadingActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        tv_register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), Register1Activity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     private void initComponents(){
@@ -46,6 +33,46 @@ public class LoginActivity extends AppCompatActivity {
         iet_email=findViewById(R.id.login_tid_email);
         iet_password=findViewById(R.id.login_tid_password);
         tv_register=findViewById(R.id.login_tv_register);
+        tv_registerLocation=findViewById(R.id.login_tv_signUpLocation);
+
+       tv_register.setOnClickListener(clickRegisterUser());
+       tv_registerLocation.setOnClickListener(clickRegisterLocation());
+       btn_login.setOnClickListener(clickLogin());
+    }
+
+    private View.OnClickListener clickRegisterUser() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getApplicationContext(), Register1Activity.class);
+                startActivity(intent);
+            }
+        };
+    }
+    private View.OnClickListener clickRegisterLocation() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getApplicationContext(),RegisterLocationActivity.class);
+                startActivity(intent);
+            }
+        };
+    }
+    private View.OnClickListener clickLogin() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(iet_email.getText().toString().trim().equals("a")){
+                    Intent intent=new Intent(getApplicationContext(), HomeAdminActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    intent=new Intent(getApplicationContext(),LoadingActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+        };
     }
 
     private boolean isValid(){

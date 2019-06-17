@@ -23,7 +23,7 @@
         android:id="@+id/register1_tid_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/signUp_email_hint" />
+        android:hint="@string/register_email_hint" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -61,7 +61,7 @@
             android:id="@+id/register1_tid_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signUp_password_hint"
+            android:hint="@string/register_password_hint"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -81,7 +81,7 @@
             android:id="@+id/register1_tid_confirmPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signUp_confirmPassword_hint"
+            android:hint="@string/register_confirmPassword_hint"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +92,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="76dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/signUp_btn_Step2Register_hint"
+        android:text="@string/register_btn_Step2Register_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +105,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@string/signUp_iv_profilePicture_hint"
+        android:contentDescription="@string/register_iv_profilePicture_hint"
         android:layout_centerHorizontal="true"
         android:layout_alignParentTop="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,7 +121,7 @@
         android:layout_height="38dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/signUp_btn_upload_hint"
+        android:text="@string/register_btn_upload_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.026"
         app:layout_constraintStart_toStartOf="parent"
@@ -143,7 +143,7 @@
             android:id="@+id/register1_tid_lastName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signUp_et_lastName_hint" />
+            android:hint="@string/register_et_lastName_hint" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
@@ -161,7 +161,7 @@
             android:id="@+id/register1_tid_firstName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/signUp_et_firstName_hint" />
+            android:hint="@string/register_et_firstName_hint" />
     </android.support.design.widget.TextInputLayout>
 
     <Button

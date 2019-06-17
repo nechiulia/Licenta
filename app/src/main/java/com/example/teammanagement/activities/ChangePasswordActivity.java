@@ -71,15 +71,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
         if(et_newPassword.getText() == null
                 || et_newPassword.getText().toString().trim().isEmpty()
                 || et_newPassword.getText().toString().contains(" ")){
-            et_newPassword.setError(getString(R.string.signUp_passwordError_hint));
+            et_newPassword.setError(getString(R.string.register_passwordError_hint));
             return false;
         }
         else if(et_newPassword.getText().length() < 9 ){
-            et_newPassword.setError(getString(R.string.signUp_passwordError_tooShort_hint));
+            et_newPassword.setError(getString(R.string.register_passwordError_tooShort_hint));
             return false;
         }
         else if(!et_newPassword.getText().toString().matches("^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$")){
-            et_newPassword.setError(getString(R.string.signUp_passwordError_oneDigitOneLetter_hint));
+            et_newPassword.setError(getString(R.string.register_passwordError_oneDigitOneLetter_hint));
             return false;
         }
         return true;

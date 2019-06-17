@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/fragment_reports_toolbar"
+        android:layout_width="423dp"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginEnd="8dp"
+        android:background="@color/darkOrange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.Toolbar>
+
+    <ImageButton
+        android:id="@+id/fragment_reports_ibtn_remove"
+        android:layout_width="52dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/transparent"
+        android:contentDescription="@string/profile_ibtn_back_hint"
+        android:src="?attr/homeAsUpIndicator"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_reports_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:srcCompat="@drawable/ic_trash" />
+
+    <ListView
+        android:id="@+id/fragment_reports_lv"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_reports_toolbar">
+
+    </ListView>
+
+</android.support.constraint.ConstraintLayout>

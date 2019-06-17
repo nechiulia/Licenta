@@ -150,7 +150,7 @@ public class Register1Activity extends AppCompatActivity {
         if(TextUtils.isEmpty(iet_email.getText())
                 || iet_email.getText().toString().trim().isEmpty()
                 || !Patterns.EMAIL_ADDRESS.matcher(iet_email.getText().toString()).matches()){
-            iet_email.setError(getText(R.string.signUp_emailError_hint));
+            iet_email.setError(getText(R.string.register_emailError_hint));
             return false;
         }
         return true;
@@ -160,15 +160,15 @@ public class Register1Activity extends AppCompatActivity {
         if(iet_password.getText() == null
                 || iet_password.getText().toString().trim().isEmpty()
                 || iet_password.getText().toString().contains(" ")){
-            iet_password.setError(getString(R.string.signUp_passwordError_hint));
+            iet_password.setError(getString(R.string.register_passwordError_hint));
            return false;
         }
         else if(iet_password.getText().length() < 9 ){
-            iet_password.setError(getString(R.string.signUp_passwordError_tooShort_hint));
+            iet_password.setError(getString(R.string.register_passwordError_tooShort_hint));
            return false;
         }
         else if(!iet_password.getText().toString().matches("^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$")){
-            iet_password.setError(getString(R.string.signUp_passwordError_oneDigitOneLetter_hint));
+            iet_password.setError(getString(R.string.register_passwordError_oneDigitOneLetter_hint));
             return false;
         }
         return true;
