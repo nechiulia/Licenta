@@ -1,25 +1,36 @@
 package com.example.teammanagement.Utils;
 
-public class Adress {
+public class Address {
 
+    private String codPostal;
     private String locationName;
     private String locationStreet;
     private String locationStreetNumber;
     private double latitude;
     private double longitude;
 
-    public Adress(String locationName, String locationStreet, String locationStreetNumber) {
+    public Address(String codPostal, String locationName, String locationStreet, String locationStreetNumber) {
+        this.codPostal = codPostal;
         this.locationName = locationName;
         this.locationStreet = locationStreet;
         this.locationStreetNumber = locationStreetNumber;
     }
 
-    public Adress(String locationName, String locationStreet, String locationStreetNumber, double latitude, double longitude) {
+    public Address(String codPostal, String locationName, String locationStreet, String locationStreetNumber, double latitude, double longitude) {
+        this.codPostal = codPostal;
         this.locationName = locationName;
         this.locationStreet = locationStreet;
         this.locationStreetNumber = locationStreetNumber;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public String getCodPostal() {
+        return codPostal;
+    }
+
+    public void setCodPostal(String codPostal) {
+        this.codPostal = codPostal;
     }
 
     public String getLocationName() {
@@ -64,8 +75,9 @@ public class Adress {
 
     @Override
     public String toString() {
-        return "Adress{" +
-                "locationName='" + locationName + '\'' +
+        return "Address{" +
+                "codPostal='" + codPostal + '\'' +
+                ", locationName='" + locationName + '\'' +
                 ", locationStreet='" + locationStreet + '\'' +
                 ", locationStreetNumber='" + locationStreetNumber + '\'' +
                 ", latitude=" + latitude +

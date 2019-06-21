@@ -11,4 +11,7 @@ public interface Constants {
     String FAQ_URL= "https://api.myjson.com/bins/k4jmm";
     String FAQ_LIST_HINT ="faq_list";
     String APP_SHAREDPREF ="App_Settings";
+
+    int ERROR_DIALOG_REQUEST = 9001;
+    float DEFAULT_ZOOM=17F;
 }

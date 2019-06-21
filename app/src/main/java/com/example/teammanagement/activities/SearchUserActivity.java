@@ -1,6 +1,5 @@
 package com.example.teammanagement.activities;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -100,7 +99,7 @@ public class SearchUserActivity extends AppCompatActivity {
         return new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+                intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 startActivity(intent);
             }
         };

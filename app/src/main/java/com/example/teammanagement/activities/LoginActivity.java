@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent=new Intent(getApplicationContext(),RegisterLocationActivity.class);
+                intent=new Intent(getApplicationContext(), ClaimLocationActivity.class);
                 startActivity(intent);
             }
         };

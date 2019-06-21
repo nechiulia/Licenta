@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/faq_explist_tv_item"
+        android:id="@+id/list_item_faq_tv"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
         android:layout_width="match_parent"

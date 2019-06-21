@@ -112,6 +112,7 @@
     <string name="faq_sp_default_hint">Nu există conexiune la internet.</string>
     <string name="register1_key_firstName_hint">FirstName</string>
     <string name="register1_key_lastName_hint">LastName</string>
+    <string name="register1_key_userName_hint">UserName</string>
     <string name="register1_key_email_hint">Email</string>
     <string name="register1_key_password_hint">Password</string>
     <string name="register1_key_confirmPassword_hint">ConfirmPassword</string>
@@ -119,15 +120,15 @@
     <string name="search_iet_search_hint">Căutare sportivi</string>
     <string name="register1_userName_hint">Nume utilizator</string>
     <string name="searchUser_search_actionBar_hint">Căutare sportivi</string>
-    <string name="registerLocation_tid_LocationName_hint">Numele locatiei</string>
-    <string name="registerLocation_til_streetName_hint">Strada</string>
-    <string name="registerLocation_tid_streetNumber_hint">Numărul</string>
-    <string name="registerLocation_tid_email_hint">Email</string>
-    <string name="registerLocation_tid_password_hint">Parolă</string>
-    <string name="registerLocation_tid_confirmPassword_hint">Confirmă parola</string>
-    <string name="registerLocation_btn_back_hint">Înapoi</string>
-    <string name="registerLocation_btn_save_hint">Salvează</string>
-    <string name="login_tv_registerLocation_hint"><u>Inregistrează-ti locația!</u></string>
+    <string name="claimLocation_tid_LocationName_hint">Numele locatiei</string>
+    <string name="claimLocation_til_streetName_hint">Strada</string>
+    <string name="claimLocation_tid_streetNumber_hint">Numărul</string>
+    <string name="claimLocation_tid_email_hint">Email</string>
+    <string name="claimLocation_tid_password_hint">Parolă</string>
+    <string name="claimLocation_tid_confirmPassword_hint">Confirmă parola</string>
+    <string name="claimLocation_btn_back_hint">Înapoi</string>
+    <string name="claimLocation_btn_save_hint">Salvează</string>
+    <string name="login_tv_claimLocation_hint"><u>Revendică-ți locația!</u></string>
     <string-array name="dialog_sports">
         <item>Selectează sportul</item>
         <item>Alergat</item>
@@ -208,5 +209,29 @@
     <string name="homeAdmin_ic_newLocation_hint">Locații noi</string>
     <string name="homeAdmin_ic_settings_hint">Setări</string>
     <string name="fragment_settings_lougOut_hint">Delogare</string>
+    <string name="fragment_reports_tv_toolbarTitle_hint">Rapoarte</string>
+    <string name="fragment_newLocations_tv_title_hint">Locații noi</string>
+    <string name="fragment_settings_tv_title_hint">Setări</string>
+    <string name="title_activity_contact">Map</string>
+    <string name="contact_tv_address_hint">Adresă</string>
+    <string name="contact_tv_email">nechita1iulia16@stud.ase.ro</string>
+    <string name="contact_tv_email_hint">Email</string>
+    <string name="claimLocation_tid_postalCode_hint">Cod Poștal</string>
+    <string name="claimLocation_tid_city_hint">Oraș</string>
+    <string name="home_googleMaps_errorMessage_hint">Nu puteți utiliza serviciile Google Maps</string>
+    <string name="home_GoogleServices_check_hint">isServicesOK: checking google services version</string>
+    <string name="home_GoogleServices_fine_hint">isServicesOK: Google Play Services is working fine</string>
+    <string name="home_GoogleServices_errorOccured_hint">isServicesOK: an error occured but we can fix it</string>
+    <string name="claimLocation_tid_userName_hint">Nume utilizator</string>
+    <string name="list_item_location_userName_hint">Nume utilizator</string>
+    <string name="list_item_location_email_hint">E-mail</string>
+    <string name="list_item_location_locationName_hint">Nume locație</string>
+    <string name="list_item_location_postalCode_hint">Cod postal</string>
+    <string name="list_item_location_locationAddress_hint">Adresă</string>
+    <string name="teams_tv_title_hint">Echipe</string>
+    <string name="teams_ibtn_addTeam_hint">Adaugă echipă</string>
+    <string name="teamProfile_tv_teamName_hint">Nume echipă</string>
+    <string name="teamProfile_tv_sport_hint">Sport</string>
+    <string name="teamProfile_tv_players_hint">Componență echipă</string>
 
 </resources>

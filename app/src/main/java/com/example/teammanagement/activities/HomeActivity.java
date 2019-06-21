@@ -1,14 +1,19 @@
 package com.example.teammanagement.activities;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Question;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,6 +32,7 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
     private List<Question> lista=new ArrayList<>();
     private HashMap<String,List<String>> listaAnswers= new HashMap<>();
     private static final String URL = Constants.FAQ_URL;
+    private static final String TAG = "HomeActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,25 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
 
     }
 
+    public boolean isServiceOK(){
+        Log.d(TAG,getString(R.string.home_GoogleServices_check_hint));
+        int avalible = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(HomeActivity.this);
+
+        if(avalible == ConnectionResult.SUCCESS){
+            Log.d(TAG,getString(R.string.home_GoogleServices_fine_hint));
+            return true;
+        }
+        else if(GoogleApiAvailability.getInstance().isUserResolvableError(avalible)){
+            Log.d(TAG,getString(R.string.home_GoogleServices_errorOccured_hint));
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(HomeActivity.this,avalible,Constants.ERROR_DIALOG_REQUEST);
+            dialog.show();
+        }
+        else{
+            Toast.makeText(this, getString(R.string.home_googleMaps_errorMessage_hint), Toast.LENGTH_LONG).show();
+        }
+        return false;
+    }
+
     private View.OnClickListener clickProfile() {
         return new View.OnClickListener() {
             @Override
@@ -78,8 +103,10 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), MapsActivity.class);
-                startActivity(intent);
+                if(isServiceOK()) {
+                    intent = new Intent(getApplicationContext(), MapsActivity.class);
+                    startActivity(intent);
+                }
             }
         };
     }
@@ -108,8 +135,10 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent = new Intent(getApplicationContext(), ContactActivity.class);
-                startActivity(intent);
+                if(isServiceOK()) {
+                    intent = new Intent(getApplicationContext(), ContactActivity.class);
+                    startActivity(intent);
+                }
             }
         };
     }

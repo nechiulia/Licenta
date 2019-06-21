@@ -6,6 +6,9 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.fragments.NewLocationsFragment;
@@ -14,6 +17,9 @@ import com.example.teammanagement.fragments.SettingsFragment;
 
 public class HomeAdminActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
+    TextView tv_title;
+    ImageButton ibtn_aprove;
+    ImageButton ibtn_remove;
 
 
     @Override
@@ -22,7 +28,7 @@ public class HomeAdminActivity extends AppCompatActivity implements BottomNaviga
         setContentView(R.layout.activity_home_admin);
 
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.home_admin_bottomNavigationView);
         navigation.setOnNavigationItemSelectedListener(this);
 
         loadFragment(new ReportsFragment());
@@ -32,7 +38,7 @@ public class HomeAdminActivity extends AppCompatActivity implements BottomNaviga
     private boolean loadFragment(Fragment fragment){
         if(fragment != null){
 
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_containerAdmin,fragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.home_admin_fragment_containerAdmin,fragment).commit();
             return true;
         }
         return false;

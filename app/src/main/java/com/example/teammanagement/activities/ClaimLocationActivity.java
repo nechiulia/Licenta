@@ -4,26 +4,24 @@ import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import com.example.teammanagement.R;
-import com.example.teammanagement.adapters.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class RegisterLocationActivity extends AppCompatActivity {
+public class ClaimLocationActivity extends AppCompatActivity {
 
     TextInputEditText iet_locationName;
     TextInputEditText iet_streetName;
     TextInputEditText iet_streetNumber;
     TextInputEditText iet_email;
     TextInputEditText iet_password;
+    TextInputEditText iet_postalCode;
+    TextInputEditText iet_city;
     TextInputEditText iet_confirmPassword;
     Button btn_save;
     Button btn_back;
@@ -34,21 +32,23 @@ public class RegisterLocationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_location);
+        setContentView(R.layout.activity_claim_location);
 
         initComponents();
     }
 
     public void initComponents(){
 
-        iet_email=findViewById(R.id.registerLocation_tid_email);
-        iet_password=findViewById(R.id.registerLocation_tid_password);
-        iet_locationName=findViewById(R.id.registerLocation_tid_LocationName);
-        iet_streetName=findViewById(R.id.registerLocation_tid_streetName);
-        iet_streetNumber=findViewById(R.id.registerLocation_tid_streetNumber);
-        iet_confirmPassword=findViewById(R.id.registerLocation_tid_confirmPassword);
-        btn_save =findViewById(R.id.registerLocation_btn_save);
-        btn_back=findViewById(R.id.registerLocation_btn_back);
+        iet_email=findViewById(R.id.claimLocation_tid_email);
+        iet_password=findViewById(R.id.claimLocation_tid_password);
+        iet_locationName=findViewById(R.id.claimLocation_tid_LocationName);
+        iet_streetName=findViewById(R.id.claimLocation_tid_streetName);
+        iet_streetNumber=findViewById(R.id.claimLocation_tid_streetNumber);
+        iet_confirmPassword=findViewById(R.id.claimLocation_tid_confirmPassword);
+        iet_city=findViewById(R.id.claimLocation_tid_city);
+        iet_postalCode=findViewById(R.id.claimLocation_tid_postalCode);
+        btn_save =findViewById(R.id.claimLocation_btn_save);
+        btn_back=findViewById(R.id.claimLocation_btn_back);
         locationTypeList =Arrays.asList(getResources().getStringArray(R.array.location_type));
 
 

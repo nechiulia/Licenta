@@ -40,8 +40,6 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
     ImageButton ibtn_removeSport;
     ListView lv_sports;
     ImageView iv_profilePicture;
-    TextInputEditText iet_lastName;
-    TextInputEditText iet_firstName;
     TextView tv_email;
     Intent intent;
     SportAdapter adapter;
@@ -70,8 +68,6 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
         lv_sports=findViewById(R.id.editProfile_lv_sports);
         lv_sports.setItemsCanFocus(true);
         tv_email=findViewById(R.id.editProfile_tv_email);
-        iet_firstName=findViewById(R.id.editProfile_tid_firstName);
-        iet_lastName=findViewById(R.id.editProfile_tid_lastName);
         ibtn_back=findViewById(R.id.editProfile_ibtn_back);
         iv_profilePicture=findViewById(R.id.editProfile_iv_profileImage);
 
@@ -216,40 +212,10 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
     }
 
     private boolean isValid(){
-        if( isValidFirstName() && isValidLastName() && isValidList())return true;
+        if( isValidList())return true;
         return false;
     }
 
-    private boolean isValidFirstName(){
-        if(iet_firstName.getText().length()<3){
-            iet_firstName.setError(getString(R.string.register1_firstNameLength_error_hint));
-            return false;
-        }
-        else if(!Character.isUpperCase(iet_firstName.getText().toString().charAt(0))){
-            iet_firstName.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
-            return false;
-        }
-        else if(!iet_firstName.getText().toString().matches("^[a-zA-Z]*$")){
-            iet_firstName.setError(getString(R.string.register1_firstNameLetters_error_hint));
-            return false;
-        }
-        return true;
-    }
-    private boolean isValidLastName(){
-        if(iet_lastName.getText().length()<3){
-            iet_lastName.setError(getString(R.string.register1_lastNameLength_error_hint));
-            return false;
-        }
-        else if(!Character.isUpperCase(iet_lastName.getText().toString().charAt(0))){
-            iet_lastName.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
-            return false;
-        }
-        else if(!iet_lastName.getText().toString().matches("^[a-zA-Z]*$")){
-            iet_lastName.setError(getString(R.string.register1_firstNameLetters_error_hint));
-            return false;
-        }
-        return true;
-    }
 
     private boolean isValidList(){
        if(lv_list_sportItems.size() == 0 ){

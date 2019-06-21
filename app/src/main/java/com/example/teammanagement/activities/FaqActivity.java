@@ -3,7 +3,6 @@ package com.example.teammanagement.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.QuestionsParser;
-import com.example.teammanagement.adapters.ExpandableListAdapter;
+import com.example.teammanagement.adapters.ExpandableListFaqAdapter;
 import com.example.teammanagement.Utils.Question;
 
 
@@ -33,7 +32,7 @@ public class FaqActivity extends AppCompatActivity implements Serializable {
     private List<Question> lista=new ArrayList<>();
     private HashMap<String,List<String>> listaAnswers = new HashMap<>();
     private ExpandableListView listView;
-    private ExpandableListAdapter listAdapter;
+    private ExpandableListFaqAdapter listAdapter;
     ArrayList<List<String>> answers= new ArrayList<>();
     TextView tv_question;
     TextView tv_answers;
@@ -54,14 +53,14 @@ public class FaqActivity extends AppCompatActivity implements Serializable {
         }
 
 
-        listAdapter =  new ExpandableListAdapter(this,listQuestions,listaAnswers);
+        listAdapter =  new ExpandableListFaqAdapter(this,listQuestions,listaAnswers);
         listView.setAdapter(listAdapter);
     }
 
     private void initComponents(){
         listView=findViewById(R.id.faq_elv_questionlist);
-        tv_question=findViewById(R.id.faq_explist_tv_group);
-        tv_answers=findViewById(R.id.faq_explist_tv_item);
+        tv_question=findViewById(R.id.list_group_faq_tv);
+        tv_answers=findViewById(R.id.list_item_faq_tv);
         ibtn_back=findViewById(R.id.faq_ibtn_back);
 
         ibtn_back.setOnClickListener(clickBack());

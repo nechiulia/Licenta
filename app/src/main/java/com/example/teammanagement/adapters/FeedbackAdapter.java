@@ -51,7 +51,7 @@ public class FeedbackAdapter extends ArrayAdapter<Feedback> {
         tvUsername.setText(feedback.getUserName());
         ratingBar.setRating(feedback.getRating());
         tvComment.setText(feedback.getComment());
-        ibtn_more.setBackgroundResource(R.drawable.more);
+        ibtn_more.setBackgroundResource(R.drawable.ic_more);
 
         return row;
     }

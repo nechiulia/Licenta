@@ -30,8 +30,7 @@ public class Register1Activity extends AppCompatActivity {
     TextInputEditText iet_email;
     TextInputEditText iet_password;
     TextInputEditText iet_confirmPassword;
-    TextInputEditText iet_lastName;
-    TextInputEditText iet_firstName;
+    TextInputEditText iet_username;
     Button btn_next;
     Button btn_back;
     Button btn_uploadPicture;
@@ -50,11 +49,10 @@ public class Register1Activity extends AppCompatActivity {
     }
 
     public void initComponents(){
-        iet_firstName=findViewById(R.id.register1_tid_firstName);
-        iet_lastName=findViewById(R.id.register1_tid_lastName);
         iet_email=findViewById(R.id.register1_tid_email);
         iet_password=findViewById(R.id.register1_tid_password);
         iet_confirmPassword=findViewById(R.id.register1_tid_confirmPassword);
+        iet_username=findViewById(R.id.register1_tid_userName);
         btn_next =findViewById(R.id.register1_btn_next);
         btn_back=findViewById(R.id.register1_btn_back);
         btn_uploadPicture = findViewById(R.id.register1_btn_upload);
@@ -75,7 +73,6 @@ public class Register1Activity extends AppCompatActivity {
                     String email=iet_email.getText().toString();
                     String password = iet_password.getText().toString();
                     String confirmPassword = iet_confirmPassword.getText().toString();
-                    String firstName= iet_firstName.getText().toString();
 
 
                     intent=new Intent(getApplicationContext(),Register2Activity.class);
@@ -111,36 +108,21 @@ public class Register1Activity extends AppCompatActivity {
 
 
     private boolean isValid(){
-        if( isValidFirstName() && isValidLastName() && isValidEmail() && isValidPassword() && isValidConfirmPassword())return true;
+        if( isValidUserName() && isValidEmail() && isValidPassword() && isValidConfirmPassword())return true;
          return false;
     }
 
-    private boolean isValidFirstName(){
-        if(iet_firstName.getText().length()<3){
-            iet_firstName.setError(getString(R.string.register1_firstNameLength_error_hint));
+    private boolean isValidUserName(){
+        if(iet_username.getText().length()<3){
+            iet_username.setError(getString(R.string.register1_firstNameLength_error_hint));
             return false;
         }
-        else if(!Character.isUpperCase(iet_firstName.getText().toString().charAt(0))){
-            iet_firstName.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
+        else if(!Character.isUpperCase(iet_username.getText().toString().charAt(0))){
+            iet_username.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
             return false;
         }
-        else if(!iet_firstName.getText().toString().matches("^[a-zA-Z]*$")){
-            iet_firstName.setError(getString(R.string.register1_firstNameLetters_error_hint));
-            return false;
-        }
-        return true;
-    }
-    private boolean isValidLastName(){
-        if(iet_lastName.getText().length()<3){
-            iet_lastName.setError(getString(R.string.register1_lastNameLength_error_hint));
-            return false;
-        }
-        else if(!Character.isUpperCase(iet_lastName.getText().toString().charAt(0))){
-            iet_lastName.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
-            return false;
-        }
-        else if(!iet_lastName.getText().toString().matches("^[a-zA-Z]*$")){
-            iet_lastName.setError(getString(R.string.register1_firstNameLetters_error_hint));
+        else if(!iet_username.getText().toString().matches("^[a-zA-Z]*$")){
+            iet_username.setError(getString(R.string.register1_firstNameLetters_error_hint));
             return false;
         }
         return true;
@@ -202,8 +184,9 @@ public class Register1Activity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(getString(R.string.register1_key_firstName_hint),iet_firstName.getText().toString());
-        outState.putString(getString(R.string.register1_key_lastName_hint),iet_lastName.getText().toString());
+/*        outState.putString(getString(R.string.register1_key_firstName_hint),iet_firstName.getText().toString());
+        outState.putString(getString(R.string.register1_key_lastName_hint),iet_lastName.getText().toString());*/
+        outState.putString(getString(R.string.register1_key_userName_hint),iet_username.getText().toString());
         outState.putString(getString(R.string.register1_key_email_hint),iet_email.getText().toString());
         outState.putString(getString(R.string.register1_key_password_hint),iet_password.getText().toString());
         outState.putString(getString(R.string.register1_key_confirmPassword_hint),iet_confirmPassword.getText().toString());
@@ -212,8 +195,7 @@ public class Register1Activity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        iet_firstName.setText(savedInstanceState.getString("FirstName"));
-        iet_lastName.setText(savedInstanceState.getString("LastName"));
+        iet_username.setText(savedInstanceState.getString("UserName"));
         iet_email.setText(savedInstanceState.getString("Email"));
         iet_password.setText(savedInstanceState.getString("Password"));
         iet_confirmPassword.setText(savedInstanceState.getString("ConfirmPassword"));

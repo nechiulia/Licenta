@@ -15,13 +15,13 @@ import com.example.teammanagement.R;
 import java.util.HashMap;
 import java.util.List;
 
-public class ExpandableListAdapter extends BaseExpandableListAdapter {
+public class ExpandableListFaqAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> questionsList;
     private HashMap<String, List<String>> answersList;
 
-    public ExpandableListAdapter(Context context, List<String> questionsList,
-                                 HashMap<String, List<String>> answersList) {
+    public ExpandableListFaqAdapter(Context context, List<String> questionsList,
+                                    HashMap<String, List<String>> answersList) {
         this._context = context;
         this.questionsList = questionsList;
         this.answersList = answersList;
@@ -72,7 +72,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView tvAnswer = convertView
-                .findViewById(R.id.faq_explist_tv_item);
+                .findViewById(R.id.list_item_faq_tv);
 
         tvAnswer.setText(answer);
         return convertView;
@@ -85,11 +85,11 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.list_group, null);
+            convertView = inflater.inflate(R.layout.list_group_faq, null);
         }
 
         TextView tvTitle = convertView
-                .findViewById(R.id.faq_explist_tv_group);
+                .findViewById(R.id.list_group_faq_tv);
         tvTitle.setTypeface(null, Typeface.BOLD);
         tvTitle.setText(title);
 

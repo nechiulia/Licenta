@@ -87,7 +87,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="20dp"
         android:text="@string/register1_userName_hint"
         android:textColor="@color/darkGrey"
@@ -102,79 +102,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:text="@string/editProfile_tid_email_hint"
         android:textColor="@color/darkGrey"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editProfile_tv_userName" />
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/editProfile_til_firstName"
-        android:layout_width="372dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textColorHint="@color/darkGrey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfile_tv_email">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editProfile_tid_firstName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkGrey"
-            android:hint="@string/editProfile_et_firstName_hint"
-            android:textColor="@color/darkGrey"
-            android:textColorHint="@color/darkGrey" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/editProfile_til_lastName"
-        android:layout_width="372dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:textColorHint="@color/darkGrey"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfile_til_firstName">
-
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/editProfile_tid_lastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/darkGrey"
-            android:hint="@string/editProfile_et_lastName_hint"
-            android:textColor="@color/darkGrey"
-            android:textColorHint="@color/darkGrey" />
-    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/editProfile_tv_sports"
         android:layout_width="wrap_content"
         android:layout_height="29dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
         android:text="@string/editProfile_tv_sports_hint"
         android:textColor="@color/darkGrey"
         android:textSize="18sp"
         android:textStyle="normal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.004"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editProfile_til_lastName" />
+        app:layout_constraintTop_toBottomOf="@+id/editProfile_tv_email" />
 
     <ListView
         android:id="@+id/editProfile_lv_sports"
         android:layout_width="338dp"
         android:layout_height="144dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="52dp"
         android:background="@drawable/rectangle_border"
         android:choiceMode="multipleChoice"
