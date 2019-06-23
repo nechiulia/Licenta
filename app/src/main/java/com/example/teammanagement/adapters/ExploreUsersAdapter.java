@@ -103,7 +103,7 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             clear();
-            addAll((List) results.values);
+            addAll((List)results.values);
             notifyDataSetChanged();
         }
 

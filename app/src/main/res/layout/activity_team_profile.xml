@@ -17,6 +17,57 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/teamProfile_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/teamProfile_tv_title_hint"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/teamProfile_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/teamProfile_ibtn_back"
+        android:layout_width="52dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/transparent"
+        android:contentDescription="@string/teamProfile_ibtn_back_hint"
+        android:src="?attr/homeAsUpIndicator"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/teamProfile_tv_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/teamProfile_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/teamProfile_toolbar"
+        tools:srcCompat="?attr/homeAsUpIndicator" />
+
+    <ImageButton
+        android:id="@+id/teamProfile_ibtn_edit"
+        android:layout_width="64dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/teamProfile_ibtn_edit_hint"
+        android:background="@drawable/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/teamProfile_toolbar"
+        app:layout_constraintEnd_toEndOf="@+id/teamProfile_toolbar"
+        app:layout_constraintHorizontal_bias="0.92"
+        app:layout_constraintStart_toEndOf="@+id/teamProfile_tv_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -93,15 +144,75 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <ListView
+        android:id="@+id/teamProfile_lv_players"
         android:layout_width="match_parent"
-        android:layout_height="448dp"
+        android:layout_height="248dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/rectangle_border"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/teamProfile_tv_players" />
+
+    <TextView
+        android:id="@+id/teamProfile_tv_announcements_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/teamProfile_tv_announcements_hint"
+        android:textColor="@color/darkGrey"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamProfile_lv_players" />
+
+    <ImageView
+        android:id="@+id/teamProfile_ibtn_next"
+        android:layout_width="18dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_rightarrow"
+        android:contentDescription="@string/teamProfile_ibtn_next_hint"
+        app:layout_constraintBottom_toBottomOf="@+id/teamProfile_tv_announcements_hint"
+        app:layout_constraintEnd_toEndOf="@+id/teamProfile_tv_announcements_hint"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/teamProfile_tv_announcements_hint"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/teamProfile_tv_reservation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/teamProfile_tv_reservation_hint"
+        android:textStyle="bold"
+        android:textColor="@color/darkGrey"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamProfile_tv_announcements_hint" />
+
+    <ImageView
+        android:id="@+id/teamProfile_ibtn_reservation_next"
+        android:layout_width="18dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/teamProfile_ibtn_reservation_next_hint"
+        android:src="@drawable/ic_rightarrow"
+        app:layout_constraintBottom_toBottomOf="@+id/teamProfile_tv_reservation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.981"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/teamProfile_tv_reservation"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </android.support.constraint.ConstraintLayout>

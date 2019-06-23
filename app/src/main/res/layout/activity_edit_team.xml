@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.EditTeamActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/editTeam_toolbar"
+        android:layout_width="423dp"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginEnd="8dp"
+        android:background="@color/darkOrange"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.Toolbar>
+    <TextView
+        android:id="@+id/editTeam_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/editTeam_tv_title_hint"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/editTeam_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/editTeam_ibtn_back"
+        android:layout_width="52dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/transparent"
+        android:contentDescription="@string/teamProfile_ibtn_back_hint"
+        android:src="?attr/homeAsUpIndicator"
+        android:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/editTeam_tv_title"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/editTeam_toolbar"
+        app:layout_constraintTop_toTopOf="@+id/editTeam_toolbar"
+        tools:srcCompat="?attr/homeAsUpIndicator" />
+
+    <TextView
+        android:id="@+id/editTeam_tv_players"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="52dp"
+        android:text="@string/editTeam_tv_players_hint"
+        android:textColor="@color/darkGrey"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_toolbar" />
+
+    <ListView
+        android:id="@+id/editTeam_lv_players"
+        android:layout_width="match_parent"
+        android:layout_height="383dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rectangle_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_tv_players" />
+
+    <Button
+        android:id="@+id/editTeam_btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="44dp"
+        android:text="@string/editTeam_btn_save_hint"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/editTeam_btn_cancel"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_lv_players" />
+
+    <Button
+        android:id="@+id/editTeam_btn_cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/editTeam_btn_cancel_hint"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_lv_players" />
+
+    <ImageButton
+        android:id="@+id/editTeam_btn_addTeamMate"
+        android:layout_width="37dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="236dp"
+        android:layout_marginTop="44dp"
+        android:contentDescription="@string/editTeam_ibtn_addTeamMate_hint"
+        android:background="@drawable/transparent"
+        app:layout_constraintStart_toEndOf="@+id/editTeam_tv_players"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_toolbar"
+        app:srcCompat="@drawable/add_grey" />
+
+    <ImageButton
+        android:id="@+id/editTeam_btn_removeTeamMate"
+        android:layout_width="37dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/editTeam_ibtn_removeTeamMate_hint"
+        android:background="@drawable/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/editTeam_btn_addTeamMate"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_tv_title"
+        app:srcCompat="@drawable/remove_grey" />
+
+</android.support.constraint.ConstraintLayout>

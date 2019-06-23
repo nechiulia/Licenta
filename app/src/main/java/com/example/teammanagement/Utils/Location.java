@@ -1,23 +1,31 @@
 package com.example.teammanagement.Utils;
 
-public class Address {
+public class Location {
 
-    private String codPostal;
+    private String postalCode;
     private String locationName;
     private String locationStreet;
     private String locationStreetNumber;
     private double latitude;
     private double longitude;
 
-    public Address(String codPostal, String locationName, String locationStreet, String locationStreetNumber) {
-        this.codPostal = codPostal;
+    public Location(String codPostal, String locationName, String locationStreet, String locationStreetNumber) {
+        this.postalCode = codPostal;
         this.locationName = locationName;
         this.locationStreet = locationStreet;
         this.locationStreetNumber = locationStreetNumber;
     }
 
-    public Address(String codPostal, String locationName, String locationStreet, String locationStreetNumber, double latitude, double longitude) {
-        this.codPostal = codPostal;
+    public Location(String codPostal, String locationName, String locationStreet, double latitude, double longitude) {
+        this.postalCode = codPostal;
+        this.locationName = locationName;
+        this.locationStreet = locationStreet;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
+
+    public Location(String codPostal, String locationName, String locationStreet, String locationStreetNumber, double latitude, double longitude) {
+        this.postalCode = codPostal;
         this.locationName = locationName;
         this.locationStreet = locationStreet;
         this.locationStreetNumber = locationStreetNumber;
@@ -25,12 +33,12 @@ public class Address {
         this.longitude = longitude;
     }
 
-    public String getCodPostal() {
-        return codPostal;
+    public String getPostalCode() {
+        return postalCode;
     }
 
-    public void setCodPostal(String codPostal) {
-        this.codPostal = codPostal;
+    public void setPostalCode(String codPostal) {
+        this.postalCode = codPostal;
     }
 
     public String getLocationName() {
@@ -75,8 +83,8 @@ public class Address {
 
     @Override
     public String toString() {
-        return "Address{" +
-                "codPostal='" + codPostal + '\'' +
+        return "Location{" +
+                "codPostal='" + postalCode + '\'' +
                 ", locationName='" + locationName + '\'' +
                 ", locationStreet='" + locationStreet + '\'' +
                 ", locationStreetNumber='" + locationStreetNumber + '\'' +

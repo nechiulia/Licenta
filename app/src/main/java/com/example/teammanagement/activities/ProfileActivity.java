@@ -43,13 +43,13 @@ public class ProfileActivity extends AppCompatActivity{
     }
 
     public void initComponents(){
-        ibtn_back=findViewById(R.id.profile_ibtn_back);
-        ibtn_more=findViewById(R.id.profile_ibtn_more);
-        tv_moreFeedback =findViewById(R.id.profile_tv_moreFeedback);
-        lv_sports=findViewById(R.id.profile_lv_sports);
-        tv_userComment=findViewById(R.id.profile_tv_comment);
-        tv_userName=findViewById(R.id.profile_tv_commentUserName);
-        ratingBar=findViewById(R.id.profile_rb_userGivenRating);
+        ibtn_back=findViewById(R.id.myProfile_ibtn_back);
+        ibtn_more=findViewById(R.id.myProfile_ibtn_more);
+        tv_moreFeedback =findViewById(R.id.myProfile_tv_moreFeedback);
+        lv_sports=findViewById(R.id.myProfile_lv_sports);
+        tv_userComment=findViewById(R.id.myProfile_tv_comment);
+        tv_userName=findViewById(R.id.myProfile_tv_commentUserName);
+        ratingBar=findViewById(R.id.myProfile_rb_userGivenRating);
 
         ibtn_back.setOnClickListener(clickBack());
         ibtn_more.setOnClickListener(clickMore());

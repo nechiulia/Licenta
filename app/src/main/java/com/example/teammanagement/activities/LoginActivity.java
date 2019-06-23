@@ -63,7 +63,11 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(iet_email.getText().toString().trim().equals("a")){
-                    Intent intent=new Intent(getApplicationContext(), HomeAdminActivity.class);
+                    intent=new Intent(getApplicationContext(), HomeAdminActivity.class);
+                    startActivity(intent);
+                }
+                else if(iet_email.getText().toString().trim().equals("l")){
+                    intent=new Intent(getApplicationContext(),HomeAdminLocationActivity.class);
                     startActivity(intent);
                 }
                 else{

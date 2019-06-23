@@ -12,16 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.ListView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.NewLocation;
-import com.example.teammanagement.Utils.Report;
 import com.example.teammanagement.adapters.ExpandableListNewLocationAdminAdapter;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;

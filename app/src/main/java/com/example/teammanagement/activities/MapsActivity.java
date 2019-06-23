@@ -1,42 +1,34 @@
 package com.example.teammanagement.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.PendingResult;
-import com.google.android.gms.location.places.PlaceBuffer;
+import com.example.teammanagement.Utils.Location;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import com.google.android.gms.location.places.Places;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -44,6 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ImageButton ibtn_back;
     private AutoCompleteTextView et_searchText;
     private static final String TAG = "MapsActivity";
+    private Map<Integer,String> program = new HashMap<>();
+    Location l1;
 
     Intent intent;
 
@@ -139,11 +133,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(options);
     }
 
-
-    public void getPlace(){
-/*
-        PendingResult<PlaceBuffer> placeBufferPendingResult = Places.GeoDataApi.getPlaceById(m)*/
-
+    public void initData(){
+        l1=new Location("012244", "Club sportiv First Tennis Club","Bulevardul Mărăști",44.471133,26.064298);
+        program.put(0,"08:00-23:00");
+        program.put(1,"08:00-23:00");
+        program.put(2,"08:00-23:00");
+        program.put(3,"08:00-23:00");
+        program.put(4,"08:00-23:00");
+        program.put(5,"08:00-23:00");
+        program.put(6,"08:00-23:00");
     }
+
 
 }

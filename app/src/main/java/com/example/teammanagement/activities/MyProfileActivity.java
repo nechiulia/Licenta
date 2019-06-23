@@ -48,16 +48,16 @@ public class MyProfileActivity extends AppCompatActivity
     }
 
     private void initComponents() {
-        btn_logOut=findViewById(R.id.profile_btn_logOut);
-        ibtn_back=findViewById(R.id.profile_ibtn_back);
-        ibtn_edit=findViewById(R.id.profile_ibtn_edit);
-        ibtn_more=findViewById(R.id.profile_ibtn_more);
-        tv_settings=findViewById(R.id.profile_tv_settings);
-        tv_moreFeedback =findViewById(R.id.profile_tv_moreFeedback);
-        lv_sports=findViewById(R.id.profile_lv_sports);
-        tv_userComment=findViewById(R.id.profile_tv_comment);
-        tv_userName=findViewById(R.id.profile_tv_commentUserName);
-        ratingBar=findViewById(R.id.profile_rb_userGivenRating);
+        btn_logOut=findViewById(R.id.myProfile_btn_logOut);
+        ibtn_back=findViewById(R.id.myProfile_ibtn_back);
+        ibtn_edit=findViewById(R.id.myProfile_ibtn_edit);
+        ibtn_more=findViewById(R.id.myProfile_ibtn_more);
+        tv_settings=findViewById(R.id.myProfile_tv_settings);
+        tv_moreFeedback =findViewById(R.id.myProfile_tv_moreFeedback);
+        lv_sports=findViewById(R.id.myProfile_lv_sports);
+        tv_userComment=findViewById(R.id.myProfile_tv_comment);
+        tv_userName=findViewById(R.id.myProfile_tv_commentUserName);
+        ratingBar=findViewById(R.id.myProfile_rb_userGivenRating);
 
         ibtn_back.setOnClickListener(clickBack());
         ibtn_more.setOnClickListener(clickMore());

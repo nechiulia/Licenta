@@ -18,9 +18,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.TeamProfileActivity"
+        <activity
+            android:name=".activities.HomeAdminLocationActivity"
+            android:label="@string/title_activity_home_admin_location"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activities.EditTeamActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/BlackText"/>
+            android:theme="@style/BlackText" />
+        <activity
+            android:name=".activities.AnnouncementsActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BlackText" />
+        <activity
+            android:name=".activities.TeamProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/BlackText" />
         <activity
             android:name=".activities.AddTeam1Activity"
             android:screenOrientation="portrait"

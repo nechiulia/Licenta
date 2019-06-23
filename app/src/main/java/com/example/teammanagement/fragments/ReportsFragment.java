@@ -140,8 +140,29 @@ public class ReportsFragment extends Fragment {
 
     public void initData(){
         try {
-            listReports.add(new Report("Marcel","Ionel","Cel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucator",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Marcel","Ionsael","Cel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucatorCel mai slab jucator",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igoter","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igoer","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igorr","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igodr","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igofr","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igord","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igorg","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igorgg","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igg","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Ma","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Marcela","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","or","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Igr","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirel","Ior","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
             listReports.add(new Report("Mirel","Igor","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Georgel","Ig","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Miresl","or","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Miredasl","Igr","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Miredsadal","Ior","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Mirefsfal","Igor","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+            listReports.add(new Report("Georsfagel","Ig","Comentariu nepotrivit",new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").parse("15-10-2019 10:00:10")));
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -150,5 +171,26 @@ public class ReportsFragment extends Fragment {
 
         mapReport.put(listUsersDate.get(0), Arrays.asList(listReports.get(0).getFeedback()));
         mapReport.put(listUsersDate.get(1),Arrays.asList(listReports.get(1).getFeedback()));
+        mapReport.put(listUsersDate.get(2),Arrays.asList(listReports.get(2).getFeedback()));
+        mapReport.put(listUsersDate.get(3),Arrays.asList(listReports.get(3).getFeedback()));
+        mapReport.put(listUsersDate.get(4),Arrays.asList(listReports.get(4).getFeedback()));
+        mapReport.put(listUsersDate.get(5),Arrays.asList(listReports.get(5).getFeedback()));
+        mapReport.put(listUsersDate.get(6),Arrays.asList(listReports.get(6).getFeedback()));
+        mapReport.put(listUsersDate.get(7),Arrays.asList(listReports.get(7).getFeedback()));
+        mapReport.put(listUsersDate.get(8),Arrays.asList(listReports.get(8).getFeedback()));
+        mapReport.put(listUsersDate.get(9),Arrays.asList(listReports.get(9).getFeedback()));
+        mapReport.put(listUsersDate.get(10),Arrays.asList(listReports.get(10).getFeedback()));
+        mapReport.put(listUsersDate.get(11),Arrays.asList(listReports.get(11).getFeedback()));
+        mapReport.put(listUsersDate.get(12),Arrays.asList(listReports.get(12).getFeedback()));
+        mapReport.put(listUsersDate.get(13),Arrays.asList(listReports.get(13).getFeedback()));
+        mapReport.put(listUsersDate.get(14),Arrays.asList(listReports.get(14).getFeedback()));
+        mapReport.put(listUsersDate.get(15),Arrays.asList(listReports.get(15).getFeedback()));
+        mapReport.put(listUsersDate.get(16),Arrays.asList(listReports.get(16).getFeedback()));
+        mapReport.put(listUsersDate.get(17),Arrays.asList(listReports.get(17).getFeedback()));
+        mapReport.put(listUsersDate.get(18),Arrays.asList(listReports.get(18).getFeedback()));
+        mapReport.put(listUsersDate.get(19),Arrays.asList(listReports.get(19).getFeedback()));
+        mapReport.put(listUsersDate.get(20),Arrays.asList(listReports.get(20).getFeedback()));
+        mapReport.put(listUsersDate.get(21),Arrays.asList(listReports.get(21).getFeedback()));
+
     }
 }

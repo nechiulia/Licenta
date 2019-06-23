@@ -7,7 +7,7 @@
     tools:context=".activities.ProfileActivity">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/userProfile_toolbar"
+        android:id="@+id/profile_toolbar"
         android:layout_width="423dp"
         android:layout_height="?attr/actionBarSize"
         android:layout_marginEnd="8dp"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userProfile_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/profile_toolbar"
         app:srcCompat="@drawable/woman"
         tools:srcCompat="@drawable/woman" />
 
@@ -54,14 +54,14 @@
         android:layout_width="179dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
         android:text="@string/profile_tv_userName_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.069"
         app:layout_constraintStart_toEndOf="@+id/profile_iv_profileImage"
-        app:layout_constraintTop_toBottomOf="@+id/userProfile_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/profile_toolbar" />
 
     <TextView
         android:id="@+id/profile_tv_sports"
@@ -74,7 +74,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_iv_profileImage" />
 
@@ -215,7 +215,7 @@
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/userProfile_toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -233,7 +233,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/profile_tv_title"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/userProfile_toolbar"
+        app:layout_constraintStart_toStartOf="@+id/profile_toolbar"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="?attr/homeAsUpIndicator" />
 
@@ -242,13 +242,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:text="@string/profile_tv_feedback_hint"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_lv_sports" />
 
