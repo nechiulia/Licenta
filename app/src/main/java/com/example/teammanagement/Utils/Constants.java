@@ -14,4 +14,8 @@ public interface Constants {
 
     int ERROR_DIALOG_REQUEST = 9001;
     float DEFAULT_ZOOM=17F;
+
+    String ADDTEAM1_TEAM="NewTeam";
+
+    String CURRENT_USER= "Current User Info";
 }

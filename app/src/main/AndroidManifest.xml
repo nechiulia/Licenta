@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -18,10 +19,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".activities.AddTeam2Activity"></activity>
         <activity
             android:name=".activities.HomeAdminLocationActivity"
             android:label="@string/title_activity_home_admin_location"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.EditTeamActivity"
             android:screenOrientation="portrait"
@@ -36,8 +38,7 @@
             android:theme="@style/BlackText" />
         <activity
             android:name=".activities.AddTeam1Activity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BlackText" />
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

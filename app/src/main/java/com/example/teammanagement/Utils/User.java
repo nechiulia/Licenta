@@ -1,21 +1,72 @@
 package com.example.teammanagement.Utils;
 
-import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.io.Serializable;
-import java.util.List;
 
 public class User implements Serializable {
+    private int idUser;
     private String userName;
-    private byte[] userPhoto;
-    private String userFirstName;
-    private String userLastName;
-    private List<Sport> sportsList;
-    private boolean isActive;
+    private String email;
     private String password;
-    private int idAppRole;
+    private int state;
+    private byte[] profilePicture;
+    private int role;
+
+    public User(int idUser, String userName, String email, String password, int state, byte[] profilePicture, int role) {
+        this.idUser = idUser;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.state = state;
+        this.profilePicture = profilePicture;
+        this.role = role;
+    }
+
+    public User(int idUser, String userName, String email, String password, int state, int role) {
+        this.idUser = idUser;
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.state = state;
+        this.role = role;
+    }
+
+    public User(String userName, String email, String password, int state, byte[] profilePicture, int role) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.state = state;
+        this.profilePicture = profilePicture;
+        this.role = role;
+    }
+
+    public User(String userName, String email, String password, int state, int role) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.state = state;
+        this.role = role;
+    }
+
+    public User(String userName, byte[] profilePicture) {
+        this.userName = userName;
+        this.profilePicture = profilePicture;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
+    }
 
     public String getUserName() {
         return userName;
@@ -25,44 +76,20 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public byte[] getUserPhoto() {
-        return userPhoto;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUserPhoto(byte[] userPhoto) {
-        this.userPhoto = userPhoto;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getUserFirstName() {
-        return userFirstName;
+    public int getState() {
+        return state;
     }
 
-    public void setUserFirstName(String userFirstName) {
-        this.userFirstName = userFirstName;
-    }
-
-    public String getUserLastName() {
-        return userLastName;
-    }
-
-    public void setUserLastName(String userLastName) {
-        this.userLastName = userLastName;
-    }
-
-    public List<Sport> getSportsList() {
-        return sportsList;
-    }
-
-    public void setSportsList(List<Sport> sportsList) {
-        this.sportsList = sportsList;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
+    public void setState(int state) {
+        this.state = state;
     }
 
     public String getPassword() {
@@ -73,32 +100,11 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public int getIdAppRole() {
-        return idAppRole;
+    public int getRole() {
+        return role;
     }
 
-    public void setIdAppRole(int idAppRole) {
-        this.idAppRole = idAppRole;
+    public void setRole(int role) {
+        this.role = role;
     }
-
-    public User(String userName, byte[] userPhoto, String userFirstName, String userLastName, List<Sport> sportsList, boolean isActive, String password, int idAppRole) {
-        this.userName = userName;
-        this.userPhoto = userPhoto;
-        this.userFirstName = userFirstName;
-        this.userLastName = userLastName;
-        this.sportsList = sportsList;
-        this.isActive = isActive;
-        this.password = password;
-        this.idAppRole = idAppRole;
-    }
-
-    public User(String userName, byte[] userPhoto) {
-        this.userName = userName;
-        this.userPhoto = userPhoto;
-    }
-
-    public User(String userName) {
-        this.userName = userName;
-    }
-
 }

@@ -2,6 +2,7 @@ package com.example.teammanagement.activities;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,8 +13,10 @@ import android.widget.Toast;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Question;
+import com.example.teammanagement.Utils.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.gson.Gson;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
     private HashMap<String,List<String>> listaAnswers= new HashMap<>();
     private static final String URL = Constants.FAQ_URL;
     private static final String TAG = "HomeActivity";
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,12 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
         btn_teams.setOnClickListener(clickTeams());
         btn_faq.setOnClickListener(clickFaq());
         btn_contact.setOnClickListener(clickContact());
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json =  sharedPreferences.getString(Constants.CURRENT_USER,"");
+        user= gson.fromJson(json,User.class);
+        Log.d("Current User",user.getUserName());
 
     }
 
@@ -143,4 +153,8 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
         };
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }

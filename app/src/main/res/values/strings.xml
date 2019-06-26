@@ -82,14 +82,14 @@
     <string name="register1_firstNameLength_error_hint">Prenumele trebuie să aibă cel puțin 3 litere</string>
     <string name="register1_firstNameCapitalLetter_error_hint">Prima literă trebuie să fie literă mare</string>
     <string name="register1_lastNameLength_error_hint">Numele de familie trebuie să aibă cel puțin 3 litere</string>
-    <string name="register1_firstNameLetters_error_hint">Singurele caractere permise sunt literele</string>
+    <string name="register1_firstNameLetters_error_hint">Singurele caractere permise sunt literele, spațiile și _</string>
     <string name="lv_feedback_tv_userName_hint">Nume utilizator</string>
     <string name="lv_feedback_ibtn_more_hint">Mai multe</string>
     <string name="lv_feedback_tv_comment_hint">Comentariu</string>
     <string name="addSportDialog_cancel_hint">Anulează</string>
     <string name="addSportDialog_addSport_hint">Adaugă sport</string>
     <string name="addSportDialog_title_hint">Adaugă sport</string>
-    <string name="register1_passwordDoesNotMatch_hint">Password doesn\'t match</string>
+    <string name="register1_passwordDoesNotMatch_hint">Parolele nu se potrivesc</string>
     <string name="register2_addSport_hint">Adaugă sport</string>
     <string name="list_item_sports_tv_level_hint">Nivel</string>
     <string name="list_item_sports_tv_sport_hint">Sport</string>
@@ -130,17 +130,15 @@
     <string name="login_tv_claimLocation_hint"><u>Revendică-ți locația!</u></string>
     <string-array name="dialog_sports">
         <item>Selectează sportul</item>
+        <item>Aerobic</item>
         <item>Alergat</item>
         <item>Arte Martiale</item>
         <item>Balet</item>
         <item>Baschet</item>
         <item>Baseball</item>
         <item>Batminton</item>
-        <item>Bob</item>
         <item>Bowling</item>
         <item>Box</item>
-        <item>Caiac-canoe</item>
-        <item>Canotaj</item>
         <item>Ciclism</item>
         <item>Culturism</item>
         <item>Dans sportiv</item>
@@ -154,22 +152,15 @@
         <item>Înot</item>
         <item>Judo</item>
         <item>Karate</item>
-        <item>Karting</item>
         <item>Kick-Boxing</item>
         <item>Patinaj artistic</item>
         <item>Pescuit</item>
-        <item>Pilates</item>
         <item>Polo</item>
         <item>Scrimă</item>
-        <item>Snooker</item>
-        <item>Șah</item>
-        <item>Taekwondo</item>
         <item>Tenis de câmp</item>
         <item>Tenis de masă</item>
         <item>Tir cu arcul</item>
-        <item>Triatlon</item>
         <item>Volei</item>
-        <item>Yoga</item>
     </string-array>
     <string-array name="dialog_level">
         <item>Selectează nivelul tău</item>
@@ -286,5 +277,14 @@
     <string name="list_item_location_admin_activities_reservation_hint">Necesită rezervare</string>
     <string name="list_item_location_admin_activities_difficultyLevel_hint">Grad dificultate</string>
     <string name="list_item_location_admin_activities_price_hint">Preț</string>
+    <string name="login_errorLogin">Parola sau e-mail-ul sunt greșite</string>
+    <string name="add_team1_tid_teamName_hint">Nume echipă</string>
+    <string name="add_team1_tv_sport_hint">Sport</string>
+    <string name="add_team1_btn_next_hint">Înainte</string>
+    <string name="add_team1_btn_back_hint">Anulează</string>
+    <string name="add_team2_btn_save_hint">Salvează</string>
+    <string name="add_team2_btn_cancel_hint">Anulează</string>
+    <string name="add_team1_teamName_lengthError_hint">Numele echipei trebuie să aibă cel puțin 3 litere</string>
+    <string name="add_team1_teamName_digitAndLettersOnlyError_hint">Numele echipei nu poate conține decât litere sau cifre</string>
 
 </resources>

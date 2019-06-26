@@ -7,7 +7,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -21,7 +20,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
-import com.example.teammanagement.Utils.Sport;
+import com.example.teammanagement.Utils.SportUtilizator;
 import com.example.teammanagement.adapters.SportAdapter;
 import com.example.teammanagement.dialogs.AddSportDialog;
 import java.io.FileNotFoundException;
@@ -46,7 +45,7 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
     View row;
     CheckBox ck_box;
 
-    List<Sport> lv_list_sportItems = new ArrayList<>();
+    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
     ArrayList<String> list_toGoToDialog ;
     ArrayList<String> lv_list_currentSportsName = new ArrayList<>();
 
@@ -206,7 +205,7 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
 
     @Override
     public void applyTexts(String sport, String level) {
-        lv_list_sportItems.add(new Sport(sport,level));
+        lv_list_sportItems.add(new SportUtilizator(sport,level));
         list_toGoToDialog= new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.dialog_sports)));
         adapter.notifyDataSetChanged();
     }

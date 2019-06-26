@@ -71,7 +71,7 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
 
         User user = users.get(position);
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(user.getUserPhoto(),0,user.getUserPhoto().length);
+        Bitmap bmp = BitmapFactory.decodeByteArray(user.getProfilePicture(),0,user.getProfilePicture().length);
 
         tv_userName.setText(user.getUserName());
         iv_userProfile.setImageBitmap(Bitmap.createBitmap(bmp));

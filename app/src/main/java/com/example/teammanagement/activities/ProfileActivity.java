@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Feedback;
-import com.example.teammanagement.Utils.Sport;
+import com.example.teammanagement.Utils.SportUtilizator;
 import com.example.teammanagement.adapters.SportAdapterNoCheckBox;
 import com.example.teammanagement.dialogs.BottomDialogReport;
 
@@ -30,7 +30,7 @@ public class ProfileActivity extends AppCompatActivity{
     TextView tv_userComment;
     RatingBar ratingBar;
     Intent intent;
-    List<Sport> lv_list_sportItems = new ArrayList<>();
+    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
     List<Feedback> list_feedback = new ArrayList<>();
     SportAdapterNoCheckBox adapter;
 
@@ -54,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity{
         ibtn_back.setOnClickListener(clickBack());
         ibtn_more.setOnClickListener(clickMore());
         tv_moreFeedback.setOnClickListener(clickMoreReviews());
-        lv_list_sportItems.add(new Sport("Fotbal","Intermediar"));
+        lv_list_sportItems.add(new SportUtilizator("Fotbal","Intermediar"));
         list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier.Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el ",4.0f));
         list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el",4.0f));
         randomFeedback();

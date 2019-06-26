@@ -13,9 +13,16 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Sport;
+import com.example.teammanagement.Utils.SportUtilizator;
 import com.example.teammanagement.adapters.SportAdapter;
+import com.example.teammanagement.database.JDBCController;
 import com.example.teammanagement.dialogs.AddSportDialog;
 import com.example.teammanagement.R;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -23,16 +30,20 @@ import java.util.List;
 public class Register2Activity extends AppCompatActivity implements AddSportDialog.AddSportDialogListener {
 
     Button btn_save;
+    Button btn_cancel;
     ImageButton ibtn_addSport;
     Intent intent;
     ListView lv_sports;
-    List<Sport> lv_list_sportItems = new ArrayList<>();
+    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
     ImageButton ibtn_removeSport;
     SportAdapter adapter;
     View row;
     CheckBox ck_box;
-    ArrayList<String> list_toGoToDialog ;
+    JDBCController jdbcController;
+    Connection c;
+    ArrayList<String> list_toGoToDialog = new ArrayList<>() ;
     ArrayList<String> lv_list_currentSportsName = new ArrayList<>();
+    ArrayList<String> list_selectDB;
 
 
 
@@ -46,7 +57,10 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
     }
 
     private void initComponents() {
+        jdbcController = new JDBCController();
+        c=jdbcController.openConnection();
         btn_save=findViewById(R.id.register2_btn_save);
+        btn_cancel=findViewById(R.id.register2_btn_cancel);
         ibtn_addSport =findViewById(R.id.register2_ibtn_addSport);
         lv_sports=findViewById(R.id.register2_lv_sports);
         lv_sports.setItemsCanFocus(true);
@@ -54,8 +68,12 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
 
         ibtn_addSport.setOnClickListener(clickAddSport());
         btn_save.setOnClickListener(clickSave());
+        btn_cancel.setOnClickListener(clickCancel());
         ibtn_removeSport.setOnClickListener(clickRemove());
-        list_toGoToDialog= new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.dialog_sports)));
+        list_toGoToDialog.add("Selectează sportul");
+        initData();
+        list_selectDB= new ArrayList<>();
+        list_selectDB.addAll(list_toGoToDialog);
 
         if(lv_list_sportItems !=null) {
             adapter = new SportAdapter(getApplicationContext(), R.layout.list_item_sports, lv_list_sportItems, getLayoutInflater());
@@ -79,6 +97,27 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
     }
 
     private View.OnClickListener clickSave() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try(Statement s = c.createStatement()){
+                    String command ="";
+                    try(ResultSet r =s.executeQuery(command)) {
+                        while(r.next()){
+                            Sport sport = new Sport(r.getString(2),r.getInt(3));
+                            list_toGoToDialog.add(sport.getDenumire());
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                intent=new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener clickCancel() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,8 +172,23 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
 
     @Override
     public void applyTexts(String sport, String level) {
-        lv_list_sportItems.add(new Sport(sport,level));
-        list_toGoToDialog= new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.dialog_sports)));
+        lv_list_sportItems.add(new SportUtilizator(sport,level));
+        list_toGoToDialog= new ArrayList<>(list_selectDB);
         adapter.notifyDataSetChanged();
+    }
+
+
+    public void initData(){
+        try(Statement s = c.createStatement()){
+            String command ="SELECT * FROM SPORTURI;";
+            try(ResultSet r =s.executeQuery(command)) {
+                while(r.next()){
+                    Sport sport = new Sport(r.getString(2),r.getInt(3));
+                    list_toGoToDialog.add(sport.getDenumire());
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

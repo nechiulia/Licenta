@@ -10,7 +10,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +23,20 @@ import android.widget.Toast;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
+import com.example.teammanagement.Utils.User;
+import com.example.teammanagement.database.JDBCController;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class Register1Activity extends AppCompatActivity {
@@ -36,6 +49,10 @@ public class Register1Activity extends AppCompatActivity {
     Button btn_uploadPicture;
     ImageView iv_profilePicture;
     Intent intent;
+    User newUser;
+    JDBCController jdbcController;
+    Connection c;
+    byte[] userProfilePicture;
 
 
     @Override
@@ -58,30 +75,54 @@ public class Register1Activity extends AppCompatActivity {
         btn_uploadPicture = findViewById(R.id.register1_btn_upload);
         iv_profilePicture = findViewById(R.id.register1_iv_profilePicture);
 
+        iet_username.addTextChangedListener(changeUserName());
+
 
         btn_next.setOnClickListener(clickNext());
         btn_back.setOnClickListener(clickBack());
         btn_uploadPicture.setOnClickListener(clickUploadPicture());
     }
 
+    private TextWatcher changeUserName(){
+        return new TextWatcher(){
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                iet_password.setError(null);
+                iet_email.setError(null);
+                iet_confirmPassword.setError(null);
+                iet_username.setError(null);
+            }
+        };
+    }
+
     private View.OnClickListener clickNext(){
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /* if(isValid()){*/
-
+                if(isValid()){
+                    String usernName = iet_username.getText().toString();
                     String email=iet_email.getText().toString();
                     String password = iet_password.getText().toString();
-                    String confirmPassword = iet_confirmPassword.getText().toString();
-
-
+                    newUser = new User(usernName,email,password,0,userProfilePicture,0);
+                    jdbcController = new JDBCController();
+                    c=jdbcController.openConnection();
+                    insertUser();
                     intent=new Intent(getApplicationContext(),Register2Activity.class);
                     startActivity(intent);
                 }
-                /*else{
 
-                }
-            }*/
+            }
         };
     }
 
@@ -121,7 +162,7 @@ public class Register1Activity extends AppCompatActivity {
             iet_username.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
             return false;
         }
-        else if(!iet_username.getText().toString().matches("^[a-zA-Z]*$")){
+        else if(!iet_username.getText().toString().matches("^[a-zA-Z_ ]*$")){
             iet_username.setError(getString(R.string.register1_firstNameLetters_error_hint));
             return false;
         }
@@ -149,10 +190,6 @@ public class Register1Activity extends AppCompatActivity {
             iet_password.setError(getString(R.string.register_passwordError_tooShort_hint));
            return false;
         }
-        else if(!iet_password.getText().toString().matches("^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$")){
-            iet_password.setError(getString(R.string.register_passwordError_oneDigitOneLetter_hint));
-            return false;
-        }
         return true;
     }
 
@@ -173,6 +210,9 @@ public class Register1Activity extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), chosenImageUri);
                 iv_profilePicture.setImageBitmap(bitmap);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                userProfilePicture = stream.toByteArray();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -184,12 +224,11 @@ public class Register1Activity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-/*        outState.putString(getString(R.string.register1_key_firstName_hint),iet_firstName.getText().toString());
-        outState.putString(getString(R.string.register1_key_lastName_hint),iet_lastName.getText().toString());*/
         outState.putString(getString(R.string.register1_key_userName_hint),iet_username.getText().toString());
         outState.putString(getString(R.string.register1_key_email_hint),iet_email.getText().toString());
         outState.putString(getString(R.string.register1_key_password_hint),iet_password.getText().toString());
         outState.putString(getString(R.string.register1_key_confirmPassword_hint),iet_confirmPassword.getText().toString());
+       /* outState.putByteArray("ProfilePicture",newUser.getProfilePicture());*/
     }
 
     @Override
@@ -199,6 +238,21 @@ public class Register1Activity extends AppCompatActivity {
         iet_email.setText(savedInstanceState.getString("Email"));
         iet_password.setText(savedInstanceState.getString("Password"));
         iet_confirmPassword.setText(savedInstanceState.getString("ConfirmPassword"));
+    }
+    public void insertUser(){
+        try(PreparedStatement s = c.prepareStatement("INSERT INTO UTILIZATORI(NumeUtilizator,Email,Parola,Stare,Rol) VALUES(?,?,?,?,?)")){
+            s.setQueryTimeout(10000000);
+            s.setString(1,newUser.getUserName());
+            s.setString(2,newUser.getEmail());
+            s.setString(3,newUser.getPassword());
+            s.setInt(4,newUser.getState());
+            s.setInt(5,newUser.getRole());
+            s.execute();
+        } catch (SQLException e1) {
+            Log.d("eroarea:",e1.toString());
+            e1.printStackTrace();
+        }
+
     }
 }
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Feedback;
-import com.example.teammanagement.Utils.Sport;
+import com.example.teammanagement.Utils.SportUtilizator;
 import com.example.teammanagement.adapters.SportAdapterNoCheckBox;
 import com.example.teammanagement.dialogs.BottomDialogReport;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class MyProfileActivity extends AppCompatActivity
     Intent intent;
     SportAdapterNoCheckBox adapter;
 
-    List<Sport> lv_list_sportItems = new ArrayList<>();
+    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
     List<Feedback> list_feedback = new ArrayList<>();
 
     @Override
@@ -66,7 +66,7 @@ public class MyProfileActivity extends AppCompatActivity
         tv_settings.setOnClickListener(clickSettings());
         tv_moreFeedback.setOnClickListener(clickMoreReviews());
 
-        lv_list_sportItems.add(new Sport("Fotbal","Intermediar"));
+        lv_list_sportItems.add(new SportUtilizator("Fotbal","Intermediar"));
         list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier.Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el ",4.0f));
         list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el",4.0f));
         randomFeedback();

@@ -1,61 +1,38 @@
 package com.example.teammanagement.Utils;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import java.io.Serializable;
 
-import java.util.ArrayList;
+public class Sport implements Serializable {
 
-public class Sport implements Parcelable {
+    private String denumire;
+    private int nrMinJucatori;
 
-    private String sportName;
-    private String sportLevel;
-
-    protected Sport(Parcel in) {
-        sportName = in.readString();
-        sportLevel=in.readString();
+    public Sport(String denumire, int nrMinJucatori) {
+        this.denumire = denumire;
+        this.nrMinJucatori = nrMinJucatori;
     }
 
-    public static final Creator<Sport> CREATOR = new Creator<Sport>() {
-        @Override
-        public Sport createFromParcel(Parcel in) {
-            return new Sport(in);
-        }
-
-        @Override
-        public Sport[] newArray(int size) {
-            return new Sport[size];
-        }
-    };
-
-    public String getSportName() {
-        return sportName;
+    public String getDenumire() {
+        return denumire;
     }
 
-    public void setSportName(String sportName) {
-        this.sportName = sportName;
+    public void setDenumire(String denumire) {
+        this.denumire = denumire;
     }
 
-    public String getSportLevel() {
-        return sportLevel;
+    public int getNrMinJucatori() {
+        return nrMinJucatori;
     }
 
-    public void setSportLevel(String sportLevel) {
-        this.sportLevel = sportLevel;
-    }
-
-    public Sport(String sportName, String sportLevel) {
-        this.sportName = sportName;
-        this.sportLevel = sportLevel;
+    public void setNrMinJucatori(int nrMinJucatori) {
+        this.nrMinJucatori = nrMinJucatori;
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(sportName);
-        dest.writeString(sportLevel);
+    public String toString() {
+        return "Sport{" +
+                "denumire='" + denumire + '\'' +
+                ", nrMinJucatori=" + nrMinJucatori +
+                '}';
     }
 }
