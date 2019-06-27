@@ -40,7 +40,7 @@ public class AddTeam2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_team2);
 
-        jdbcController = new JDBCController();
+        jdbcController = JDBCController.getInstance();
         c=jdbcController.openConnection();
         intent=getIntent();
         initData();

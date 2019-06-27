@@ -8,15 +8,26 @@ import java.sql.SQLException;
 
 public class JDBCController implements JConstants {
 
-    private static JDBCController jdbcController;
+    private static JDBCController instance = null;
     private static Connection connection = null;
 
-    public JDBCController() {
+    private JDBCController() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
     }
 
-    public static synchronized Connection openConnection() {
+    public static Connection getConnection() {
+        return connection;
+    }
+
+    public static synchronized JDBCController getInstance(){
+        if(instance == null){
+            instance= new JDBCController();
+        }
+        return instance;
+    }
+
+    public Connection openConnection() {
         try {
             if (connection == null) {
                 connection = DriverManager.getConnection(JConstants.CONNECTION_URL);

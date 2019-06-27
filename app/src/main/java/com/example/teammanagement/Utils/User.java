@@ -1,6 +1,7 @@
 package com.example.teammanagement.Utils;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class User implements Serializable {
     private int idUser;
@@ -19,6 +20,16 @@ public class User implements Serializable {
         this.state = state;
         this.profilePicture = profilePicture;
         this.role = role;
+    }
+
+    public User() {
+        this.idUser = -1;
+        this.userName = "";
+        this.email = "";
+        this.password = "";
+        this.state = -1;
+        this.profilePicture = null;
+        this.role = -1;
     }
 
     public User(int idUser, String userName, String email, String password, int state, int role) {
@@ -106,5 +117,18 @@ public class User implements Serializable {
 
     public void setRole(int role) {
         this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "idUser=" + idUser +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", state=" + state +
+                ", profilePicture=" + Arrays.toString(profilePicture) +
+                ", role=" + role +
+                '}';
     }
 }

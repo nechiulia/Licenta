@@ -11,4 +11,6 @@ public interface JConstants {
                     "trustServerCertificate=false;" +
                     "hostNameInCertificate=*.database.windows.net;" +
                     "loginTimeout=30;";
+
+    String INSERT_USER="INSERT INTO UTILIZATORI(NumeUtilizator,Email,Parola,Stare,Rol) VALUES(?,?,?,?,?)";
 }

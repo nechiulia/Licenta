@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Feedback;
 import com.example.teammanagement.Utils.User;
+import com.example.teammanagement.activities.SearchUserActivity;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -29,6 +30,7 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
     private Context context;
     private int resource;
     private List<User> users;
+    private ArrayList<User> users_toDisplay;
     private LayoutInflater inflater;
 
     public ExploreUsersAdapter(@NonNull Context context,
@@ -38,8 +40,10 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
-        this.users =  new ArrayList<>(objects);
+        this.users =  objects;
         this.inflater = inflater;
+        users_toDisplay = new ArrayList<>();
+        users_toDisplay.addAll(objects);
     }
 
     public List<User> getUsers() {
@@ -49,6 +53,7 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
     public void setUsers(List<User> users) {
         this.users = users;
     }
+
 
     @NonNull
     @Override
@@ -69,6 +74,7 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
         TextView tv_userName = row.findViewById(R.id.list_item_usersExplorer_tv_userName);
         ImageView iv_userProfile = row.findViewById(R.id.list_item_usersExplorer_iv_userPicture);
 
+
         User user = users.get(position);
 
         Bitmap bmp = BitmapFactory.decodeByteArray(user.getProfilePicture(),0,user.getProfilePicture().length);
@@ -85,10 +91,10 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
             FilterResults results = new FilterResults();
             List<User> suggestions = new ArrayList<>();
             if(constraint == null || constraint.length() ==0){
-                suggestions.addAll(users);
+                suggestions.addAll(users_toDisplay);
             }else{
                 String filterPattern = constraint.toString().toLowerCase().trim();
-                for(User user : users){
+                for(User user : users_toDisplay){
                     if(user.getUserName().toLowerCase().contains(filterPattern)){
                         suggestions.add(user);
                     }
@@ -102,8 +108,8 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
 
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
-            clear();
-            addAll((List)results.values);
+            users.clear();
+            users.addAll((List)results.values);
             notifyDataSetChanged();
         }
 

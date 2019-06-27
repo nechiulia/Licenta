@@ -1,10 +1,13 @@
 package com.example.teammanagement.activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Feedback;
 import com.example.teammanagement.Utils.SportUtilizator;
+import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.adapters.SportAdapterNoCheckBox;
 import com.example.teammanagement.dialogs.BottomDialogReport;
 
@@ -28,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity{
     ListView lv_sports;
     TextView tv_userName;
     TextView tv_userComment;
+    ImageView iv_profilePicture;
     RatingBar ratingBar;
     Intent intent;
     List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
@@ -43,13 +48,14 @@ public class ProfileActivity extends AppCompatActivity{
     }
 
     public void initComponents(){
-        ibtn_back=findViewById(R.id.myProfile_ibtn_back);
-        ibtn_more=findViewById(R.id.myProfile_ibtn_more);
-        tv_moreFeedback =findViewById(R.id.myProfile_tv_moreFeedback);
-        lv_sports=findViewById(R.id.myProfile_lv_sports);
-        tv_userComment=findViewById(R.id.myProfile_tv_comment);
-        tv_userName=findViewById(R.id.myProfile_tv_commentUserName);
-        ratingBar=findViewById(R.id.myProfile_rb_userGivenRating);
+        ibtn_back=findViewById(R.id.profile_ibtn_back);
+        ibtn_more=findViewById(R.id.profile_ibtn_more);
+        tv_moreFeedback =findViewById(R.id.profile_tv_moreFeedback);
+        lv_sports=findViewById(R.id.profile_lv_sports);
+        tv_userComment=findViewById(R.id.profile_tv_comment);
+        tv_userName=findViewById(R.id.profile_tv_commentUserName);
+        ratingBar=findViewById(R.id.profile_rb_userGivenRating);
+        iv_profilePicture=findViewById(R.id.profile_iv_profileImage);
 
         ibtn_back.setOnClickListener(clickBack());
         ibtn_more.setOnClickListener(clickMore());
@@ -64,6 +70,9 @@ public class ProfileActivity extends AppCompatActivity{
             adapter = new SportAdapterNoCheckBox(getApplicationContext(), R.layout.list_item_sports_nocheckbox, lv_list_sportItems, getLayoutInflater());
             lv_sports.setAdapter(adapter);
         }
+
+
+
     }
 
     private View.OnClickListener clickBack(){

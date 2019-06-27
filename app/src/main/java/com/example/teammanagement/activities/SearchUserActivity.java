@@ -32,6 +32,9 @@ public class SearchUserActivity extends AppCompatActivity {
     List<String> list_userName = new ArrayList<>();
     User user1;
     User user2;
+    User user3;
+    User user4;
+    User user5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +50,17 @@ public class SearchUserActivity extends AppCompatActivity {
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG, 50, stream);
                 byte[] byteArray = stream.toByteArray();
-                user1 = new User("Pipel",byteArray);
-                user2 = new User("Gigel",byteArray);
+                user1 = new User("Pipel Simion",byteArray);
+                user2 = new User("Gigel Duminica",byteArray);
+                user3 = new User("Marcel Sfanta Vineri",byteArray);
+                user4 = new User("Ionel Columb",byteArray);
+                user5 = new User("Gheorghe Columb",byteArray);
                 list_users.add(user1);
                 list_users.add(user2);
+                list_users.add(user3);
+                list_users.add(user4);
+                list_users.add(user5);
+
             }
         };
         timer.start();

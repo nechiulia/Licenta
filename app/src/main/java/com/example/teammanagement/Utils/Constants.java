@@ -18,4 +18,6 @@ public interface Constants {
     String ADDTEAM1_TEAM="NewTeam";
 
     String CURRENT_USER= "Current User Info";
+
+    String NEW_USER= "New User";
 }

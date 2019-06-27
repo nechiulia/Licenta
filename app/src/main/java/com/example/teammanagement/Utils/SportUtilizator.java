@@ -1,29 +1,17 @@
 package com.example.teammanagement.Utils;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-public class SportUtilizator implements Parcelable {
+import java.io.Serializable;
+
+public class SportUtilizator implements Serializable {
 
     private String sportName;
-    private String sportLevel;
+    private String level;
 
-    protected SportUtilizator(Parcel in) {
-        sportName = in.readString();
-        sportLevel=in.readString();
+    public SportUtilizator(String sportName, String level) {
+        this.sportName = sportName;
+        this.level = level;
     }
-
-    public static final Creator<SportUtilizator> CREATOR = new Creator<SportUtilizator>() {
-        @Override
-        public SportUtilizator createFromParcel(Parcel in) {
-            return new SportUtilizator(in);
-        }
-
-        @Override
-        public SportUtilizator[] newArray(int size) {
-            return new SportUtilizator[size];
-        }
-    };
 
     public String getSportName() {
         return sportName;
@@ -33,27 +21,13 @@ public class SportUtilizator implements Parcelable {
         this.sportName = sportName;
     }
 
-    public String getSportLevel() {
-        return sportLevel;
+    public String getLevel() {
+        return level;
     }
 
-    public void setSportLevel(String sportLevel) {
-        this.sportLevel = sportLevel;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public SportUtilizator(String sportName, String sportLevel) {
-        this.sportName = sportName;
-        this.sportLevel = sportLevel;
-    }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(sportName);
-        dest.writeString(sportLevel);
-    }
 }

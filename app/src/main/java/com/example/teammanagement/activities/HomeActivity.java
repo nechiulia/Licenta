@@ -36,7 +36,6 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
     private HashMap<String,List<String>> listaAnswers= new HashMap<>();
     private static final String URL = Constants.FAQ_URL;
     private static final String TAG = "HomeActivity";
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +61,6 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
         btn_faq.setOnClickListener(clickFaq());
         btn_contact.setOnClickListener(clickContact());
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json =  sharedPreferences.getString(Constants.CURRENT_USER,"");
-        user= gson.fromJson(json,User.class);
-        Log.d("Current User",user.getUserName());
 
     }
 

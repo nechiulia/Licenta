@@ -8,12 +8,15 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.HttpManager;
+import com.example.teammanagement.Utils.User;
+import com.google.gson.Gson;
 
 public class LoadingActivity extends AppCompatActivity {
     ImageView iv_logo;

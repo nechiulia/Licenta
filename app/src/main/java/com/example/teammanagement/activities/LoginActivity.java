@@ -2,11 +2,14 @@ package com.example.teammanagement.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +18,14 @@ import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.database.JDBCController;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView tv_register;
     TextView tv_registerLocation;
     Intent intent;
-    User user;
+    User user= new User();
     Connection c;
     JDBCController jdbcController;
     SharedPreferences sharedPreferences;
@@ -51,12 +60,11 @@ public class LoginActivity extends AppCompatActivity {
         iet_password=findViewById(R.id.login_tid_password);
         tv_register=findViewById(R.id.login_tv_register);
         tv_registerLocation=findViewById(R.id.login_tv_signUpLocation);
-        jdbcController=new JDBCController();
+        jdbcController=JDBCController.getInstance();
         c=jdbcController.openConnection();
        tv_register.setOnClickListener(clickRegisterUser());
        tv_registerLocation.setOnClickListener(clickRegisterLocation());
        btn_login.setOnClickListener(clickLogin());
-
 
        iet_email.addTextChangedListener(new TextWatcher() {
            @Override
@@ -128,6 +136,7 @@ public class LoginActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), HomeAdminLocationActivity.class);
                             startActivity(intent);
                         } else {
+                            getUserProfilePicture();
                             intent = new Intent(getApplicationContext(), LoadingActivity.class);
                             startActivity(intent);
                         }
@@ -143,20 +152,47 @@ public class LoginActivity extends AppCompatActivity {
         };
     }
 
-    public boolean isUserValid(){
+    public void getUserProfilePicture(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(String.valueOf(user.getIdUser()));
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String valoare = dataSnapshot.getValue(String.class);
+                byte[] decodedString = Base64.decode(valoare, Base64.DEFAULT);
+                user.setProfilePicture( decodedString);
+                Log.d("ceva", "Value is: " + user.toString());
+                sharedPreferences=getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                Gson gson = new Gson();
+                String json = gson.toJson(user);
+                editor.putString(Constants.CURRENT_USER,json);
+                editor.apply();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("ceva", "Failed to read value.", error.toException());
+            }
+        });
+    }
+
+    public boolean isUserValid(){
         try(Statement s = c.createStatement()){
-            String command ="SELECT * FROM UTILIZATORI WHERE EMAIL='"+iet_email.getText()+"' AND PAROLA='"+iet_password.getText()+"' ;";
+            String command ="SELECT * FROM UTILIZATORI WHERE EMAIL='"
+                    +iet_email.getText()
+                    +"' AND PAROLA='"
+                    +iet_password.getText()+"' ;";
             try(ResultSet r =s.executeQuery(command)) {
                 if(r.next()){
-                    user= new User(r.getInt(1),r.getString(2),
-                                    r.getString(3),r.getString(4),r.getInt(5),r.getInt(6));
-                    sharedPreferences=getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    Gson gson = new Gson();
-                    String json = gson.toJson(user);
-                    editor.putString(Constants.CURRENT_USER,json);
-                    editor.apply();
+                    user.setIdUser(r.getInt(1));
+                    user.setUserName(r.getString(2));
+                    user.setEmail(r.getString(3));
+                    user.setPassword(r.getString(4));
+                    user.setState(r.getInt(5));
+                    user.setRole(r.getInt(6));
+
                     return true;
                 }
                 return false;

@@ -46,7 +46,7 @@ public class SportAdapterNoCheckBox extends ArrayAdapter<SportUtilizator> {
         SportUtilizator sport=sports.get(position);
 
         tv_Sport.setText(sport.getSportName());
-        tv_Level.setText(sport.getSportLevel());
+        tv_Level.setText(sport.getLevel());
         return row;
     }
 
