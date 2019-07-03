@@ -55,52 +55,53 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initComponents(){
+
+        jdbcController=JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
         btn_login=findViewById(R.id.login_btn_login);
         iet_email=findViewById(R.id.login_tid_email);
         iet_password=findViewById(R.id.login_tid_password);
         tv_register=findViewById(R.id.login_tv_register);
         tv_registerLocation=findViewById(R.id.login_tv_signUpLocation);
-        jdbcController=JDBCController.getInstance();
-        c=jdbcController.openConnection();
-       tv_register.setOnClickListener(clickRegisterUser());
-       tv_registerLocation.setOnClickListener(clickRegisterLocation());
-       btn_login.setOnClickListener(clickLogin());
+        tv_register.setOnClickListener(clickRegisterUser());
+        tv_registerLocation.setOnClickListener(clickRegisterLocation());
+        btn_login.setOnClickListener(clickLogin());
+        iet_email.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-       iet_email.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-           }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-           @Override
-           public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
-           }
-
-           @Override
-           public void afterTextChanged(Editable s) {
+            @Override
+            public void afterTextChanged(Editable s) {
                 iet_email.setError(null);
                 iet_password.setError(null);
-           }
-       });
+            }
+        });
 
-       iet_password.addTextChangedListener(new TextWatcher() {
-           @Override
-           public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        iet_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-           }
+            }
 
-           @Override
-           public void onTextChanged(CharSequence s, int start, int before, int count) {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-           }
+            }
 
-           @Override
-           public void afterTextChanged(Editable s) {
-               iet_email.setError(null);
-               iet_password.setError(null);
-           }
-       });
+            @Override
+            public void afterTextChanged(Editable s) {
+                iet_email.setError(null);
+                iet_password.setError(null);
+            }
+        });
 
     }
 
@@ -160,9 +161,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String valoare = dataSnapshot.getValue(String.class);
-                byte[] decodedString = Base64.decode(valoare, Base64.DEFAULT);
-                user.setProfilePicture( decodedString);
-                Log.d("ceva", "Value is: " + user.toString());
+                if( valoare != null) {
+                    byte[] decodedString = Base64.decode(valoare, Base64.DEFAULT);
+                    user.setProfilePicture( decodedString);
+                }
                 sharedPreferences=getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 Gson gson = new Gson();
@@ -173,7 +175,6 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.w("ceva", "Failed to read value.", error.toException());
             }
         });
     }
@@ -181,9 +182,9 @@ public class LoginActivity extends AppCompatActivity {
     public boolean isUserValid(){
         try(Statement s = c.createStatement()){
             String command ="SELECT * FROM UTILIZATORI WHERE EMAIL='"
-                    +iet_email.getText()
+                    +iet_email.getText().toString().trim()
                     +"' AND PAROLA='"
-                    +iet_password.getText()+"' ;";
+                    +iet_password.getText().toString().trim()+"' ;";
             try(ResultSet r =s.executeQuery(command)) {
                 if(r.next()){
                     user.setIdUser(r.getInt(1));
@@ -203,15 +204,14 @@ public class LoginActivity extends AppCompatActivity {
         return false;
     }
 
-    public void updateUserState(){
-        try(Statement s = c.createStatement()){
-            String command ="UPDATE UTILIZATORI SET STARE=0 WHERE ID='"+user.getIdUser()+"';";
-            int updatedRows=s.executeUpdate(command);
-                if(updatedRows >0 )Log.d("databaseUpdateUser",String.valueOf(updatedRows));
-            } catch (SQLException e1) {
+    public void updateUserState() {
+        try (Statement s = c.createStatement()) {
+            String command = "UPDATE UTILIZATORI SET STARE=0 WHERE ID='" + user.getIdUser() + "';";
+            int updatedRows = s.executeUpdate(command);
+            if (updatedRows > 0) Log.d("databaseUpdateUser", String.valueOf(updatedRows));
+        } catch (SQLException e1) {
             e1.printStackTrace();
         }
-
     }
 
     @Override

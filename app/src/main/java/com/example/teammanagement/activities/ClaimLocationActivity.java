@@ -45,7 +45,6 @@ public class ClaimLocationActivity extends AppCompatActivity {
         iet_streetName=findViewById(R.id.claimLocation_tid_streetName);
         iet_streetNumber=findViewById(R.id.claimLocation_tid_streetNumber);
         iet_confirmPassword=findViewById(R.id.claimLocation_tid_confirmPassword);
-        iet_city=findViewById(R.id.claimLocation_tid_city);
         iet_postalCode=findViewById(R.id.claimLocation_tid_postalCode);
         btn_save =findViewById(R.id.claimLocation_btn_save);
         btn_back=findViewById(R.id.claimLocation_btn_back);

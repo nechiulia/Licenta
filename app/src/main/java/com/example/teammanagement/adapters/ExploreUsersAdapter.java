@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,10 +78,11 @@ public class ExploreUsersAdapter extends ArrayAdapter<User> {
 
         User user = users.get(position);
 
-        Bitmap bmp = BitmapFactory.decodeByteArray(user.getProfilePicture(),0,user.getProfilePicture().length);
-
+        if(user.getProfilePicture()!=null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(user.getProfilePicture(), 0, user.getProfilePicture().length);
+            iv_userProfile.setImageBitmap(Bitmap.createBitmap(bmp));
+        }
         tv_userName.setText(user.getUserName());
-        iv_userProfile.setImageBitmap(Bitmap.createBitmap(bmp));
 
         return row;
     }

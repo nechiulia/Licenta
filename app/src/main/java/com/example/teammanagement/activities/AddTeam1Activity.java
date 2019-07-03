@@ -1,6 +1,7 @@
 package com.example.teammanagement.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +17,15 @@ import android.widget.Spinner;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Team;
+import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.adapters.SpinnerWhiteAdapter;
+import com.example.teammanagement.database.JDBCController;
+import com.google.gson.Gson;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,8 +36,15 @@ public class AddTeam1Activity extends AppCompatActivity {
     private Button btn_cancel;
     private TextInputEditText iet_teamName;
     private Spinner spn_sport;
+
     private Intent intent;
-    List<String> spnsport_items = new ArrayList<>();
+
+    private User currentUser;
+    private List<String> spnsport_items = new ArrayList<>();
+    private List<Integer> idSportList = new ArrayList<>();
+
+    private Connection c;
+    private JDBCController jdbcController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +56,17 @@ public class AddTeam1Activity extends AppCompatActivity {
     }
 
     public void initComponents(){
+
+        jdbcController = JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
         btn_cancel=findViewById(R.id.add_team1_btn_cancel);
         btn_save=findViewById(R.id.add_team1_btn_next);
         iet_teamName=findViewById(R.id.add_team1_tid_teamName);
         spn_sport=findViewById(R.id.add_team1_spn_sport);
         btn_save.setEnabled(false);
+
+        spnsport_items.add(getString(R.string.register2_sportSpinner_item0));
 
         iet_teamName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -63,13 +84,26 @@ public class AddTeam1Activity extends AppCompatActivity {
                 iet_teamName.setError(null);
             }
         });
-        spnsport_items = Arrays.asList(getResources().getStringArray(R.array.dialog_sports));
+
+        getUser();
+        selectUserSports();
+        for(int i=0;i<idSportList.size();i++) {
+            getSportsName(idSportList.get(i));
+        }
+
         spn_sport.setOnItemSelectedListener(spn_sport_change());
         SpinnerWhiteAdapter adapter=new SpinnerWhiteAdapter(this,spnsport_items);
         spn_sport.setAdapter(adapter);
 
         btn_save.setOnClickListener(clickNext());
         btn_cancel.setOnClickListener(clickCancel());
+    }
+
+    public void getUser(){
+        SharedPreferences sharedPreferences = getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json =  sharedPreferences.getString(Constants.CURRENT_USER,"");
+        currentUser= gson.fromJson(json,User.class);
     }
 
     private AdapterView.OnItemSelectedListener spn_sport_change(){
@@ -110,6 +144,30 @@ public class AddTeam1Activity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    public void selectUserSports(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT IDSPORT FROM SPORTUTILIZATOR WHERE IDUTILIZATOR="+currentUser.getIdUser())){
+                while(r.next()){
+                    idSportList.add( r.getInt(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getSportsName(int idSport){
+        try(Statement statement = c.createStatement()){
+            try(ResultSet r = statement.executeQuery("SELECT DENUMIRE FROM SPORTURI WHERE ID="+idSport)){
+                if(r.next()){
+                    spnsport_items.add(r.getString(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean isValidName(){

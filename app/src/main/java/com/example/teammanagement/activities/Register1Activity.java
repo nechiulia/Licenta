@@ -2,7 +2,6 @@ package com.example.teammanagement.activities;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -12,8 +11,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Base64;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -22,32 +19,33 @@ import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.database.JDBCController;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 
 public class Register1Activity extends AppCompatActivity {
-    TextInputEditText iet_email;
-    TextInputEditText iet_password;
-    TextInputEditText iet_confirmPassword;
-    TextInputEditText iet_username;
-    Button btn_next;
-    Button btn_back;
-    Button btn_uploadPicture;
-    ImageView iv_profilePicture;
-    Intent intent;
-    User newUser;
-    JDBCController jdbcController;
-    Connection c;
-    byte[] userProfilePicture;
 
+    private TextInputEditText iet_email;
+    private TextInputEditText iet_password;
+    private TextInputEditText iet_confirmPassword;
+    private TextInputEditText iet_username;
+    private Button btn_next;
+    private Button btn_back;
+    private Button btn_uploadPicture;
+    private ImageView iv_profilePicture;
+
+    private Intent intent;
+
+    private User newUser;
+    private byte[] userProfilePicture;
+
+    private JDBCController jdbcController;
+    private Connection c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,10 +54,13 @@ public class Register1Activity extends AppCompatActivity {
 
         initComponents();
 
-
     }
 
     public void initComponents(){
+
+        jdbcController =JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
         iet_email=findViewById(R.id.register1_tid_email);
         iet_password=findViewById(R.id.register1_tid_password);
         iet_confirmPassword=findViewById(R.id.register1_tid_confirmPassword);
@@ -176,9 +177,9 @@ public class Register1Activity extends AppCompatActivity {
                     String userName = iet_username.getText().toString();
                     String email=iet_email.getText().toString();
                     String password = iet_password.getText().toString();
+
                     newUser = new User(userName,email,password,0,userProfilePicture,0);
-                    jdbcController =JDBCController.getInstance();
-                    c=jdbcController.openConnection();
+
                     intent=new Intent(getApplicationContext(),Register2Activity.class);
                     intent.putExtra(Constants.NEW_USER,newUser);
                     startActivity(intent);
@@ -202,8 +203,10 @@ public class Register1Activity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-                photoPickerIntent.setType("image/*");
+
+                photoPickerIntent.setType(getString(R.string.register1_typeImage_hint));
                 startActivityForResult(photoPickerIntent, Constants.UPLOAD_IMAGE_REQUEST_CODE);
             }
         };
@@ -236,6 +239,10 @@ public class Register1Activity extends AppCompatActivity {
                 || iet_email.getText().toString().trim().isEmpty()
                 || !Patterns.EMAIL_ADDRESS.matcher(iet_email.getText().toString()).matches()){
             iet_email.setError(getText(R.string.register_emailError_hint));
+            return false;
+        }
+        if(emailExistsInDatabase()){
+            iet_email.setError(getString(R.string.register_emailError_alreadyExists_hint));
             return false;
         }
         return true;
@@ -295,10 +302,23 @@ public class Register1Activity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        iet_username.setText(savedInstanceState.getString("UserName"));
-        iet_email.setText(savedInstanceState.getString("Email"));
-        iet_password.setText(savedInstanceState.getString("Password"));
-        iet_confirmPassword.setText(savedInstanceState.getString("ConfirmPassword"));
+        iet_username.setText(savedInstanceState.getString(getString(R.string.register1_keyState_userName_hint)));
+        iet_email.setText(savedInstanceState.getString(getString(R.string.register1_keyState_email_hint)));
+        iet_password.setText(savedInstanceState.getString(getString(R.string.register1_keyState_password_hint)));
+        iet_confirmPassword.setText(savedInstanceState.getString(getString(R.string.register1_keyState_confirmPassword_hint)));
+    }
+
+    public boolean emailExistsInDatabase(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM UTILIZATORI WHERE EMAIL='"+iet_email.getText().toString()+"';")){
+                if(r.next()){
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

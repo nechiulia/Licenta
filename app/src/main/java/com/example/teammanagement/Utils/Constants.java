@@ -20,4 +20,7 @@ public interface Constants {
     String CURRENT_USER= "Current User Info";
 
     String NEW_USER= "New User";
+    String CLICKED_USERID ="ClickedUserID";
+    String CLICKED_TEAMID="ClickedTeamID";
+    String CURRENT_TEAM="Current Team Info";
 }

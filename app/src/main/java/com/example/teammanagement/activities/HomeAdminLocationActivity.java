@@ -6,15 +6,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.fragments.EditLocationFragment;
 import com.example.teammanagement.fragments.LocationProfileFragment;
 import com.example.teammanagement.fragments.LocationsReservationsFragment;
-import com.example.teammanagement.fragments.NewLocationsFragment;
-import com.example.teammanagement.fragments.ReportsFragment;
-import com.example.teammanagement.fragments.SettingsFragment;
 
 public class HomeAdminLocationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 

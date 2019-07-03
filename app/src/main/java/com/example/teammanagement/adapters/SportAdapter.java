@@ -12,19 +12,19 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.teammanagement.R;
-import com.example.teammanagement.Utils.SportUtilizator;
+import com.example.teammanagement.Utils.SportUser;
 
 import java.util.List;
 
-public class SportAdapter extends ArrayAdapter<SportUtilizator> {
+public class SportAdapter extends ArrayAdapter<SportUser> {
     private Context context;
     private int resource;
-    private List<SportUtilizator> sports;
+    private List<SportUser> sports;
     private LayoutInflater inflater;
 
     public SportAdapter(@NonNull Context context,
                         int resource,
-                        @NonNull List<SportUtilizator> objects,
+                        @NonNull List<SportUser> objects,
                         LayoutInflater inflater) {
         super(context, resource, objects);
         this.context = context;
@@ -45,7 +45,7 @@ public class SportAdapter extends ArrayAdapter<SportUtilizator> {
         TextView tv_Level = row.findViewById(R.id.list_item_sports_tv_level);
         CheckBox ck_check = row.findViewById(R.id.list_item_sports_ck);
 
-        SportUtilizator sport=sports.get(position);
+        SportUser sport=sports.get(position);
 
         tv_Sport.setText(sport.getSportName());
         tv_Level.setText(sport.getLevel());

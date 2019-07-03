@@ -35,34 +35,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageButton
-        android:id="@+id/editTeam_ibtn_back"
-        android:layout_width="52dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/transparent"
-        android:contentDescription="@string/teamProfile_ibtn_back_hint"
-        android:src="?attr/homeAsUpIndicator"
-        android:visibility="visible"
-        app:layout_constraintEnd_toStartOf="@+id/editTeam_tv_title"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTeam_toolbar"
-        app:layout_constraintTop_toTopOf="@+id/editTeam_toolbar"
-        tools:srcCompat="?attr/homeAsUpIndicator" />
-
     <TextView
         android:id="@+id/editTeam_tv_players"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="20dp"
         android:text="@string/editTeam_tv_players_hint"
         android:textColor="@color/darkGrey"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTeam_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_til_teamName" />
 
     <ListView
         android:id="@+id/editTeam_lv_players"
@@ -82,7 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="44dp"
         android:text="@string/editTeam_btn_save_hint"
         android:textColor="@color/white"
@@ -95,8 +78,8 @@
         android:id="@+id/editTeam_btn_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="20dp"
         android:text="@string/editTeam_btn_cancel_hint"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,29 +87,52 @@
 
     <ImageButton
         android:id="@+id/editTeam_btn_addTeamMate"
-        android:layout_width="37dp"
-        android:layout_height="46dp"
-        android:layout_marginStart="236dp"
-        android:layout_marginTop="44dp"
-        android:contentDescription="@string/editTeam_ibtn_addTeamMate_hint"
+        android:layout_width="26dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/transparent"
+        android:contentDescription="@string/editTeam_ibtn_addTeamMate_hint"
         app:layout_constraintStart_toEndOf="@+id/editTeam_tv_players"
-        app:layout_constraintTop_toBottomOf="@+id/editTeam_toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_til_teamName"
         app:srcCompat="@drawable/add_grey" />
 
     <ImageButton
         android:id="@+id/editTeam_btn_removeTeamMate"
-        android:layout_width="37dp"
-        android:layout_height="46dp"
+        android:layout_width="26dp"
+        android:layout_height="33dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:contentDescription="@string/editTeam_ibtn_removeTeamMate_hint"
         android:background="@drawable/transparent"
+        android:contentDescription="@string/editTeam_ibtn_removeTeamMate_hint"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/editTeam_btn_addTeamMate"
-        app:layout_constraintTop_toBottomOf="@+id/editTeam_tv_title"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_til_teamName"
         app:srcCompat="@drawable/remove_grey" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editTeam_til_teamName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textColorHint="@color/darkGrey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTeam_toolbar">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editTeam_tid_teamName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey"
+            android:hint="@string/edit_team_tid_teamName_hint" />
+    </android.support.design.widget.TextInputLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -3,12 +3,12 @@ package com.example.teammanagement.Utils;
 
 import java.io.Serializable;
 
-public class SportUtilizator implements Serializable {
+public class SportUser implements Serializable {
 
     private String sportName;
     private String level;
 
-    public SportUtilizator(String sportName, String level) {
+    public SportUser(String sportName, String level) {
         this.sportName = sportName;
         this.level = level;
     }

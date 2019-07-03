@@ -2,24 +2,24 @@ package com.example.teammanagement.Utils;
 
 import java.io.Serializable;
 
-public class SportUtilizatorTable implements Serializable {
+public class SportUserTable implements Serializable {
 
     private int idUtilizator;
     private int idSport;
     private int sportLevel;
 
-    public SportUtilizatorTable(int idUtilizator, int idSport, int sportLevel) {
+    public SportUserTable(int idUtilizator, int idSport, int sportLevel) {
         this.idUtilizator = idUtilizator;
         this.idSport = idSport;
         this.sportLevel = sportLevel;
     }
 
-    public SportUtilizatorTable(int idSport, int sportLevel) {
+    public SportUserTable(int idSport, int sportLevel) {
         this.idSport = idSport;
         this.sportLevel = sportLevel;
     }
 
-    public SportUtilizatorTable() {
+    public SportUserTable() {
         this.idUtilizator=-1;
         this.idSport=-1;
         sportLevel=-1;

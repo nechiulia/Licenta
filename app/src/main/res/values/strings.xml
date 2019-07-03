@@ -197,7 +197,7 @@
     <string name="title_activity_home_admin">HomeAdminActivity</string>
     <string name="homeAdmin_ic_report_hint">Rapoarte</string>
     <string name="homeAdmin_ic_newLocation_hint">Locații noi</string>
-    <string name="homeAdmin_ic_settings_hint">Setări</string>
+    <string name="homeAdmin_ic_map_hint">Căutare locație</string>
     <string name="fragment_settings_lougOut_hint">Delogare</string>
     <string name="fragment_reports_tv_toolbarTitle_hint">Rapoarte</string>
     <string name="fragment_newLocations_tv_title_hint">Locații noi</string>
@@ -211,7 +211,7 @@
     <string name="home_googleMaps_errorMessage_hint">Nu puteți utiliza serviciile Google Maps</string>
     <string name="home_GoogleServices_check_hint">isServicesOK: checking google services version</string>
     <string name="home_GoogleServices_fine_hint">isServicesOK: Google Play Services is working fine</string>
-    <string name="home_GoogleServices_errorOccured_hint">isServicesOK: an error occured but we can fix it</string>
+    <string name="home_GoogleServices_errorOccured_hint">isServicesOK: an error occurred but we can fix it</string>
     <string name="claimLocation_tid_userName_hint">Nume utilizator</string>
     <string name="list_item_location_userName_hint">Nume utilizator</string>
     <string name="list_item_location_email_hint">E-mail</string>
@@ -286,5 +286,27 @@
     <string name="add_team2_btn_cancel_hint">Anulează</string>
     <string name="add_team1_teamName_lengthError_hint">Numele echipei trebuie să aibă cel puțin 3 litere</string>
     <string name="add_team1_teamName_digitAndLettersOnlyError_hint">Numele echipei nu poate conține decât litere sau cifre</string>
+    <string name="search_location_ibtn_back_hint">Înapoi</string>
+    <string name="claimLocation_ck_reservation_hint">Rezervare in aplicatie</string>
+    <string name="add_team2_tv_title_hint">Adăugare coechipieri</string>
+    <string name="add_team2_alertDialog_title">Echipă incompletă</string>
+    <string name="add_team2_alertDialog_message">Nu ați adăugat suficienți jucători pentru a crea o echipă pentru acest sport. Numărul minim pentru a forma o echipă este 2, iar pentru sportul selectat este </string>
+    <string name="list_item__item_team_tv_teamName_hint">Denumire echipă</string>
+    <string name="list_item_team_tv_sport_hint">Denumire sport</string>
+    <string name="register_emailError_alreadyExists_hint">Email-ul există deja în baza de date</string>
+    <string name="register1_keyState_userName_hint">UserName</string>
+    <string name="register1_keyState_email_hint">Email</string>
+    <string name="register1_keyState_password_hint">Password</string>
+    <string name="register1_keyState_confirmPassword_hint">ConfirmPassword</string>
+    <string name="register1_typeImage_hint">image/*</string>
+    <string name="register2_sportSpinner_item0">Selectează sportul</string>
+    <string name="user_sport_level_0">Începător</string>
+    <string name="user_sport_level_1">Elementar</string>
+    <string name="user_sport_level_2">Intermediar</string>
+    <string name="user_sport_level_3">Post-intermediar</string>
+    <string name="user_sport_level_4">Avansat</string>
+    <string name="user_sport_level_5">Expert</string>
+    <string name="edit_team_tid_teamName_hint">Nume echipă</string>
+    <string name="list_item_usersExplorer_tv_role_hint">Rol</string>
 
 </resources>

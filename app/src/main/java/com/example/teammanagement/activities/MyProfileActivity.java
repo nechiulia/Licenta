@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,48 +16,63 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Feedback;
-import com.example.teammanagement.Utils.SportUtilizator;
+import com.example.teammanagement.Utils.SportUser;
 import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.adapters.SportAdapterNoCheckBox;
+import com.example.teammanagement.database.JDBCController;
 import com.example.teammanagement.dialogs.BottomDialogReport;
 import com.google.gson.Gson;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class MyProfileActivity extends AppCompatActivity
-        /*implements BottomDialogReport.BottomDialogListener */
 {
 
-    Button btn_logOut;
-    ImageButton ibtn_back;
-    ImageButton ibtn_edit;
-    ImageButton ibtn_more;
-    TextView tv_settings;
-    TextView tv_moreFeedback;
-    ListView lv_sports;
-    TextView tv_userName;
-    TextView tv_userComment;
-    RatingBar ratingBar;
-    ImageView iv_profilePicture;
-    Intent intent;
-    SportAdapterNoCheckBox adapter;
-    User newUser;
-    Bitmap bitmap;
+    private Button btn_logOut;
+    private ImageButton ibtn_back;
+    private ImageButton ibtn_edit;
+    private ImageButton ibtn_more;
+    private TextView tv_settings;
+    private TextView tv_moreFeedback;
+    private ListView lv_sports;
+    private TextView tv_userName;
+    private TextView tv_userComment;
+    private TextView tv_userProfile;
+    private RatingBar ratingBar;
+    private ImageView iv_profilePicture;
 
-    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
-    List<Feedback> list_feedback = new ArrayList<>();
+    private Intent intent;
+
+    private SportAdapterNoCheckBox adapter;
+
+    private User currentUser;
+    private List<SportUser> lv_list_sportItems = new ArrayList<>();
+    private List<Feedback> list_feedback = new ArrayList<>();
+
+    private Bitmap bitmap;
+
+    private JDBCController jdbcController;
+    private Connection c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myprofile);
-        initComponents();
 
+        initComponents();
     }
 
     private void initComponents() {
+
+        jdbcController = JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
         btn_logOut=findViewById(R.id.myProfile_btn_logOut);
         ibtn_back=findViewById(R.id.myProfile_ibtn_back);
         ibtn_edit=findViewById(R.id.myProfile_ibtn_edit);
@@ -66,6 +80,7 @@ public class MyProfileActivity extends AppCompatActivity
         tv_settings=findViewById(R.id.myProfile_tv_settings);
         tv_moreFeedback =findViewById(R.id.myProfile_tv_moreFeedback);
         lv_sports=findViewById(R.id.myProfile_lv_sports);
+        tv_userProfile =findViewById(R.id.myProfile_tv_userName);
         tv_userComment=findViewById(R.id.myProfile_tv_comment);
         tv_userName=findViewById(R.id.myProfile_tv_commentUserName);
         ratingBar=findViewById(R.id.myProfile_rb_userGivenRating);
@@ -79,28 +94,60 @@ public class MyProfileActivity extends AppCompatActivity
         tv_settings.setOnClickListener(clickSettings());
         tv_moreFeedback.setOnClickListener(clickMoreReviews());
 
-        lv_list_sportItems.add(new SportUtilizator("Fotbal","Intermediar"));
-        list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier.Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el ",4.0f));
-        list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el",4.0f));
+        list_feedback.add(new Feedback("Alexandru Matei","Ionel este o fire competitivă și un bun coechipier.Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. ",4.0f));
+        list_feedback.add(new Feedback("Alexandru Matei","Ionel este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. ",4.0f));
         randomFeedback();
 
+        getCurrentUser();
+
+        initData();
 
         if(lv_list_sportItems != null) {
             adapter = new SportAdapterNoCheckBox(getApplicationContext(), R.layout.list_item_sports_nocheckbox, lv_list_sportItems, getLayoutInflater());
             lv_sports.setAdapter(adapter);
         }
 
+    }
 
+    public void initData(){
+          if(currentUser.getProfilePicture() != null) {
+            bitmap = BitmapFactory.decodeByteArray(currentUser.getProfilePicture(), 0, currentUser.getProfilePicture().length);
+            iv_profilePicture.setImageBitmap(Bitmap.createBitmap(bitmap));
+        }
+        tv_userProfile.setText(currentUser.getUserName());
+        selectSports();
+
+    }
+
+    public void selectSports(){
+        try(Statement s = c.createStatement()){
+            String command ="SELECT S.DENUMIRE,SU.NIVEL FROM UTILIZATORI U, SPORTURI S, SPORTUTILIZATOR SU WHERE U.ID=SU.IDUTILIZATOR AND SU.IDSPORT=S.ID AND U.ID='"+currentUser.getIdUser()+"';";
+            try(ResultSet r =s.executeQuery(command)) {
+                while(r.next()){
+                    String level = getLevel(r.getInt(2));
+                    SportUser sportUser = new SportUser(r.getString(1),level);
+                    lv_list_sportItems.add(sportUser);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getLevel(int level){
+        if(level ==0)return getString(R.string.user_sport_level_0);
+        else if(level == 1)return getString(R.string.user_sport_level_1);
+        else if(level == 2)return getString(R.string.user_sport_level_2);
+        else if(level == 3)return getString(R.string.user_sport_level_3);
+        else if(level == 4)return getString(R.string.user_sport_level_4);
+        return getString(R.string.user_sport_level_5);
+    }
+
+    public void getCurrentUser(){
         SharedPreferences sharedPreferences = getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
         Gson gson = new Gson();
         String json =  sharedPreferences.getString(Constants.CURRENT_USER,"");
-        newUser= gson.fromJson(json,User.class);
-        Log.d("Current User",String.valueOf(newUser.getProfilePicture()));
-
-        if(newUser.getProfilePicture().length !=0) {
-            bitmap = BitmapFactory.decodeByteArray(newUser.getProfilePicture(), 0, newUser.getProfilePicture().length);
-            iv_profilePicture.setImageBitmap(Bitmap.createBitmap(bitmap));
-        }
+        currentUser = gson.fromJson(json,User.class);
     }
 
     private View.OnClickListener clickBack(){

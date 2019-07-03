@@ -13,29 +13,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.teammanagement.R;
-import com.example.teammanagement.Utils.Constants;
-import com.example.teammanagement.activities.EditProfileActivity;
 import com.example.teammanagement.activities.LoginActivity;
-import com.example.teammanagement.dialogs.BottomDialogReport;
 
-public class SettingsFragment extends Fragment {
+public class SearchLocationFragment extends Fragment {
 
-    Button btn_logOut;
     Intent intent;
-    TextView tv_title;
-    ImageButton ibtn_aprove;
-    ImageButton  ibtn_remove;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =inflater.inflate(R.layout.fragment_settings,null);
-        btn_logOut=view.findViewById(R.id.fragment_settings_btn);
+        View view =inflater.inflate(R.layout.fragment_search_location,null);
 
-
-
-
-        btn_logOut.setOnClickListener(clickLogOut());
 
         return view;
 

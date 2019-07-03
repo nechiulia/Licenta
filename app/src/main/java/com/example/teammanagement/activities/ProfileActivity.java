@@ -1,6 +1,7 @@
 package com.example.teammanagement.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
@@ -15,39 +16,60 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Feedback;
-import com.example.teammanagement.Utils.SportUtilizator;
+import com.example.teammanagement.Utils.SportUser;
 import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.adapters.SportAdapterNoCheckBox;
+import com.example.teammanagement.database.JDBCController;
 import com.example.teammanagement.dialogs.BottomDialogReport;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 public class ProfileActivity extends AppCompatActivity{
 
-    ImageButton ibtn_back;
-    ImageButton ibtn_more;
-    TextView tv_moreFeedback;
-    ListView lv_sports;
-    TextView tv_userName;
-    TextView tv_userComment;
-    ImageView iv_profilePicture;
-    RatingBar ratingBar;
-    Intent intent;
-    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
-    List<Feedback> list_feedback = new ArrayList<>();
-    SportAdapterNoCheckBox adapter;
+    private ImageButton ibtn_back;
+    private ImageButton ibtn_more;
+    private TextView tv_moreFeedback;
+    private ListView lv_sports;
+    private TextView tv_userName;
+    private TextView tv_userComment;
+    private TextView tv_userProfileName;
+    private ImageView iv_profilePicture;
+    private RatingBar ratingBar;
+
+    private Intent intent;
+
+    private User user;
+    private List<SportUser> lv_list_sportItems = new ArrayList<>();
+    private List<Feedback> list_feedback = new ArrayList<>();
+
+    private SportAdapterNoCheckBox adapter;
+
+    private JDBCController jdbcController;
+    private Connection c;
+
+    private Bitmap bitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        intent=getIntent();
+
         initComponents();
     }
 
     public void initComponents(){
+
+        jdbcController= JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
         ibtn_back=findViewById(R.id.profile_ibtn_back);
         ibtn_more=findViewById(R.id.profile_ibtn_more);
         tv_moreFeedback =findViewById(R.id.profile_tv_moreFeedback);
@@ -56,11 +78,18 @@ public class ProfileActivity extends AppCompatActivity{
         tv_userName=findViewById(R.id.profile_tv_commentUserName);
         ratingBar=findViewById(R.id.profile_rb_userGivenRating);
         iv_profilePicture=findViewById(R.id.profile_iv_profileImage);
+        tv_userProfileName=findViewById(R.id.profile_tv_userName);
 
         ibtn_back.setOnClickListener(clickBack());
         ibtn_more.setOnClickListener(clickMore());
         tv_moreFeedback.setOnClickListener(clickMoreReviews());
-        lv_list_sportItems.add(new SportUtilizator("Fotbal","Intermediar"));
+
+        if(intent.hasExtra(Constants.CLICKED_USERID)){
+            user= (User) intent.getSerializableExtra(Constants.CLICKED_USERID);
+        }
+
+        initData();
+
         list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier.Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el ",4.0f));
         list_feedback.add(new Feedback("Alexandru Matei","Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el.Marius este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. Sper sa mai am ocazia sa joc cu el",4.0f));
         randomFeedback();
@@ -71,8 +100,40 @@ public class ProfileActivity extends AppCompatActivity{
             lv_sports.setAdapter(adapter);
         }
 
+    }
 
+    public void initData(){
+        if(user.getProfilePicture() != null) {
+            bitmap = BitmapFactory.decodeByteArray(user.getProfilePicture(), 0, user.getProfilePicture().length);
+            iv_profilePicture.setImageBitmap(Bitmap.createBitmap(bitmap));
+        }
+        tv_userProfileName.setText(user.getUserName());
+        selectSports();
 
+    }
+
+    public void selectSports(){
+        try(Statement s = c.createStatement()){
+            String command ="SELECT S.DENUMIRE,SU.NIVEL FROM UTILIZATORI U, SPORTURI S, SPORTUTILIZATOR SU WHERE U.ID=SU.IDUTILIZATOR AND SU.IDSPORT=S.ID AND U.ID='"+user.getIdUser()+"';";
+            try(ResultSet r =s.executeQuery(command)) {
+                while(r.next()){
+                    String level = getLevel(r.getInt(2));
+                    SportUser sportUser = new SportUser(r.getString(1),level);
+                    lv_list_sportItems.add(sportUser);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getLevel(int level){
+        if(level ==0)return getString(R.string.user_sport_level_0);
+        else if(level == 1)return getString(R.string.user_sport_level_1);
+        else if(level == 2)return getString(R.string.user_sport_level_2);
+        else if(level == 3)return getString(R.string.user_sport_level_3);
+        else if(level == 4)return getString(R.string.user_sport_level_4);
+        return getString(R.string.user_sport_level_5);
     }
 
     private View.OnClickListener clickBack(){

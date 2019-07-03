@@ -19,10 +19,10 @@ import com.example.teammanagement.Utils.User;
 import com.google.gson.Gson;
 
 public class LoadingActivity extends AppCompatActivity {
-    ImageView iv_logo;
+    private ImageView iv_logo;
     private static final String URL = Constants.FAQ_URL;
-    Intent intent;
-    SharedPreferences sharedPreferences;
+    private Intent intent;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +64,7 @@ public class LoadingActivity extends AppCompatActivity {
     protected boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        } else {
-            return false;
-        }
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
 

@@ -15,6 +15,8 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Location;
@@ -23,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -87,7 +90,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if(list.size() != 0){
             Address address = list.get(0);
             Log.d(TAG,"geoLocate found a location "+address.toString());
-            moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),Constants.DEFAULT_ZOOM,address.getAddressLine(0));
+            moveCamera(new LatLng(address.getLatitude(),
+                    address.getLongitude()),
+                    Constants.DEFAULT_ZOOM,address.getAddressLine(0));
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
@@ -104,8 +109,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             dialog.setCanceledOnTouchOutside(false);
             dialog.show();
         }
-
-
     }
 
     private View.OnClickListener clickBack(){
@@ -123,18 +126,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         LatLng bucharest = new LatLng(44.4268, 26.1025);
-        mMap.addMarker(new MarkerOptions().position(bucharest).title("București"));
         moveCamera(new LatLng(bucharest.latitude,bucharest.longitude), Constants.DEFAULT_ZOOM,"București");
     }
 
-    private void moveCamera(LatLng latLng, float zoom, String title){
+    private void moveCamera(final LatLng latLng, float zoom, String title){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         mMap.addMarker(options);
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return true;
+            };
+        });
     }
-
+    /* Log.d("lat lonf",String.valueOf(latLng.latitude)+"---"+String.valueOf(latLng.longitude));*/
     public void initData(){
-        l1=new Location("012244", "Club sportiv First Tennis Club","Bulevardul Mărăști",44.471133,26.064298);
+        l1=new Location("075100", "Patinoar Țiriac Telekom Arena","Bulevardul Mărăști",44.471133,26.064298);
         program.put(0,"08:00-23:00");
         program.put(1,"08:00-23:00");
         program.put(2,"08:00-23:00");

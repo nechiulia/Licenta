@@ -27,6 +27,7 @@ public class AddUsersAdapter extends ArrayAdapter<User> {
     private List<User> users;
     private LayoutInflater inflater;
     private List<Integer> mCheckedItems = new ArrayList<>();
+    private List<User> checkedUsers = new ArrayList<>();
 
     public AddUsersAdapter(@NonNull Context context,
                            int resource,
@@ -75,9 +76,11 @@ public class AddUsersAdapter extends ArrayAdapter<User> {
                 final CheckBox cb = (CheckBox)v;
                 if(cb.isChecked()){
                     mCheckedItems.add(position);
+                    checkedUsers.add(users.get(position));
                 }
                 else{
                     mCheckedItems.remove(position);
+                    checkedUsers.remove(users.get(position));
                 }
             }
         });
@@ -91,5 +94,8 @@ public class AddUsersAdapter extends ArrayAdapter<User> {
         return mCheckedItems;
     }
 
+    public List<User> getCheckedUsers() {
+        return checkedUsers;
+    }
 
 }

@@ -6,14 +6,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.fragments.NewLocationsFragment;
 import com.example.teammanagement.fragments.ReportsFragment;
-import com.example.teammanagement.fragments.SettingsFragment;
+import com.example.teammanagement.fragments.SearchLocationFragment;
 
 public class HomeAdminActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -55,8 +54,8 @@ public class HomeAdminActivity extends AppCompatActivity implements BottomNaviga
             case R.id.navigation_newLocations:
                 fragment = new NewLocationsFragment();
                 break;
-            case R.id.navigation_settings:
-                fragment = new SettingsFragment();
+            case R.id.navigation_map:
+                fragment = new SearchLocationFragment();
                 break;
 
         }

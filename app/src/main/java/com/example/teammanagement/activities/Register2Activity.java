@@ -17,8 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Sport;
-import com.example.teammanagement.Utils.SportUtilizator;
-import com.example.teammanagement.Utils.SportUtilizatorTable;
+import com.example.teammanagement.Utils.SportUser;
+import com.example.teammanagement.Utils.SportUserTable;
 import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.adapters.SportAdapter;
 import com.example.teammanagement.database.JConstants;
@@ -38,25 +38,27 @@ import java.util.List;
 
 public class Register2Activity extends AppCompatActivity implements AddSportDialog.AddSportDialogListener {
 
-    Button btn_save;
-    Button btn_cancel;
-    ImageButton ibtn_addSport;
-    Intent intent;
-    ListView lv_sports;
-    List<SportUtilizator> lv_list_sportItems = new ArrayList<>();
-    List<SportUtilizatorTable> list_to_table = new ArrayList<>();
-    ImageButton ibtn_removeSport;
-    SportAdapter adapter;
-    View row;
-    CheckBox ck_box;
-    JDBCController jdbcController;
-    Connection c;
-    ArrayList<String> list_toGoToDialog = new ArrayList<>() ;
-    ArrayList<String> lv_list_currentSportsName = new ArrayList<>();
-    ArrayList<String> list_selectDB;
-    User newUser;
+    private Button btn_save;
+    private Button btn_cancel;
+    private ImageButton ibtn_addSport;
+    private ImageButton ibtn_removeSport;
+    private CheckBox ck_box;
+    private View row;
+    private ListView lv_sports;
 
+    private Intent intent;
 
+    private User newUser;
+    private List<SportUser> lv_list_sportItems = new ArrayList<>();
+    private List<SportUserTable> list_to_table = new ArrayList<>();
+    private ArrayList<String> list_toGoToDialog = new ArrayList<>() ;
+    private ArrayList<String> lv_list_currentSportsName = new ArrayList<>();
+    private ArrayList<String> list_selectDB;
+
+    private SportAdapter adapter;
+
+    private JDBCController jdbcController;
+    private Connection c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +88,8 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         btn_save.setOnClickListener(clickSave());
         btn_cancel.setOnClickListener(clickCancel());
         ibtn_removeSport.setOnClickListener(clickRemove());
-        list_toGoToDialog.add("Selectează sportul");
+
+        list_toGoToDialog.add(getString(R.string.register2_sportSpinner_item0));
         initDataSpinner();
         list_selectDB= new ArrayList<>();
         list_selectDB.addAll(list_toGoToDialog);
@@ -100,7 +103,6 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         if(intent.hasExtra(Constants.NEW_USER)){
             newUser= (User) intent.getSerializableExtra(Constants.NEW_USER);
         }
-
 
     }
 
@@ -127,10 +129,10 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
                     insertUser();
                     getUserID();
                     insertUserPicture();
-                    for (SportUtilizator sportUtilizator : lv_list_sportItems) {
+                    for (SportUser sportUtilizator : lv_list_sportItems) {
                         list_to_table.add(getSportID(sportUtilizator));
                     }
-                    for (SportUtilizatorTable sportUtilizatorTable : list_to_table) {
+                    for (SportUserTable sportUtilizatorTable : list_to_table) {
                         insertUserSports(sportUtilizatorTable);
                     }
                     intent = new Intent(getApplicationContext(), LoginActivity.class);
@@ -209,7 +211,7 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
 
     @Override
     public void applyTexts(String sport, String level) {
-        lv_list_sportItems.add(new SportUtilizator(sport,level));
+        lv_list_sportItems.add(new SportUser(sport,level));
         list_toGoToDialog= new ArrayList<>(list_selectDB);
         adapter.notifyDataSetChanged();
     }
@@ -251,7 +253,7 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         myRef.setValue(encodedImage);
     }
 
-    public void insertUserSports(SportUtilizatorTable sportUtilizatorTable){
+    public void insertUserSports(SportUserTable sportUtilizatorTable){
         try(Statement s = c.createStatement()){
             String command ="INSERT INTO SPORTUTILIZATOR VALUES("+newUser.getIdUser()
                     +","+sportUtilizatorTable.getIdSport()+",'"
@@ -277,8 +279,8 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
     }
 
 
-    public SportUtilizatorTable getSportID(SportUtilizator sportUtilizator){
-        SportUtilizatorTable sportToAdd = new SportUtilizatorTable();
+    public SportUserTable getSportID(SportUser sportUtilizator){
+        SportUserTable sportToAdd = new SportUserTable();
         try(Statement s = c.createStatement()){
             String command ="SELECT ID FROM Sporturi WHERE DENUMIRE='"+sportUtilizator.getSportName()+"';";
             try(ResultSet r =s.executeQuery(command)) {
@@ -296,12 +298,12 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
     }
 
     private int getLevelInt(String level){
-        if(level.equals("Începător"))return 0;
-        if(level.equals("Elementar"))return 1;
-        if(level.equals("Intermediar"))return 2;
-        if(level.equals("Post-intermediar"))return 3;
-        if(level.equals("Avansat"))return 4;
-        if(level.equals("Expert"))return 5;
+        if(level.equals(getString(R.string.user_sport_level_0)))return 0;
+        if(level.equals(getString(R.string.user_sport_level_1)))return 1;
+        if(level.equals(getString(R.string.user_sport_level_2)))return 2;
+        if(level.equals(getString(R.string.user_sport_level_3)))return 3;
+        if(level.equals(getString(R.string.user_sport_level_4)))return 4;
+        if(level.equals(getString(R.string.user_sport_level_5)))return 5;
         return -2;
     }
 

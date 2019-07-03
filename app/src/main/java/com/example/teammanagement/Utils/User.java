@@ -58,6 +58,17 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    public User(int idUser, String userName) {
+        this.idUser = idUser;
+        this.userName = userName;
+    }
+
+    public User(int idUser, String userName, byte[] profilePicture) {
+        this.idUser = idUser;
+        this.userName = userName;
+        this.profilePicture = profilePicture;
+    }
+
     public User(String userName, byte[] profilePicture) {
         this.userName = userName;
         this.profilePicture = profilePicture;

@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.AddTeam2Activity"></activity>
+        <activity android:name=".activities.AddTeammatesActivity"></activity>
+        <activity android:name=".activities.AddTeam2Activity" />
         <activity
             android:name=".activities.HomeAdminLocationActivity"
             android:label="@string/title_activity_home_admin_location"
@@ -51,7 +52,8 @@
             android:theme="@style/BlackText" />
         <activity
             android:name=".activities.HomeAdminActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.google.android.maps.API_KEY"

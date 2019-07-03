@@ -68,15 +68,16 @@
         tools:context=".MapsActivity" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/white_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/maps_toolbar"
-        android:background="@drawable/white_border">
+        app:layout_constraintTop_toBottomOf="@+id/maps_toolbar">
 
         <ImageView
             android:id="@+id/maps_iv_searchIcon"
@@ -102,6 +103,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
             android:hint="@string/maps_et_searchBar_hint"
+            android:imeOptions="actionSearch"
             android:inputType="text"
             android:textColor="@color/darkGrey"
             android:textColorHint="@color/darkGrey"
@@ -110,7 +112,6 @@
             app:layout_constraintHorizontal_bias="0.529"
             app:layout_constraintStart_toEndOf="@+id/maps_iv_searchIcon"
             app:layout_constraintTop_toTopOf="parent"
-            android:imeOptions="actionSearch"
             app:layout_constraintVertical_bias="0.0" />
     </android.support.constraint.ConstraintLayout>
 
