@@ -315,7 +315,7 @@
     <string name="editRoleDialog_title_alertDialog_hint">Modifică rol coechipier</string>
     <string name="statistics_tv_title_hint">Statistici</string>
     <string name="teams_alertDialog_title_hint">Elimină echipă</string>
-    <string name="teams_alertDialog_message_hint">Sunteți sigur că doriți să părăsiți echipa? În cazul în care sunteți singurul căpita, echipa va fi ștearsă.</string>
+    <string name="teams_alertDialog_message_hint">Sunteți sigur că doriți să părăsiți echipa? În cazul în care sunteți singurul căpitan, echipa va fi ștearsă.</string>
     <string name="teams_alertDialog_negativeButton_hint">Nu</string>
     <string name="teams_alertDialog_positiveButton_hint">Da</string>
     <string name="role_captain_hint">CĂPITAN</string>
@@ -335,5 +335,10 @@
     <string name="announcements_alertDialog_delete_message_hint">Sunteți sigur că doriți să ștergeți acest anunț?</string>
     <string name="announcements_alertDialog_negativeBtn_hint">Nu</string>
     <string name="announcements_alertDialog_positiveBtn_hint">Da</string>
+    <string name="delete_account_altertbuilder_title">Ștergere cont utilizator</string>
+    <string name="delete_account_altertbuilder_message_hint">Nu puteți șterge contul deoarece aveți rezervări în cadrul aplicației. Dacă doriți să ștergeți contul, anulați mai întâi rezervările!</string>
+    <string name="delete_account_alertBuilder_message_teams_hint">Aveți rolul de căpitan în cadrul anumitor echipe din aplicație. Pentru a putea șterge contul trebuie să părăsiți sau să ștergeți echipele în care îndepliniți acest rol. Dacă ați realizat rezervări pentru perioada următoare, acestea trebuie anulate pentru a se permite ștergerea contului de utilizator.</string>
+    <string name="disable_account_altertbuilder_message_hint">Nu puteți dezactiva contul deoarece aveți rezervări în cadrul aplicației. Dacă doriți să dezactivati contul, anulați mai întâi rezervările!</string>
+    <string name="disable_account_alertBuilder_message_teams_hint">Aveți rolul de căpitan în cadrul anumitor echipe din aplicație. Pentru a putea dezactiva contul trebuie să părăsiți sau să ștergeți echipele în care îndepliniți acest rol. Dacă ați realizat rezervări pentru perioada următoare, acestea trebuie anulate pentru a se permite dezactivarea contului de utilizator.</string>
 
 </resources>

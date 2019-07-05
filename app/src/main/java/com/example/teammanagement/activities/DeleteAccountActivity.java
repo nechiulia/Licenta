@@ -1,5 +1,7 @@
 package com.example.teammanagement.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.example.teammanagement.database.JDBCController;
 import com.google.gson.Gson;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -82,11 +85,44 @@ public class DeleteAccountActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                updateState();
-                currentUser.setState(2);
-                saveCurrentUser();
-                intent=new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
+                if(getNumberReservations() > 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(DeleteAccountActivity.this);
+                    builder.setTitle(getString(R.string.delete_account_altertbuilder_title))
+                            .setMessage(getString(R.string.delete_account_altertbuilder_message_hint))
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else{
+
+                    if(getNumberTeams() >0){
+                        AlertDialog.Builder builder = new AlertDialog.Builder(DeleteAccountActivity.this);
+                        builder.setTitle(getString(R.string.delete_account_altertbuilder_title))
+                                .setMessage(getString(R.string.delete_account_alertBuilder_message_teams_hint))
+                                .setCancelable(false)
+                                .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog alert = builder.create();
+                        alert.show();
+                    }
+                    else{
+                        updateState();
+                        currentUser.setState(2);
+                        saveCurrentUser();
+                        intent = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(intent);
+                    }
+                }
             }
         };
     }
@@ -106,5 +142,32 @@ public class DeleteAccountActivity extends AppCompatActivity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getNumberTeams(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT COUNT(IDUTILIZATOR) FROM ROLECHIPA WHERE DENUMIRE=N'CĂPITAN' AND IDUTILIZATOR="+currentUser.getIdUser())){
+                if(r.next()){
+                    return r.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int getNumberReservations(){
+
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("  SELECT COUNT(ID) FROM REZERVARI WHERE IDECHIPA IN (SELECT IDECHIPA FROM RolEchipa WHERE IDUtilizator ="+currentUser.getIdUser()+") AND STARE=0;")){
+                if(r.next()){
+                    return r.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

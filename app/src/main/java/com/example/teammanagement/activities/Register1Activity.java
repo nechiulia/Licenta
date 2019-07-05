@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +20,14 @@ import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.database.JDBCController;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -78,6 +83,99 @@ public class Register1Activity extends AppCompatActivity {
         btn_next.setOnClickListener(clickNext());
         btn_back.setOnClickListener(clickBack());
         btn_uploadPicture.setOnClickListener(clickUploadPicture());
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        Bitmap bitmap = null;
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == Constants.UPLOAD_IMAGE_REQUEST_CODE) {
+            Uri chosenImageUri = data.getData();
+            try {
+                if(chosenImageUri!= null) {
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), chosenImageUri);
+                    iv_profilePicture.setImageBitmap(bitmap);
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    userProfilePicture = stream.toByteArray();
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void insertUserPicture(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(String.valueOf(newUser.getIdUser()));
+        String encodedImage = Base64.encodeToString(userProfilePicture, Base64.NO_WRAP);
+        myRef.setValue(encodedImage);
+    }
+
+    public void insertUser(){
+        try(PreparedStatement s =c.prepareStatement("INSERT INTO UTILIZATORI VALUES('" + newUser.getUserName() + "','" + newUser.getEmail() + "','" + newUser.getPassword() + "'," + newUser.getState() + "," + newUser.getRole() + ")",Statement.RETURN_GENERATED_KEYS)){
+            int updatedRows=s.executeUpdate();
+            ResultSet r = s.getGeneratedKeys();
+            if (r.next()) {
+                if (updatedRows > 0) {
+                    newUser.setIdUser(r.getInt(1));
+                }
+            }
+        }
+        catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private View.OnClickListener clickNext(){
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isValid()){
+                    String userName = iet_username.getText().toString();
+                    String email=iet_email.getText().toString();
+                    String password = iet_password.getText().toString();
+
+                    /*newUser = new User(userName,email,password,0,userProfilePicture,0);*/
+                    newUser = new User(userName,email,password,0,0);
+                    insertUser();
+                    if(userProfilePicture != null) {
+                        insertUserPicture();
+                    }
+
+                    intent=new Intent(getApplicationContext(),Register2Activity.class);
+                    intent.putExtra(Constants.NEW_USER,newUser);
+                    startActivity(intent);
+                }
+
+            }
+        };
+    }
+
+    private View.OnClickListener clickBack() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener clickUploadPicture() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+
+                photoPickerIntent.setType(getString(R.string.register1_typeImage_hint));
+                startActivityForResult(photoPickerIntent, Constants.UPLOAD_IMAGE_REQUEST_CODE);
+            }
+        };
     }
 
     private TextWatcher changeUserName(){
@@ -169,53 +267,40 @@ public class Register1Activity extends AppCompatActivity {
         };
     }
 
-    private View.OnClickListener clickNext(){
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(isValid()){
-                    String userName = iet_username.getText().toString();
-                    String email=iet_email.getText().toString();
-                    String password = iet_password.getText().toString();
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(getString(R.string.register1_key_userName_hint),iet_username.getText().toString());
+        outState.putString(getString(R.string.register1_key_email_hint),iet_email.getText().toString());
+        outState.putString(getString(R.string.register1_key_password_hint),iet_password.getText().toString());
+        outState.putString(getString(R.string.register1_key_confirmPassword_hint),iet_confirmPassword.getText().toString());
+    }
 
-                    newUser = new User(userName,email,password,0,userProfilePicture,0);
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        iet_username.setText(savedInstanceState.getString(getString(R.string.register1_keyState_userName_hint)));
+        iet_email.setText(savedInstanceState.getString(getString(R.string.register1_keyState_email_hint)));
+        iet_password.setText(savedInstanceState.getString(getString(R.string.register1_keyState_password_hint)));
+        iet_confirmPassword.setText(savedInstanceState.getString(getString(R.string.register1_keyState_confirmPassword_hint)));
+    }
 
-                    intent=new Intent(getApplicationContext(),Register2Activity.class);
-                    intent.putExtra(Constants.NEW_USER,newUser);
-                    startActivity(intent);
+    public boolean emailExistsInDatabase(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM UTILIZATORI WHERE EMAIL='"+iet_email.getText().toString()+"';")){
+                if(r.next()){
+                    return true;
                 }
-
             }
-        };
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
-
-    private View.OnClickListener clickBack() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                intent=new Intent(getApplicationContext(),LoginActivity.class);
-                startActivity(intent);
-            }
-        };
-    }
-
-    private View.OnClickListener clickUploadPicture() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-
-                photoPickerIntent.setType(getString(R.string.register1_typeImage_hint));
-                startActivityForResult(photoPickerIntent, Constants.UPLOAD_IMAGE_REQUEST_CODE);
-            }
-        };
-    }
-
 
     private boolean isValid(){
         if( isValidUserName() && isValidEmail() && isValidPassword() && isValidConfirmPassword())return true;
-         return false;
+        return false;
     }
 
     private boolean isValidUserName(){
@@ -253,11 +338,11 @@ public class Register1Activity extends AppCompatActivity {
                 || iet_password.getText().toString().trim().isEmpty()
                 || iet_password.getText().toString().contains(" ")){
             iet_password.setError(getString(R.string.register_passwordError_hint));
-           return false;
+            return false;
         }
         else if(iet_password.getText().length() < 9 ){
             iet_password.setError(getString(R.string.register_passwordError_tooShort_hint));
-           return false;
+            return false;
         }
         return true;
     }
@@ -268,57 +353,6 @@ public class Register1Activity extends AppCompatActivity {
             return false;
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Bitmap bitmap = null;
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == Constants.UPLOAD_IMAGE_REQUEST_CODE) {
-            Uri chosenImageUri = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), chosenImageUri);
-                iv_profilePicture.setImageBitmap(bitmap);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                userProfilePicture = stream.toByteArray();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(getString(R.string.register1_key_userName_hint),iet_username.getText().toString());
-        outState.putString(getString(R.string.register1_key_email_hint),iet_email.getText().toString());
-        outState.putString(getString(R.string.register1_key_password_hint),iet_password.getText().toString());
-        outState.putString(getString(R.string.register1_key_confirmPassword_hint),iet_confirmPassword.getText().toString());
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        iet_username.setText(savedInstanceState.getString(getString(R.string.register1_keyState_userName_hint)));
-        iet_email.setText(savedInstanceState.getString(getString(R.string.register1_keyState_email_hint)));
-        iet_password.setText(savedInstanceState.getString(getString(R.string.register1_keyState_password_hint)));
-        iet_confirmPassword.setText(savedInstanceState.getString(getString(R.string.register1_keyState_confirmPassword_hint)));
-    }
-
-    public boolean emailExistsInDatabase(){
-        try(Statement s = c.createStatement()){
-            try(ResultSet r = s.executeQuery("SELECT * FROM UTILIZATORI WHERE EMAIL='"+iet_email.getText().toString()+"';")){
-                if(r.next()){
-                    return true;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
 }

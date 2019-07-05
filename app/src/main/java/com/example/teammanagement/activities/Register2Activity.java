@@ -126,10 +126,10 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
             public void onClick(View v) {
 
                 if(lv_list_sportItems.size()!= 0) {
-                    insertUser();
-                    if(newUser.getProfilePicture()!=null) {
+                    /*insertUser();*/
+                   /* if(newUser.getProfilePicture()!=null) {
                         insertUserPicture();
-                    }
+                    }*/
                     for (SportUser sportUtilizator : lv_list_sportItems) {
                         list_to_table.add(getSportID(sportUtilizator));
                     }
@@ -161,6 +161,8 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                deleteUser();
+                deleteUserPhoto();
                 Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
                 startActivity(intent);
             }
@@ -233,7 +235,14 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         }
     }
 
-    public void insertUser(){
+    public void deleteUser(){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM UTILIZATORI WHERE ID="+newUser.getIdUser());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+   /* public void insertUser(){
         try(PreparedStatement s =c.prepareStatement("INSERT INTO UTILIZATORI VALUES('" + newUser.getUserName() + "','" + newUser.getEmail() + "','" + newUser.getPassword() + "'," + newUser.getState() + "," + newUser.getRole() + ")",Statement.RETURN_GENERATED_KEYS)){
             int updatedRows=s.executeUpdate();
             ResultSet r = s.getGeneratedKeys();
@@ -246,14 +255,14 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
          catch (SQLException e1) {
             e1.printStackTrace();
         }
-    }
+    }*/
 
-    public void insertUserPicture(){
+   /* public void insertUserPicture(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference(String.valueOf(newUser.getIdUser()));
         String encodedImage = Base64.encodeToString(newUser.getProfilePicture(), Base64.NO_WRAP);
         myRef.setValue(encodedImage);
-    }
+    }*/
 
     public void insertUserSports(SportUserTable sportUtilizatorTable){
         try(Statement s = c.createStatement()){
@@ -265,6 +274,12 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void deleteUserPhoto(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference(String.valueOf(newUser.getIdUser()));
+        myRef.removeValue();
     }
 
 
