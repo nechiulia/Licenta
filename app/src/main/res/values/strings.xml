@@ -19,7 +19,7 @@
     <string name="Home_ib_users_hint">Prieteni</string>
     <string name="Home_ib_Map_hint">Hartă</string>
     <string name="Home_ib_teams_hint">Echipe</string>
-    <string name="Home_ib_Contact_hint">Contact</string>
+    <string name="Home_ib_Statistics_hint">Statistici</string>
     <string name="Faq_tv_hint">Intrebări frecvente</string>
     <string name="myProfile_img_profile_hint">Imagine de profil</string>
     <string name="myProfile_tv_userName_hint">Nume utilizator</string>
@@ -184,6 +184,12 @@
         <item>Dojo</item>
         <item>Altceva</item>
     </string-array>
+    <string-array name="team_role">
+        <item>Selectează rolul</item>
+        <item>JUCĂTOR</item>
+        <item>CĂPITAN</item>
+        <item>ANTRENOR</item>
+    </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="maps_tv_locations_hint">Locații</string>
     <string name="menu_search_search_titile_hint">Căutare</string>
@@ -202,10 +208,6 @@
     <string name="fragment_reports_tv_toolbarTitle_hint">Rapoarte</string>
     <string name="fragment_newLocations_tv_title_hint">Locații noi</string>
     <string name="fragment_settings_tv_title_hint">Setări</string>
-    <string name="title_activity_contact">Map</string>
-    <string name="contact_tv_address_hint">Adresă</string>
-    <string name="contact_tv_email">nechita1iulia16@stud.ase.ro</string>
-    <string name="contact_tv_email_hint">Email</string>
     <string name="claimLocation_tid_postalCode_hint">Cod Poștal</string>
     <string name="claimLocation_tid_city_hint">Oraș</string>
     <string name="home_googleMaps_errorMessage_hint">Nu puteți utiliza serviciile Google Maps</string>
@@ -249,7 +251,7 @@
     <string name="editTeam_btn_cancel_hint">Anulează</string>
     <string name="editTeam_ibtn_addTeamMate_hint">Adaugă coechipier</string>
     <string name="editTeam_ibtn_removeTeamMate_hint">Șterge coechipier</string>
-    <string name="teamProfile_tv_reservation_hint">Rezervări</string>
+    <string name="teamProfile_tv_reservation_hint"><u>Rezervări</u></string>
     <string name="teamProfile_ibtn_next_hint">Anunțuri</string>
     <string name="teamProfile_ibtn_reservation_next_hint">Rezervări</string>
     <string name="title_activity_home_admin_location">HomeAdminLocationActivity</string>
@@ -290,7 +292,7 @@
     <string name="claimLocation_ck_reservation_hint">Rezervare in aplicatie</string>
     <string name="add_team2_tv_title_hint">Adăugare coechipieri</string>
     <string name="add_team2_alertDialog_title">Echipă incompletă</string>
-    <string name="add_team2_alertDialog_message">Nu ați adăugat suficienți jucători pentru a crea o echipă pentru acest sport. Numărul minim pentru a forma o echipă este 2, iar pentru sportul selectat este </string>
+    <string name="add_team2_alertDialog_message">Nu ați adăugat suficienți jucători pentru a crea o echipă pentru acest sport. Numărul minim pentru a forma o echipă este 2, iar pentru sportul selectat este</string>
     <string name="list_item__item_team_tv_teamName_hint">Denumire echipă</string>
     <string name="list_item_team_tv_sport_hint">Denumire sport</string>
     <string name="register_emailError_alreadyExists_hint">Email-ul există deja în baza de date</string>
@@ -308,5 +310,30 @@
     <string name="user_sport_level_5">Expert</string>
     <string name="edit_team_tid_teamName_hint">Nume echipă</string>
     <string name="list_item_usersExplorer_tv_role_hint">Rol</string>
+    <string name="editRoleDialog_positivebutton_hint">Modifică rol</string>
+    <string name="editRoleDialog_negativebutton_hint">Anulează</string>
+    <string name="editRoleDialog_title_alertDialog_hint">Modifică rol coechipier</string>
+    <string name="statistics_tv_title_hint">Statistici</string>
+    <string name="teams_alertDialog_title_hint">Elimină echipă</string>
+    <string name="teams_alertDialog_message_hint">Sunteți sigur că doriți să părăsiți echipa? În cazul în care sunteți singurul căpita, echipa va fi ștearsă.</string>
+    <string name="teams_alertDialog_negativeButton_hint">Nu</string>
+    <string name="teams_alertDialog_positiveButton_hint">Da</string>
+    <string name="role_captain_hint">CĂPITAN</string>
+    <string name="list_item_announcements_tv_title_hint">Titlu</string>
+    <string name="list_item_announcements_tv_date_hint">Data</string>
+    <string name="list_item_announcements_tv_message_hint">Anunț</string>
+    <string name="myProfile_tv_score_initial_hint">0</string>
+    <string name="announcemenets_ibtn_add_hint">Adaugă</string>
+    <string name="role_trainer_hnt">ANTRENOR</string>
+    <string name="add_announcement_tv_date_hint">Data</string>
+    <string name="add_announcement_tv_message_hint">Mesaj</string>
+    <string name="add_announcement_title_hint">Gestiune anunț</string>
+    <string name="add_announcement_negativeButton_hint">Anulează</string>
+    <string name="add_announcement_positiveButton_hint">Salvează</string>
+    <string name="announcements_tag_hint">Gestiune anunț</string>
+    <string name="announcements_alertDialog_delete_hint">Șterge anunț</string>
+    <string name="announcements_alertDialog_delete_message_hint">Sunteți sigur că doriți să ștergeți acest anunț?</string>
+    <string name="announcements_alertDialog_negativeBtn_hint">Nu</string>
+    <string name="announcements_alertDialog_positiveBtn_hint">Da</string>
 
 </resources>

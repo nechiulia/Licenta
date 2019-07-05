@@ -127,8 +127,9 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
 
                 if(lv_list_sportItems.size()!= 0) {
                     insertUser();
-                    getUserID();
-                    insertUserPicture();
+                    if(newUser.getProfilePicture()!=null) {
+                        insertUserPicture();
+                    }
                     for (SportUser sportUtilizator : lv_list_sportItems) {
                         list_to_table.add(getSportID(sportUtilizator));
                     }
@@ -206,6 +207,7 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
         addSportDialog.show(getSupportFragmentManager(),getString(R.string.register2_addSport_hint));
 
         addSportDialog.setArguments(args);
+        addSportDialog.setCancelable(false);
         lv_list_currentSportsName.clear();
     }
 
@@ -232,18 +234,18 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
     }
 
     public void insertUser(){
-        String command= JConstants.INSERT_USER;
-        try(PreparedStatement s = c.prepareStatement(command)){
-            s.setString(1,newUser.getUserName());
-            s.setString(2,newUser.getEmail());
-            s.setString(3,newUser.getPassword());
-            s.setInt(4,newUser.getState());
-            s.setInt(5,newUser.getRole());
-            s.execute();
-        } catch (SQLException e1) {
+        try(PreparedStatement s =c.prepareStatement("INSERT INTO UTILIZATORI VALUES('" + newUser.getUserName() + "','" + newUser.getEmail() + "','" + newUser.getPassword() + "'," + newUser.getState() + "," + newUser.getRole() + ")",Statement.RETURN_GENERATED_KEYS)){
+            int updatedRows=s.executeUpdate();
+            ResultSet r = s.getGeneratedKeys();
+            if (r.next()) {
+                if (updatedRows > 0) {
+                    newUser.setIdUser(r.getInt(1));
+                }
+            }
+        }
+         catch (SQLException e1) {
             e1.printStackTrace();
         }
-
     }
 
     public void insertUserPicture(){
@@ -260,19 +262,6 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
                     +sportUtilizatorTable.getSportLevel()+"');";
             int updatedRows =s.executeUpdate(command);
             if(updatedRows >0 ) Log.d("Updatesuccesful","Updatesuccesful");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getUserID(){
-        try(Statement s = c.createStatement()){
-            String command ="SELECT ID FROM UTILIZATORI WHERE EMAIL='"+newUser.getEmail()+"';";
-            try(ResultSet r =s.executeQuery(command)) {
-                if(r.next()){
-                    newUser.setIdUser(r.getInt(1));
-                }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

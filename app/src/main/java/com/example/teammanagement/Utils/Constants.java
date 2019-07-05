@@ -1,6 +1,14 @@
 package com.example.teammanagement.Utils;
 
+import android.annotation.SuppressLint;
+
+import java.text.SimpleDateFormat;
+
 public interface Constants {
+
+    String TIME_FORMAT="dd/MM/yyyy HH:mm";
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat simpleDateFormat=new SimpleDateFormat(TIME_FORMAT);
 
     String ADD_KEY="addQuestions";
     String AD_KEY="add";
@@ -21,6 +29,10 @@ public interface Constants {
 
     String NEW_USER= "New User";
     String CLICKED_USERID ="ClickedUserID";
-    String CLICKED_TEAMID="ClickedTeamID";
+    String CLICKED_TEAM ="ClickedTeamID";
     String CURRENT_TEAM="Current Team Info";
+    String ADDED_TEAMMATES="Added teammates";
+    String CURRENT_TEAM_ID ="Current team ID";
+
+    int ADD_TEAMMATES_CODE =101;
 }

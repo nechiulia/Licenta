@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,8 +12,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -22,9 +23,10 @@ import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Team;
 import com.example.teammanagement.Utils.Teammate;
 import com.example.teammanagement.Utils.User;
-import com.example.teammanagement.adapters.TeammatesAdapter;
 import com.example.teammanagement.adapters.TeammatesCkAdapter;
 import com.example.teammanagement.database.JDBCController;
+import com.example.teammanagement.dialogs.AddSportDialog;
+import com.example.teammanagement.dialogs.EditRoleDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +43,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditTeamActivity extends AppCompatActivity {
+public class EditTeamActivity extends AppCompatActivity implements EditRoleDialog.EditRoleDialogListener {
 
     private TextInputEditText iet_teamName;
     private ListView lv_teammates;
@@ -58,7 +60,9 @@ public class EditTeamActivity extends AppCompatActivity {
     private Connection c;
 
     private User currentUser;
-    private Team currentTeam;
+    private int currentTeamID;
+    private Team currentTeam= new Team();
+    private int clickedTeammateID;
     private List<Integer> list_teammatesID = new ArrayList<>();
     private List<Teammate> list_teammates = new ArrayList<>();
     private List<Teammate> checkedTeammates = new ArrayList<>();
@@ -87,7 +91,7 @@ public class EditTeamActivity extends AppCompatActivity {
         ibtn_remove_temmate = findViewById(R.id.editTeam_btn_removeTeamMate);
 
         getCurrentUser();
-        getCurrentTeamInfo();
+        getTeam();
         selectTeammatesID();
         for(int i = 0; i< list_teammatesID.size(); i++){
             getTeammatesInfo(list_teammatesID.get(i));
@@ -123,6 +127,7 @@ public class EditTeamActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(clickCancel());
         ibtn_remove_temmate.setOnClickListener(clickRemove());
         ibtn_add_temmate.setOnClickListener(clickAdd());
+        lv_teammates.setOnItemLongClickListener(editRole());
 
     }
 
@@ -133,9 +138,25 @@ public class EditTeamActivity extends AppCompatActivity {
         currentUser= gson.fromJson(json, User.class);
     }
 
-    public void getCurrentTeamInfo(){
-        if(intent.hasExtra(Constants.CURRENT_TEAM)){
-            currentTeam= (Team) intent.getSerializableExtra(Constants.CURRENT_TEAM);
+    public void getTeam(){
+
+        if(intent.hasExtra(Constants.CURRENT_TEAM_ID)){
+            currentTeamID=(Integer) intent.getSerializableExtra(Constants.CURRENT_TEAM_ID);
+        }
+
+        getTeamInfo();
+    }
+    public void getTeamInfo(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM ECHIPE WHERE ID="+currentTeamID)){
+                if(r.next()){
+                    currentTeam.setId(currentTeamID);
+                    currentTeam.setTeamName(r.getString(2));
+                    currentTeam.setSport(r.getString(3));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -223,7 +244,7 @@ public class EditTeamActivity extends AppCompatActivity {
 
     public void insertRole(Teammate teammate){
         try(Statement s = c.createStatement()){
-            int updatedRows=s.executeUpdate("INSERT INTO ROLECHIPA VALUES("+teammate.getUserID()+","+currentTeam.getId()+",N'JUCĂTOR');");
+            int updatedRows=s.executeUpdate("INSERT INTO ROLECHIPA VALUES("+teammate.getUserID()+","+currentTeam.getId()+",N'"+teammate.getTeamRole()+"');");
             if(updatedRows >0 ) {
                 Log.d("databaseUpdated", String.valueOf(updatedRows));
             }
@@ -243,7 +264,15 @@ public class EditTeamActivity extends AppCompatActivity {
 
     public void deleteTeammates(){
         try(Statement s = c.createStatement()){
-            s.executeUpdate("DELETE FROM ROLECHIPA WHERE IDUTILIZATOR="+currentTeam.getId()+" AND IDUTILIZATOR!="+currentUser.getIdUser()+";");
+            s.executeUpdate("DELETE FROM ROLECHIPA WHERE IDUTILIZATOR!="+currentUser.getIdUser()+"AND IDECHIPA="+currentTeam.getId()+";");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteTeammate(Teammate teammate){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM ROLECHIPA WHERE IDUTILIZATOR="+teammate.getUserID()+" AND IDECHIPA="+currentTeam.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -254,6 +283,7 @@ public class EditTeamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent=new Intent(getApplicationContext(), TeamProfileActivity.class);
+                intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
                 startActivity(intent);
             }
         };
@@ -272,6 +302,7 @@ public class EditTeamActivity extends AppCompatActivity {
                             insertRole(teammate);
                         }
                         intent = new Intent(getApplicationContext(), TeamProfileActivity.class);
+                        intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
                         startActivity(intent);
                     } else {
                         AlertDialog.Builder builder = new AlertDialog.Builder(EditTeamActivity.this);
@@ -316,9 +347,23 @@ public class EditTeamActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                intent=new Intent(getApplicationContext(), AddTeammatesActivity.class);
+                intent.putExtra(Constants.CLICKED_TEAM,currentTeam);
+                startActivityForResult(intent,Constants.ADD_TEAMMATES_CODE);
             }
         };
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK&&data!=null) {
+            if (requestCode == Constants.ADD_TEAMMATES_CODE) {
+                list_teammates.addAll((ArrayList<Teammate>) data.getSerializableExtra(Constants.ADDED_TEAMMATES));
+                adapter.notifyDataSetChanged();
+            }
+        }
     }
 
     private View.OnClickListener clickRemove() {
@@ -326,8 +371,28 @@ public class EditTeamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                checkedTeammates=adapter.getCheckedTeammates();
+                for(Teammate teammate: checkedTeammates){
+                    deleteTeammate(teammate);
+                }
+
                 list_teammates.removeAll(adapter.getCheckedTeammates());
                 adapter.notifyDataSetChanged();
+            }
+        };
+    }
+
+    private AdapterView.OnItemLongClickListener editRole()
+    {
+        return new AdapterView.OnItemLongClickListener() {
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                clickedTeammateID=position;
+                openDialog();
+
+                return false;
             }
         };
     }
@@ -350,5 +415,20 @@ public class EditTeamActivity extends AppCompatActivity {
         return false;
     }
 
+    private void openDialog(){
+        Bundle args = new Bundle();
 
+        EditRoleDialog editRoleDialog=new EditRoleDialog();
+        editRoleDialog.show(getSupportFragmentManager(),"Editează roluri");
+
+        editRoleDialog.setArguments(args);
+    }
+
+
+    @Override
+    public void applyTexts(String role) {
+
+        list_teammates.get(clickedTeammateID).setTeamRole(role);
+        adapter.notifyDataSetChanged();
+    }
 }

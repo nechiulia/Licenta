@@ -19,7 +19,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.AddTeammatesActivity"></activity>
+        <activity android:name=".activities.StatisticsActivity"></activity>
+        <activity android:name=".activities.AddTeammatesActivity" />
         <activity android:name=".activities.AddTeam2Activity" />
         <activity
             android:name=".activities.HomeAdminLocationActivity"
@@ -31,8 +32,7 @@
             android:theme="@style/BlackText" />
         <activity
             android:name=".activities.AnnouncementsActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/BlackText" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activities.TeamProfileActivity"
             android:screenOrientation="portrait"
@@ -45,11 +45,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".activities.ContactActivity"
-            android:label="@string/title_activity_contact"
-            android:screenOrientation="portrait"
-            android:theme="@style/BlackText" />
         <activity
             android:name=".activities.HomeAdminActivity"
             android:screenOrientation="portrait"

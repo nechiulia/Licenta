@@ -15,7 +15,6 @@ import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Team;
 import com.example.teammanagement.Utils.Teammate;
 import com.example.teammanagement.Utils.User;
-import com.example.teammanagement.adapters.ExploreUsersAdapter;
 import com.example.teammanagement.adapters.TeammatesAdapter;
 import com.example.teammanagement.database.JDBCController;
 import com.google.firebase.database.DataSnapshot;
@@ -52,7 +51,9 @@ public class TeamProfileActivity extends AppCompatActivity {
     private JDBCController jdbcController;
 
     private User currentUser;
-    private Team currentTeam;
+    private int currentTeamID;
+    private Team currentTeam = new Team();
+    private String currentUserRole;
     private List<Integer> list_teammatesID = new ArrayList<>();
     private List<Teammate> list_teammates = new ArrayList<>();
     private Map<Integer,byte[]> list_teammatesPhotos = new HashMap<>();
@@ -118,6 +119,10 @@ public class TeamProfileActivity extends AppCompatActivity {
 
         ibtn_back.setOnClickListener(clickBack());
         ibtn_edit.setOnClickListener(clickEdit());
+        tv_announcements.setOnClickListener(clickAnnouncements());
+
+        getCurrentUserTeamRole();
+        if(!currentUserRole.equals(getString(R.string.role_captain_hint)))ibtn_edit.setVisibility(View.GONE);
     }
 
     public void getUser(){
@@ -127,10 +132,28 @@ public class TeamProfileActivity extends AppCompatActivity {
         currentUser= gson.fromJson(json, User.class);
     }
 
+
+
     public void getTeam(){
 
-        if(intent.hasExtra(Constants.CLICKED_TEAMID)){
-            currentTeam=(Team) intent.getSerializableExtra(Constants.CLICKED_TEAMID);
+        if(intent.hasExtra(Constants.CURRENT_TEAM_ID)){
+            currentTeamID=(Integer) intent.getSerializableExtra(Constants.CURRENT_TEAM_ID);
+        }
+
+        getTeamInfo();
+    }
+
+    public void getTeamInfo(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM ECHIPE WHERE ID="+currentTeamID)){
+                if(r.next()){
+                    currentTeam.setId(currentTeamID);
+                    currentTeam.setTeamName(r.getString(2));
+                    currentTeam.setSport(r.getString(3));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -152,6 +175,18 @@ public class TeamProfileActivity extends AppCompatActivity {
                 if(r.next()) {
                     currentTeam.setTeamName(r.getString(1));
                     currentTeam.setSport(r.getString(2));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getCurrentUserTeamRole(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT DENUMIRE FROM ROLECHIPA WHERE IDUTILIZATOR="+currentUser.getIdUser()+" AND IDECHIPA="+currentTeam.getId())){
+                if(r.next()){
+                    currentUserRole=r.getString(1);
                 }
             }
         } catch (SQLException e) {
@@ -231,7 +266,18 @@ public class TeamProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent=new Intent(getApplicationContext(), EditTeamActivity.class);
-                intent.putExtra(Constants.CURRENT_TEAM,currentTeam);
+                intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
+                startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener clickAnnouncements() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getApplicationContext(), AnnouncementsActivity.class);
+                intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
                 startActivity(intent);
             }
         };

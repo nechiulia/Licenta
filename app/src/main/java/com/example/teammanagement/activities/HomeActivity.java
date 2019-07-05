@@ -140,7 +140,7 @@ public class HomeActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View v) {
                 if(isServiceOK()) {
-                    intent = new Intent(getApplicationContext(), ContactActivity.class);
+                    intent = new Intent(getApplicationContext(), StatisticsActivity.class);
                     startActivity(intent);
                 }
             }

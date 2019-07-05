@@ -251,7 +251,7 @@ public class AddTeam2Activity extends AppCompatActivity {
                     else{
                         AlertDialog.Builder builder = new AlertDialog.Builder(AddTeam2Activity.this);
                         builder.setTitle(getString(R.string.add_team2_alertDialog_title))
-                                .setMessage(getString(R.string.add_team2_alertDialog_message)+minPlayers)
+                                .setMessage(getString(R.string.add_team2_alertDialog_message)+" "+minPlayers)
                                 .setCancelable(false)
                                 .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
                                     @Override

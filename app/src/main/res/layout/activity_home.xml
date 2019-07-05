@@ -78,7 +78,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.0"
             android:background="@drawable/stat1"
-            android:contentDescription="@string/Home_ib_Contact_hint" />
+            android:contentDescription="@string/Home_ib_Statistics_hint" />
 
     </LinearLayout>
 

@@ -110,7 +110,7 @@ public class MyProfileActivity extends AppCompatActivity
     }
 
     public void initData(){
-          if(currentUser.getProfilePicture() != null) {
+        if(currentUser.getProfilePicture() != null) {
             bitmap = BitmapFactory.decodeByteArray(currentUser.getProfilePicture(), 0, currentUser.getProfilePicture().length);
             iv_profilePicture.setImageBitmap(Bitmap.createBitmap(bitmap));
         }

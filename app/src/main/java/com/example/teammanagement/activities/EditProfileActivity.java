@@ -405,6 +405,7 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
         addSportDialog.show(getSupportFragmentManager(),getString(R.string.register2_addSport_hint));
 
         addSportDialog.setArguments(args);
+        addSportDialog.setCancelable(false);
         lv_list_currentSportsName.clear();
     }
 

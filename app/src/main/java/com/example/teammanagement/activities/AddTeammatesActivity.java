@@ -1,12 +1,11 @@
 package com.example.teammanagement.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,7 +15,6 @@ import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Team;
 import com.example.teammanagement.Utils.Teammate;
 import com.example.teammanagement.Utils.User;
-import com.example.teammanagement.adapters.AddUsersAdapter;
 import com.example.teammanagement.adapters.TeammatesCkAdapter;
 import com.example.teammanagement.database.JDBCController;
 import com.google.firebase.database.DataSnapshot;
@@ -48,8 +46,9 @@ public class AddTeammatesActivity extends AppCompatActivity {
     private JDBCController jdbcController;
     private Connection c;
 
-    private Team team;
+    private Team currentTeam;
     private User currentUser;
+    private int idSport;
     private List<Teammate> checkedUsers = new ArrayList<>();
     private List<Teammate> listUsers = new ArrayList<>();
     private Map<Integer,byte[]> listUserPhotos = new HashMap<>();
@@ -59,10 +58,15 @@ public class AddTeammatesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_teammates);
 
+        intent=getIntent();
+
         initComponents();
     }
 
     public void initComponents() {
+
+        jdbcController = JDBCController.getInstance();
+        c=jdbcController.openConnection();
 
         btn_cancel = findViewById(R.id.add_teammates_btn_cancel);
         btn_save = findViewById(R.id.add_teammates_btn_save);
@@ -73,6 +77,11 @@ public class AddTeammatesActivity extends AppCompatActivity {
 
         getUser();
 
+        if(intent.hasExtra(Constants.CLICKED_TEAM)){
+           currentTeam = (Team) intent.getSerializableExtra(Constants.CLICKED_TEAM);
+        }
+
+        getTeamSport();
         getUsers();
 
         Thread t1 = new Thread(){
@@ -134,20 +143,54 @@ public class AddTeammatesActivity extends AppCompatActivity {
 
     public void getUsers(){
         try(Statement s = c.createStatement()){
-            try(ResultSet r = s.executeQuery("SELECT ID,NUMEUTILIZATOR FROM UTILIZATORI U, ")){
-
+            try(ResultSet r = s.executeQuery("select u.ID, u.NumeUtilizator from Utilizatori u, SportUtilizator su where u.ID=su.IDUtilizator AND u.ID" +
+                    "  not in (select r.IDUtilizator from RolEchipa  r where u.ID=r.IDUtilizator and r.IDEchipa ="+currentTeam.getId() +")"+
+                    "  and su.IDSport="+idSport+" AND u.ROL=0 AND u.STARE=0")){
+                while(r.next()){
+                    Teammate teammate = new Teammate();
+                    int userID=r.getInt(1);
+                    String userName = r.getString(2);
+                    teammate.setUserID(userID);
+                    teammate.setUserName(userName);
+                    teammate.setTeamRole("JUCĂTOR");
+                    listUsers.add(teammate);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void getTeamSport(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT ID FROM SPORTURI WHERE DENUMIRE='"+currentTeam.getSport()+"';")){
+                if(r.next()){
+                    idSport=r.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertRole(Teammate teammate){
+        try(Statement s = c.createStatement()){
+            int updatedRows=s.executeUpdate("INSERT INTO ROLECHIPA VALUES("+teammate.getUserID()+","+currentTeam.getId()+",N'JUCĂTOR');");
+            if(updatedRows >0 ) {
+                Log.d("databaseUpdated", String.valueOf(updatedRows));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     private View.OnClickListener clickCancel() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(),EditTeamActivity.class);
-                startActivity(intent);
+                setResult(RESULT_CANCELED,intent);
+                finish();
             }
         };
     }
@@ -156,9 +199,13 @@ public class AddTeammatesActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Intent intent=new Intent(getApplicationContext(),EditTeamActivity.class);
-                startActivity(intent);
+                checkedUsers=adapter.getCheckedTeammates();
+                for (Teammate teammate : checkedUsers) {
+                    insertRole(teammate);
+                }
+                intent.putExtra(Constants.ADDED_TEAMMATES,(ArrayList<Teammate>)checkedUsers);
+                setResult(RESULT_OK,intent);
+                finish();
             }
         };
     }

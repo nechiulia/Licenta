@@ -8,6 +8,12 @@ public class Team implements Serializable {
     private String teamName;
     private String sport;
 
+    public Team() {
+        this.id=-1;
+        this.teamName="";
+        this.sport="";
+    }
+
     public Team(String teamName, String sport) {
         this.teamName = teamName;
         this.sport = sport;
