@@ -171,19 +171,6 @@
         <item>Avansat</item>
         <item>Expert</item>
     </string-array>
-    <string-array name="location_type">
-        <item>Selectează tipul locației</item>
-        <item>Sala de fitness</item>
-        <item>Complex sportiv</item>
-        <item>Bazin înot</item>
-        <item>Studio de dans</item>
-        <item>Bază sportivă</item>
-        <item>Patinoar</item>
-        <item>Club echitație</item>
-        <item>Teren exterior</item>
-        <item>Dojo</item>
-        <item>Altceva</item>
-    </string-array>
     <string-array name="team_role">
         <item>Selectează rolul</item>
         <item>JUCĂTOR</item>
@@ -340,5 +327,24 @@
     <string name="delete_account_alertBuilder_message_teams_hint">Aveți rolul de căpitan în cadrul anumitor echipe din aplicație. Pentru a putea șterge contul trebuie să părăsiți sau să ștergeți echipele în care îndepliniți acest rol. Dacă ați realizat rezervări pentru perioada următoare, acestea trebuie anulate pentru a se permite ștergerea contului de utilizator.</string>
     <string name="disable_account_altertbuilder_message_hint">Nu puteți dezactiva contul deoarece aveți rezervări în cadrul aplicației. Dacă doriți să dezactivati contul, anulați mai întâi rezervările!</string>
     <string name="disable_account_alertBuilder_message_teams_hint">Aveți rolul de căpitan în cadrul anumitor echipe din aplicație. Pentru a putea dezactiva contul trebuie să părăsiți sau să ștergeți echipele în care îndepliniți acest rol. Dacă ați realizat rezervări pentru perioada următoare, acestea trebuie anulate pentru a se permite dezactivarea contului de utilizator.</string>
+    <string name="claim_location_isvpostacode_error_hint">Codul poștal este format din cifre</string>
+    <string name="claim_location_isvalid_lettersAndDigits_error_hint">Doar litere, cifre și spații</string>
+    <string name="cliam_location_isvlength_postacode_error_hint">Cod poștal prea scurt, minim 6 cifre</string>
+    <string name="claim_location_isvalidstreetName_length_error_hint">Numele trebuie să aibă cel puțin 3 litere</string>
+    <string name="claim_location_isvalidLocation_error_hint">Denumirea locației trebuie să aibă cel puțin 3 litere</string>
+    <string name="list_item_location_latitude_hint">Latitudine</string>
+    <string name="list_item_location_longitude_hint">Longitudine</string>
+    <string name="list_item_location_reservation_hint">Rezervări în aplicație</string>
+    <string name="reservations_yes">Da</string>
+    <string name="reservation_no">Nu</string>
+    <string name="maps_alertDialog_errorLocation_title_hint">Eroare căutare locație</string>
+    <string name="maps_alertDialog_errorLocation_message_hint">Nu s-a găsit nicio locație cu această denumire</string>
+    <string name="maps_alertDialog_errorLocation_positiveButton_hint">OK</string>
+    <string name="list_item_location_admin_btn_verifyInfo_hint">Verifică informațiile</string>
+    <string name="fragment_location_tv_title_hint">Profil locație</string>
+    <string name="fragment_location_ibtn_logout_hint">Delogare</string>
+    <string name="fragment_locations_reservations_tv_title_hint">Rezervări</string>
+    <string name="fragment_newLocation_ibtn_logout_hint">Delogare</string>
+    <string name="fragment_edit_location_tv_title_hint">Editare profil locație</string>
 
 </resources>

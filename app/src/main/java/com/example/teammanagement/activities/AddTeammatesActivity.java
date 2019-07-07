@@ -203,6 +203,9 @@ public class AddTeammatesActivity extends AppCompatActivity {
                 for (Teammate teammate : checkedUsers) {
                     insertRole(teammate);
                 }
+                for(Teammate teammate:checkedUsers){
+                    teammate.setUserProfilePicture(null);
+                }
                 intent.putExtra(Constants.ADDED_TEAMMATES,(ArrayList<Teammate>)checkedUsers);
                 setResult(RESULT_OK,intent);
                 finish();

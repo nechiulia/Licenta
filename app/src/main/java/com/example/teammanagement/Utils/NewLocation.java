@@ -1,19 +1,31 @@
 package com.example.teammanagement.Utils;
 
-public class NewLocation {
+import java.io.Serializable;
 
-    private String userName;
+public class NewLocation implements Serializable {
+
+    private int locationID;
+    private int userID;
     private String email;
     private String locationName;
     private String postalCode;
     private String address;
+    private double latitude;
+    private double longitude;
+    private int resevation;
+    private int state;
+    private String userName;
 
-    public NewLocation(String userName, String email, String locationName, String postalCode, String address) {
-        this.userName = userName;
-        this.email = email;
-        this.locationName = locationName;
-        this.postalCode = postalCode;
-        this.address = address;
+    public NewLocation() {
+        this.locationID = -1;
+        this.userID = -1;
+        this.email = "";
+        this.locationName = "";
+        this.postalCode = "";
+        this.address = "";
+        this.resevation = -1;
+        this.state = -1;
+        this.userName="";
     }
 
     public String getUserName() {
@@ -22,6 +34,54 @@ public class NewLocation {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public int getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(int locationID) {
+        this.locationID = locationID;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public int getResevation() {
+        return resevation;
+    }
+
+    public void setResevation(int resevation) {
+        this.resevation = resevation;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userName) {
+        this.userID = userName;
     }
 
     public String getEmail() {
@@ -59,7 +119,7 @@ public class NewLocation {
     @Override
     public String toString() {
         return "NewLocation{" +
-                "userName='" + userName + '\'' +
+                "userName='" + userID + '\'' +
                 ", email='" + email + '\'' +
                 ", locationName='" + locationName + '\'' +
                 ", postalCode='" + postalCode + '\'' +

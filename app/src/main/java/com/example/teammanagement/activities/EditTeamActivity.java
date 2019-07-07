@@ -65,6 +65,8 @@ public class EditTeamActivity extends AppCompatActivity implements EditRoleDialo
     private int clickedTeammateID;
     private List<Integer> list_teammatesID = new ArrayList<>();
     private List<Teammate> list_teammates = new ArrayList<>();
+    private List<Teammate> addedTeammates = new ArrayList<>();
+    private List<Teammate> removedTeammates = new ArrayList<>();
     private List<Teammate> checkedTeammates = new ArrayList<>();
     private Map<Integer,byte[]> list_teammatesPhotos = new HashMap<>();
 
@@ -283,6 +285,14 @@ public class EditTeamActivity extends AppCompatActivity implements EditRoleDialo
             @Override
             public void onClick(View v) {
                 intent=new Intent(getApplicationContext(), TeamProfileActivity.class);
+                list_teammates.removeAll(addedTeammates);
+                list_teammates.addAll(removedTeammates);
+                for(Teammate teammate: removedTeammates) {
+                    insertRole(teammate);
+                }
+                for(Teammate teammate: addedTeammates){
+                    deleteTeammate(teammate);
+                }
                 intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
                 startActivity(intent);
             }
@@ -360,7 +370,20 @@ public class EditTeamActivity extends AppCompatActivity implements EditRoleDialo
 
         if(resultCode==RESULT_OK&&data!=null) {
             if (requestCode == Constants.ADD_TEAMMATES_CODE) {
-                list_teammates.addAll((ArrayList<Teammate>) data.getSerializableExtra(Constants.ADDED_TEAMMATES));
+                addedTeammates.addAll((ArrayList<Teammate>) data.getSerializableExtra(Constants.ADDED_TEAMMATES));
+                list_teammates.addAll(addedTeammates);
+                Thread t1 = new Thread(){
+                    @Override
+                    public void run() {
+                        getUserProfilePicture();
+                    }
+                };
+                t1.start();
+                try {
+                    t1.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 adapter.notifyDataSetChanged();
             }
         }
@@ -372,11 +395,11 @@ public class EditTeamActivity extends AppCompatActivity implements EditRoleDialo
             public void onClick(View v) {
 
                 checkedTeammates=adapter.getCheckedTeammates();
+                removedTeammates.addAll(adapter.getCheckedTeammates());
                 for(Teammate teammate: checkedTeammates){
                     deleteTeammate(teammate);
                 }
-
-                list_teammates.removeAll(adapter.getCheckedTeammates());
+                list_teammates.removeAll(removedTeammates);
                 adapter.notifyDataSetChanged();
             }
         };

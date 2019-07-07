@@ -1,5 +1,7 @@
 package com.example.teammanagement.fragments;
 
+import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
 import com.example.teammanagement.Utils.Report;
+import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.ExpandableListLocationActivitiesAdapter;
 import com.example.teammanagement.adapters.ExpandableListReportAdminAdapter;
 
@@ -23,25 +27,30 @@ import java.util.List;
 
 public class LocationProfileFragment extends Fragment {
 
-    TextView tv_locationName;
-    TextView tv_email;
-    TextView tv_postalCode;
-    TextView tv_address;
-    TextView tv_monday;
-    TextView tv_tuesday;
-    TextView tv_wednsdey;
-    TextView tv_thursday;
-    TextView tv_friday;
-    TextView tv_saturday;
-    TextView tv_sunday;
-    TextView tv_program;
-    TextView tv_activities;
-    LinearLayout layout_hours;
-    ExpandableListView lv_activities;
+    private TextView tv_locationName;
+    private TextView tv_email;
+    private TextView tv_postalCode;
+    private TextView tv_address;
+    private TextView tv_monday;
+    private TextView tv_tuesday;
+    private TextView tv_wednsdey;
+    private TextView tv_thursday;
+    private TextView tv_friday;
+    private TextView tv_saturday;
+    private TextView tv_sunday;
+    private TextView tv_program;
+    private TextView tv_activities;
+    private ImageButton ibtn_logOut;
+    private LinearLayout layout_hours;
+    private ExpandableListView lv_activities;
+
+    private ExpandableListLocationActivitiesAdapter listAdapter;
+
+    private Intent intent;
+
     private HashMap<String, Activity> mapActivity = new HashMap<>();
     private List<String> listParentActivities = new ArrayList<>();
     private List<Activity> listActivities=new ArrayList<>();
-    ExpandableListLocationActivitiesAdapter listAdapter;
 
     @Nullable
     @Override
@@ -63,12 +72,14 @@ public class LocationProfileFragment extends Fragment {
         tv_program=view.findViewById(R.id.fragment_location_program_hint);
         tv_activities=view.findViewById(R.id.fragment_location_activities_hint);
         lv_activities=view.findViewById(R.id.fragment_location_lv_activities);
+        ibtn_logOut=view.findViewById(R.id.fragment_location_ibtn_logout);
 
 
         tv_program.setOnClickListener(showProgram());
         tv_activities.setOnClickListener(showActivities());
         layout_hours.setVisibility(View.GONE);
         lv_activities.setVisibility(View.GONE);
+        ibtn_logOut.setOnClickListener(clickLogOut());
 
         initData();
         if(listParentActivities.size() != 0 && mapActivity.size() !=0) {
@@ -148,5 +159,15 @@ public class LocationProfileFragment extends Fragment {
         mapActivity.put(listParentActivities.get(13), listActivities.get(13));
 
 
+    }
+
+    private View.OnClickListener clickLogOut() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        };
     }
 }

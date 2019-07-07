@@ -77,6 +77,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void geoLocate(){
+        mMap.clear();
+
         String searchText = et_searchText.getText().toString();
 
         Geocoder geocoder = new Geocoder(MapsActivity.this);
@@ -97,9 +99,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
 
-            builder.setTitle("Eroare căutare locație")
-                    .setMessage("Nu s-a găsit nicio locație cu această denumire")
-                    .setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            builder.setTitle(getString(R.string.maps_alertDialog_errorLocation_title_hint))
+                    .setMessage(getString(R.string.maps_alertDialog_errorLocation_message_hint))
+                    .setNeutralButton(getString(R.string.maps_alertDialog_errorLocation_positiveButton_hint), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

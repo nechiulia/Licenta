@@ -3,6 +3,7 @@ package com.example.teammanagement.fragments;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -14,6 +15,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Report;
+import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.ExpandableListReportAdminAdapter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,13 +27,18 @@ import java.util.List;
 
 public class ReportsFragment extends Fragment {
 
-    ExpandableListView lv_report;
-    ImageButton ibtn_aprove;
-    ImageButton ibtn_remove;
+    private ExpandableListView lv_report;
+    private ImageButton ibtn_aprove;
+    private ImageButton ibtn_remove;
+    private ImageButton ibtn_logOut;
+
+    private ExpandableListReportAdminAdapter listAdapter;
+
+    private Intent intent;
+
     private HashMap<String,List<String>> mapReport = new HashMap<>();
     private List<String> listUsersDate = new ArrayList<>();
     private List<Report> listReports=new ArrayList<>();
-    ExpandableListReportAdminAdapter listAdapter;
 
 
     @Nullable
@@ -192,5 +199,15 @@ public class ReportsFragment extends Fragment {
         mapReport.put(listUsersDate.get(20),Arrays.asList(listReports.get(20).getFeedback()));
         mapReport.put(listUsersDate.get(21),Arrays.asList(listReports.get(21).getFeedback()));
 
+    }
+
+    private View.OnClickListener clickLogOut() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        };
     }
 }

@@ -2,30 +2,55 @@ package com.example.teammanagement.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.NewLocation;
+import com.example.teammanagement.Utils.SharedViewModel;
+import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.ExpandableListNewLocationAdminAdapter;
+import com.example.teammanagement.database.JDBCController;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class NewLocationsFragment extends Fragment {
-    ExpandableListView lv_newLocations;
-    ImageButton ibtn_aprove;
-    ImageButton ibtn_remove;
-    ExpandableListNewLocationAdminAdapter listAdapter;
+
+public class NewLocationsFragment extends Fragment  {
+    private ExpandableListView lv_newLocations;
+    private ImageButton ibtn_aprove;
+    private ImageButton ibtn_remove;
+    private ImageButton ibtn_logOut;
+
+    private Intent intent;
+
+    private ExpandableListNewLocationAdminAdapter listAdapter;
+
+    private JDBCController jdbcController;
+    private Connection c;
+
+    private SharedViewModel model;
+
     private HashMap<String, NewLocation> mapLocations = new HashMap<>();
     private List<String> listUsersDate = new ArrayList<>();
     private List<NewLocation> listNewLocations = new ArrayList<>();
@@ -35,12 +60,18 @@ public class NewLocationsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newlocations,null);
+
+        jdbcController =JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
         lv_newLocations =view.findViewById(R.id.fragment_newLocations_lv);
         ibtn_aprove=view.findViewById(R.id.fragment_newLocations_ibtn_aproveFeedback);
         ibtn_remove=view.findViewById(R.id.fragment_newLocations_ibtn_remove);
+        ibtn_logOut=view.findViewById(R.id.fragment_newLocation_ibtn_logout);
 
         ibtn_remove.setOnClickListener(clickRemove());
         ibtn_aprove.setOnClickListener(clickAprove());
+        ibtn_logOut.setOnClickListener(clickLogOut());
 
         initData();
 
@@ -49,8 +80,47 @@ public class NewLocationsFragment extends Fragment {
             lv_newLocations.setAdapter(listAdapter);
         }
 
+
+        model = ViewModelProviders.of(this.getActivity()).get(SharedViewModel.class);
+
+
         return view;
 
+    }
+
+    public void selectLocations(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM LOCATII WHERE STARE=2")){
+                while (r.next()){
+                    NewLocation newLocation = new NewLocation();
+                    newLocation.setLocationID(r.getInt(1));
+                    newLocation.setLocationName(r.getString(2));
+                    newLocation.setPostalCode(r.getString(3));
+                    newLocation.setAddress(r.getString(4));
+                    newLocation.setResevation(r.getByte(7));
+                    newLocation.setState(r.getInt(8));
+                    newLocation.setUserID(r.getInt(9));
+                    listUsersDate.add(r.getString(2));
+                    mapLocations.put(r.getString(2),newLocation);
+                    listNewLocations.add(newLocation);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectUsername(NewLocation location){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT NUMEUTILIZATOR,EMAIL FROM UTILIZATORI WHERE ID="+location.getUserID())){
+                if (r.next()){
+                    location.setUserName(r.getString(1));
+                    location.setEmail(r.getString(2));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private View.OnClickListener clickRemove() {
@@ -128,22 +198,25 @@ public class NewLocationsFragment extends Fragment {
         listAdapter.notifyDataSetChanged();
     }
 
-    public void getKeys(List<NewLocation> list_NewLocations){
 
-        for(NewLocation l: list_NewLocations){
-            listUsersDate.add(l.getUserName());
-        }
-    }
 
     public void initData(){
-        NewLocation location1 = new NewLocation("Studio IDance București","office@idancestudio.ro","IDance Studio by Catalin & Andreea","031424","Traian Popovici 87A");
-        NewLocation location2 = new NewLocation("Studio HappyFeet București","happyfeetstudio@gmail.com","Happy Feet Studio","030301","Șoseaua Mihai Bravu 223");
-        listNewLocations.add(location1);
-        listNewLocations.add(location2);
+        selectLocations();
 
-        getKeys(listNewLocations);
+        for(NewLocation l: listNewLocations){
+            selectUsername(l);
+        }
 
-        mapLocations.put(location1.getUserName(), location1);
-        mapLocations.put(location2.getUserName(),location2);
     }
+
+    private View.OnClickListener clickLogOut() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
+            }
+        };
+    }
+
 }
