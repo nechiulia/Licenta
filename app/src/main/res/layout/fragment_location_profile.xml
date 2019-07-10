@@ -1,423 +1,443 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fillViewport="false">
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:layout_weight="1.0">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fragment_location_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/fragment_location_ibtn_logout"
+            android:layout_width="50dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/transparent"
+            android:contentDescription="@string/fragment_newLocation_ibtn_logout_hint"
+            android:src="@drawable/ic_logoff"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/fragment_location_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/fragment_location_tv_title_hint"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.391"
+            app:layout_constraintStart_toEndOf="@+id/fragment_location_ibtn_logout"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="520dp"
+        android:fillViewport="false"
         android:orientation="vertical"
-        android:scrollbars="vertical">
-
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/fragment_location_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/fragment_location_ibtn_logout"
-                android:layout_width="50dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/transparent"
-                android:src="@drawable/ic_logoff"
-                android:contentDescription="@string/fragment_newLocation_ibtn_logout_hint"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/fragment_location_tv_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/fragment_location_tv_title_hint"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.391"
-                app:layout_constraintStart_toEndOf="@+id/fragment_location_ibtn_logout"
-                app:layout_constraintTop_toTopOf="parent" />
-        </android.support.constraint.ConstraintLayout>
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_location_toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:layout_weight="1.0"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <TextView
-                android:id="@+id/fragment_location_locationName_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_locationName_hint"
-                android:textColor="@color/darkGrey"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/fragment_location_locationName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_locationName"
-                android:textColor="@color/darkGrey" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <TextView
-                android:id="@+id/fragment_location_email_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_email_hint"
-                android:textColor="@color/darkGrey"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/fragment_location_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_locationName"
-                android:textColor="@color/darkGrey" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <TextView
-                android:id="@+id/fragment_location_postalCode_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_postalCode_hint"
-                android:textColor="@color/darkGrey"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/fragment_location_postalCode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_locationName"
-                android:textColor="@color/darkGrey" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <TextView
-                android:id="@+id/fragment_location_locationAddress_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_locationAddress_hint"
-                android:textColor="@color/darkGrey"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/fragment_location_locationAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_locationName"
-                android:textColor="@color/darkGrey" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <TextView
-                android:id="@+id/fragment_location_program_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_program_hint"
-                android:textColor="@color/darkGrey"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fragment_location_container_program"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.0"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
+                android:layout_weight="1.0"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragment_location_monday_hint"
+                    android:id="@+id/fragment_location_locationName_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_monday_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:text="@string/fragment_location_locationName_hint"
+                    android:textColor="@color/darkGrey"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/fragment_location_monday_Hours"
+                    android:id="@+id/fragment_location_locationName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
+                    android:text="@string/fragment_location_locationName"
                     android:textColor="@color/darkGrey" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragment_location_tuesday_hint"
+                    android:id="@+id/fragment_location_email_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_tuesday_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:text="@string/fragment_location_email_hint"
+                    android:textColor="@color/darkGrey"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/fragment_location__tuesday_Hours"
+                    android:id="@+id/fragment_location_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
+                    android:text="@string/fragment_location_locationName"
                     android:textColor="@color/darkGrey" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragment_location_wednesday_hint"
+                    android:id="@+id/fragment_location_postalCode_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_wednesday_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:text="@string/fragment_location_postalCode_hint"
+                    android:textColor="@color/darkGrey"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/fragment_location_wednesday_Hours"
+                    android:id="@+id/fragment_location_postalCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
+                    android:text="@string/fragment_location_locationName"
                     android:textColor="@color/darkGrey" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragment_location_thursday_hint"
+                    android:id="@+id/fragment_location_locationAddress_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_thursday_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:text="@string/fragment_location_locationAddress_hint"
+                    android:textColor="@color/darkGrey"
+                    android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/fragment_location_thursday_Hours"
+                    android:id="@+id/fragment_location_locationAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
+                    android:text="@string/fragment_location_locationName"
                     android:textColor="@color/darkGrey" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
 
                 <TextView
-                    android:id="@+id/fragment_location_friday_hint"
+                    android:id="@+id/fragment_location_program_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_friday_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:text="@string/fragment_location_program_hint"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/darkGrey"
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/fragment_location_friday_Hours"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <ImageView
+                    android:id="@+id/fragment_location_program_more"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
-                    android:textColor="@color/darkGrey" />
+                    app:srcCompat="@drawable/ic_groupindicator" />
+
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/fragment_location_container_program"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
+                android:layout_weight="1.0"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/fragment_location_saturday_hint"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_saturday_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
 
-                <TextView
-                    android:id="@+id/fragment_location_saturday_Hours"
+                    <TextView
+                        android:id="@+id/fragment_location_monday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_monday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location_monday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
-                    android:textColor="@color/darkGrey" />
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_tuesday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_tuesday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location__tuesday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_wednesday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_wednesday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location_wednesday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_thursday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_thursday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location_thursday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_friday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_friday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location_friday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_saturday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_saturday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location_saturday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_sunday_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/fragment_location_sunday_hint"
+                        android:textColor="@color/darkGrey" />
+
+                    <TextView
+                        android:id="@+id/fragment_location_sunday_Hours"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/fragment_location_hours_hint"
+                        android:textColor="@color/darkGrey" />
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp">
+
+                    <TextView
+                        android:id="@+id/fragment_location_activities_hint"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/fragment_location_activities_hint"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/darkGrey"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/fragment_location_activities_more"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/ic_groupindicator" />
+
+                </LinearLayout>
+
+            <ExpandableListView
+                android:id="@+id/fragment_location_lv_activities"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-                <TextView
-                    android:id="@+id/fragment_location_sunday_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/fragment_location_sunday_hint"
-                    android:textColor="@color/darkGrey" />
-
-                <TextView
-                    android:id="@+id/fragment_location_sunday_Hours"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fragment_location_hours_hint"
-                    android:textColor="@color/darkGrey" />
-            </LinearLayout>
-
+                android:layout_height="400dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:groupIndicator="@drawable/ic_groupindicator">
+            </ExpandableListView>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp">
-
-            <TextView
-                android:id="@+id/fragment_location_activities_hint"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/fragment_location_activities_hint"
-                android:textColor="@color/darkGrey"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <ExpandableListView
-            android:id="@+id/fragment_location_lv_activities"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:groupIndicator="@drawable/ic_groupindicator">
-        </ExpandableListView>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+    </android.support.constraint.ConstraintLayout>

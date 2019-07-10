@@ -250,13 +250,13 @@
     <string name="fragment_location_email_hint">E-mail</string>
     <string name="fragment_location_postalCode_hint">Cod poștal</string>
     <string name="fragment_location_locationAddress_hint">Adresa</string>
-    <string name="fragment_location_monday_hint">Luni:</string>
-    <string name="fragment_location_sunday_hint">Duminică:</string>
-    <string name="fragment_location_saturday_hint">Sâmbătă</string>
-    <string name="fragment_location_friday_hint">Vineri:</string>
-    <string name="fragment_location_thursday_hint">Joi:</string>
-    <string name="fragment_location_wednesday_hint">Miercuri:</string>
-    <string name="fragment_location_tuesday_hint">Marți:</string>
+    <string name="fragment_location_monday_hint">L:</string>
+    <string name="fragment_location_sunday_hint">D:</string>
+    <string name="fragment_location_saturday_hint">S:</string>
+    <string name="fragment_location_friday_hint">V:</string>
+    <string name="fragment_location_thursday_hint">J:</string>
+    <string name="fragment_location_wednesday_hint">M:</string>
+    <string name="fragment_location_tuesday_hint">M:</string>
     <string name="fragment_location_hours_hint">--:-- - --:--</string>
     <string name="fragment_location_activities_hint">Activități</string>
     <string name="fragment_location_locationName">-</string>
@@ -346,5 +346,72 @@
     <string name="fragment_locations_reservations_tv_title_hint">Rezervări</string>
     <string name="fragment_newLocation_ibtn_logout_hint">Delogare</string>
     <string name="fragment_edit_location_tv_title_hint">Editare profil locație</string>
+    <string name="searchLocation_fragment_alertDialog_addLatLong_titile">Adăugare detalii locație</string>
+    <string name="searchLocation_fragment_alertDialog_addLatLong_message_hint">Adăugați aceste informații la locația nouă în curs de aprobare?</string>
+    <string name="searchLocation_fragment_alertDialog_addLatLong_negativeButton">Nu</string>
+    <string name="searchLocation_fragment_alertDialog_addLatLong_positiveButton">Da</string>
+    <string name="newLocations_fragment_alertDialog_aprove_title">Aprobă locație</string>
+    <string name="newLocations_fragment_alertDialog_aprove_message_hint">Sunteți sigur că doriți să aprobați noua locație?</string>
+    <string name="newLocations_fragment_alertDialog_aprove_negativeButton_hint">Nu</string>
+    <string name="newLocations_fragment_alertDialog_aprove_positiveButton_hint">Da</string>
+    <string name="newLocations_fragment_alertDialog_delete_title">Respinge cerere</string>
+    <string name="newLocations_fragment_alertDialog_delete_message_hint">Sunteți sigur că doriți să ștergeți această cerere?</string>
+    <string name="newLocations_fragment_alertDialog_delete_negativeButton_hint">Nu</string>
+    <string name="newLocations_fragment_alertDialog_delete_positiveButton_hint">Da</string>
+    <string name="reports_fragment_alertDialog_removeFeedback_title">Respinge raportare feedback</string>
+    <string name="reports_fragment_alertDialog_removeFeedback_message">Sunteți sigur că doriți să ștergeți aceast raport?</string>
+    <string name="reports_fragment_alertDialog_removeFeedback_negativeButton_hint">Nu</string>
+    <string name="reports_fragment_alertDialog_removeFeedback_positiveButton_hint">Da</string>
+    <string name="reports_fragment_alertDialog_aproveFeedback_title">Aprobă raportare feedback</string>
+    <string name="reports_fragment_alertDialog_aproveFeedback_message_hint">Sunteți sigur că doriți să aprobați cererea și să ștergeți feedback-ul?</string>
+    <string name="reports_fragment_alertDialog_aproveFeedback_negativeButton_hint">Nu</string>
+    <string name="reports_fragment_alertDialog_aproveFeedback_positiveButton_hint">Da</string>
+    <string name="fragment_edit_location_delete_hint">Șterge cont</string>
+    <string name="fragment_edit_location_tv_program_hint">Program</string>
+    <string name="interval_separator">-</string>
+    <string name="fragment_location_tv_activities_hint">Activități</string>
+    <string name="fragment_location_btn_save_hint">Salvează</string>
+    <string name="list_item_edit_location_activities_tv_activityName_hint">Denumire</string>
+    <string name="list_item_edit_location_activities_tv_activityDifficulty_hint">Dificultate</string>
+    <string name="add_activity_dialog_tid_activityName_hint">Denumire activitate</string>
+    <string name="add_activity_dialog_tid_trainer_hint">Antrenor</string>
+    <string name="add_activity_dialog_til_price_hint">Pret</string>
+    <string name="add_activity_dialog_ck_reservation_hint">Rezervare</string>
+    <string name="add_activity_dialog_btn_save_hint">Salvează</string>
+    <string name="add_activity_dialog_tv_title_hint">Gestiune activitate</string>
+    <string-array name="hours">
+        <item>--</item>
+        <item>00</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>08</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
+        <item>21</item>
+        <item>22</item>
+        <item>23</item>
+    </string-array>
+    <string-array name="minutes">
+        <item>--</item>
+        <item>00</item>
+        <item>15</item>
+        <item>30</item>
+        <item>45</item>
+    </string-array>
 
 </resources>

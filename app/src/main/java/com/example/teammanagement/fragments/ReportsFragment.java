@@ -48,9 +48,11 @@ public class ReportsFragment extends Fragment {
         lv_report = view.findViewById(R.id.fragment_reports_lv);
         ibtn_aprove=view.findViewById(R.id.fragment_reports_ibtn_aproveFeedback);
         ibtn_remove=view.findViewById(R.id.fragment_reports_ibtn_remove);
+        ibtn_logOut=view.findViewById(R.id.fragment_reports_ibtn_logout);
 
         ibtn_remove.setOnClickListener(clickRemove());
         ibtn_aprove.setOnClickListener(clickAprove());
+        ibtn_logOut.setOnClickListener(clickLogOut());
 
         initData();
 
@@ -61,67 +63,6 @@ public class ReportsFragment extends Fragment {
 
         return view;
 
-    }
-
-    private View.OnClickListener clickRemove() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listAdapter.getmCheckedItems().size() > 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                    builder.setTitle("Respinge raportare feedback")
-                            .setMessage("Sunteți sigur că doriți să ștergeți aceast raport?")
-                            .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("Da", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    deleteGroupsFromList();
-                                }
-                            });
-                    Dialog dialog = builder.create();
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.show();
-                }
-           }
-        };
-    }
-
-
-    private View.OnClickListener clickAprove() {
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listAdapter.getmCheckedItems().size() > 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-                    builder.setTitle("Aprobă raportare feedback")
-                            .setMessage("Sunteți sigur că doriți să aprobați cererea și să ștergeți feedback-ul?")
-                            .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            })
-                            .setPositiveButton("Da", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    deleteGroupsFromList();
-                             }
-                            });
-                    Dialog dialog = builder.create();
-                    dialog.setCanceledOnTouchOutside(false);
-                    dialog.show();
-                }
-           }
-        };
     }
 
     public void getKeys(List<Report> list_Reports){
@@ -199,6 +140,67 @@ public class ReportsFragment extends Fragment {
         mapReport.put(listUsersDate.get(20),Arrays.asList(listReports.get(20).getFeedback()));
         mapReport.put(listUsersDate.get(21),Arrays.asList(listReports.get(21).getFeedback()));
 
+    }
+
+    private View.OnClickListener clickRemove() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listAdapter.getmCheckedItems().size() > 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle(getString(R.string.reports_fragment_alertDialog_removeFeedback_title))
+                            .setMessage(getString(R.string.reports_fragment_alertDialog_removeFeedback_message))
+                            .setNegativeButton(getString(R.string.reports_fragment_alertDialog_removeFeedback_negativeButton_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton(getString(R.string.reports_fragment_alertDialog_removeFeedback_positiveButton_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    deleteGroupsFromList();
+                                }
+                            });
+                    Dialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                }
+            }
+        };
+    }
+
+
+    private View.OnClickListener clickAprove() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listAdapter.getmCheckedItems().size() > 0) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle(getString(R.string.reports_fragment_alertDialog_aproveFeedback_title))
+                            .setMessage(getString(R.string.reports_fragment_alertDialog_aproveFeedback_message_hint))
+                            .setNegativeButton(getString(R.string.reports_fragment_alertDialog_aproveFeedback_negativeButton_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .setPositiveButton(getString(R.string.reports_fragment_alertDialog_aproveFeedback_positiveButton_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    deleteGroupsFromList();
+                                }
+                            });
+                    Dialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                }
+            }
+        };
     }
 
     private View.OnClickListener clickLogOut() {

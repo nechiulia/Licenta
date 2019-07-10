@@ -1,63 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/fragment_edit_location_toolbar"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/add_activity_dialog_til_activityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1.0"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageButton
-        android:id="@+id/fragment_edit_location_ibtn_logout"
-        android:layout_width="50dp"
-        android:layout_height="36dp"
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/add_activity_dialog_tid_activityName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_activity_dialog_tid_activityName_hint"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey" />
+    </android.support.design.widget.TextInputLayout>
+
+    <Spinner
+        android:id="@+id/add_activity_dialog_spn_sport"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/transparent"
-        android:contentDescription="@string/fragment_newLocation_ibtn_logout_hint"
-        android:src="@drawable/ic_logoff"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_til_activityName" />
 
-    <TextView
-        android:id="@+id/fragment_edit_location_tv_title"
+    <Spinner
+        android:id="@+id/add_activity_dialog_spn_difficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_spn_sport" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/add_activity_dialog_til_trainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_spn_difficulty">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/add_activity_dialog_tid_trainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey"
+            android:hint="@string/add_activity_dialog_tid_trainer_hint" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/add_activity_dialog_til_price"
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:hintEnabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textColor="@color/darkGrey"
+        android:textColorHint="@color/darkGrey"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_til_trainer">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/add_activity_dialog_tid_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/darkGrey"
+            android:textColorHint="@color/darkGrey"
+            android:hint="@string/add_activity_dialog_til_price_hint"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <CheckBox
+        android:id="@+id/add_activity_dialog_ck_reservation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/fragment_edit_location_tv_title_hint"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:text="@string/add_activity_dialog_ck_reservation_hint"
+        android:backgroundTint="@color/darkGrey"
+        android:buttonTint="@color/darkGrey"
+        android:foregroundTint="@color/darkGrey"
+        android:textColor="@color/darkGrey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
-        app:layout_constraintStart_toEndOf="@+id/fragment_edit_location_ibtn_logout"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_til_price" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:orientation="horizontal"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_edit_location_toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_ck_reservation">
 
         <TextView
-            android:id="@+id/fragment_edit_location_tv_program_hint"
+            android:id="@+id/add_activity_dialog_tv_program_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -68,7 +141,7 @@
             android:textStyle="bold" />
 
         <ImageView
-            android:id="@+id/fragment_edit_location_program_more"
+            android:id="@+id/add_activity_dialog_program_more"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -79,11 +152,11 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="fill_parent"
-        android:layout_height="520dp"
+        android:layout_height="150dp"
         android:fillViewport="false"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -93,12 +166,11 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/fragment_edit_location_container_program"
+                android:id="@+id/add_activity_dialog_container_program"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -108,7 +180,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_monday_hint"
+                        android:id="@+id/add_activity_dialog_monday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -118,21 +190,21 @@
                         android:textColor="@color/darkGrey" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_monday_open_hours"
+                        android:id="@+id/add_activity_dialog_monday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_monday_open_minutes"
+                        android:id="@+id/add_activity_dialog_monday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_monday_separator"
+                        android:id="@+id/add_activity_dialog_monday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -143,14 +215,14 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_monday_close_hours"
+                        android:id="@+id/add_activity_dialog_monday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_monday_close_minutes"
+                        android:id="@+id/add_activity_dialog_monday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -166,7 +238,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_tuesday_hint"
+                        android:id="@+id/add_activity_dialog_tuesday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -176,21 +248,21 @@
                         android:textColor="@color/darkGrey" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_tuesday_open_hours"
+                        android:id="@+id/add_activity_dialog_tuesday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_tuesday_open_minutes"
+                        android:id="@+id/add_activity_dialog_tuesday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_tuesday_separator"
+                        android:id="@+id/add_activity_dialog_tuesday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -201,14 +273,14 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_tuesday_close_hours"
+                        android:id="@+id/add_activity_dialog_tuesday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_tuesday_close_minutes"
+                        android:id="@+id/add_activity_dialog_tuesday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -224,7 +296,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_wednesday_hint"
+                        android:id="@+id/add_activity_dialog_wednesday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -234,21 +306,21 @@
                         android:textColor="@color/darkGrey" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_wednesday_open_hours"
+                        android:id="@+id/add_activity_dialog_wednesday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_wednesday_open_minutes"
+                        android:id="@+id/add_activity_dialog_wednesday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_wednesday_separator"
+                        android:id="@+id/add_activity_dialog_wednesday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -259,14 +331,14 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_wednesday_close_hours"
+                        android:id="@+id/add_activity_dialog_wednesday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_wednesday_close_minutes"
+                        android:id="@+id/add_activity_dialog_wednesday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -282,7 +354,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_thursday_hint"
+                        android:id="@+id/add_activity_dialog_thursday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -292,21 +364,21 @@
                         android:textColor="@color/darkGrey" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_thursday_open_hours"
+                        android:id="@+id/add_activity_dialog_thursday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_thursday_open_minutes"
+                        android:id="@+id/add_activity_dialog_thursday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_thursday_separator"
+                        android:id="@+id/add_activity_dialog_thursday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -317,14 +389,14 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_thursday_close_hours"
+                        android:id="@+id/add_activity_dialog_thursday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_thursday_close_minutes"
+                        android:id="@+id/add_activity_dialog_thursday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -340,7 +412,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_friday_hint"
+                        android:id="@+id/add_activity_dialog_friday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -350,21 +422,21 @@
                         android:textColor="@color/darkGrey" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_friday_open_hours"
+                        android:id="@+id/add_activity_dialog_friday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_friday_open_minutes"
+                        android:id="@+id/add_activity_dialog_friday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_friday_separator"
+                        android:id="@+id/add_activity_dialog_friday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -375,14 +447,14 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_friday_close_hours"
+                        android:id="@+id/add_activity_dialog_friday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_friday_close_minutes"
+                        android:id="@+id/add_activity_dialog_friday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -398,7 +470,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_saturday_hint"
+                        android:id="@+id/add_activity_dialog_saturday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -408,21 +480,21 @@
                         android:textColor="@color/darkGrey" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_saturday_open_hours"
+                        android:id="@+id/add_activity_dialog_saturday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_saturday_open_minutes"
+                        android:id="@+id/add_activity_dialog_saturday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_saturday_separator"
+                        android:id="@+id/add_activity_dialog_saturday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -433,7 +505,7 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_saturday_close_hours"
+                        android:id="@+id/add_activity_dialog_saturday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -441,7 +513,7 @@
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_saturday_close_minutes"
+                        android:id="@+id/add_activity_dialog_saturday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -459,7 +531,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_sunday_hint"
+                        android:id="@+id/add_activity_dialog_sunday_hint"
                         android:layout_width="17dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -470,7 +542,7 @@
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_sunday_open_hours"
+                        android:id="@+id/add_activity_dialog_sunday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -478,7 +550,7 @@
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_sunday_open_minutes"
+                        android:id="@+id/add_activity_dialog_sunday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -486,7 +558,7 @@
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
-                        android:id="@+id/fragment_edit_location_sunday_separator"
+                        android:id="@+id/add_activity_dialog_sunday_separator"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -497,7 +569,7 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_sunday_close_hours"
+                        android:id="@+id/add_activity_dialog_sunday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -507,7 +579,7 @@
                         android:theme="@style/BlackTextDialog" />
 
                     <Spinner
-                        android:id="@+id/fragment_edit_location_sunday_close_minutes"
+                        android:id="@+id/add_activity_dialog_sunday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
@@ -517,87 +589,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:paddingStart="10dp"
-                android:paddingEnd="10dp">
-
-                <TextView
-                    android:id="@+id/fragment_edit_location_tv_activities_hint"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="@string/fragment_location_tv_activities_hint"
-                    android:textColor="@color/darkGrey"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/fragment_edit_location_activities_more"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    app:srcCompat="@drawable/ic_groupindicator" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_weight="1.0"
-                android:gravity="end"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/fragment_edit_location_ibtn_addActivity"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/transparent"
-                    android:contentDescription="@string/editProfile_ibtn_addSport_hint"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fragment_edit_location_tv_activities_hint"
-                    app:srcCompat="@drawable/add_grey" />
-
-                <ImageButton
-                    android:id="@+id/fragment_edit_location_ibtn_removeActivity"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="end"
-                    android:background="@drawable/transparent"
-                    android:contentDescription="@string/editProfile_ibtn_removeSport_hint"
-                    app:srcCompat="@drawable/remove_grey" />
-            </LinearLayout>
-
-            <ListView
-                android:id="@+id/fragment_edit_location_lv_activities"
-                android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/rounded_border" />
-
-            <Button
-                android:id="@+id/fragment_edit_location_btn_save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:gravity="center"
-                android:text="@string/fragment_location_btn_save_hint"
-                android:textColor="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fragment_edit_location_lv_activities" />
         </LinearLayout>
     </ScrollView>
+
 </android.support.constraint.ConstraintLayout>

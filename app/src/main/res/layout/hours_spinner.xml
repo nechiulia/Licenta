@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/spn_item_tv_text"
         style="?attr/spinnerDropDownItemStyle"
@@ -11,9 +12,10 @@
         android:layout_height="?attr/dropdownListPreferredItemHeight"
         android:ellipsize="marquee"
         android:singleLine="true"
-        android:textColor="@color/grey"
-        android:background="@color/white"
+        android:textColor="@color/darkGrey"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -2,6 +2,7 @@ package com.example.teammanagement.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.teammanagement.R;
@@ -29,6 +31,7 @@ import com.example.teammanagement.Utils.SharedViewModel;
 import com.example.teammanagement.activities.HomeAdminActivity;
 import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.activities.MapsActivity;
+import com.example.teammanagement.adapters.ExpandableListNewLocationAdminAdapter;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -45,6 +48,7 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
 
     private GoogleMap mMap;
     private ImageButton ibtn_logOut;
+    private ImageView iv_search;
     private AutoCompleteTextView et_searchText;
 
     private SharedViewModel model;
@@ -52,6 +56,9 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
     private NewLocation newLocation;
 
     private static final String TAG = "MapsActivity";
+
+    private ExpandableListNewLocationAdminAdapter.OnSwitchFragment switchFragment;
+
 
     private Intent intent;
 
@@ -62,9 +69,13 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        switchFragment= (ExpandableListNewLocationAdminAdapter.OnSwitchFragment) getContext();
 
         et_searchText=view.findViewById(R.id.search_location_et_searchBar);
         ibtn_logOut=view.findViewById(R.id.search_location_ibtn_logout);
+        iv_search=view.findViewById(R.id.search_location_iv_searchIcon);
+
+        iv_search.setOnClickListener(clickSearchIcon());
 
         et_searchText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -80,36 +91,38 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
         ibtn_logOut.setOnClickListener(clickLogOut());
 
         model = ViewModelProviders.of(this.getActivity()).get(SharedViewModel.class);
-        if(model.getSelected().getValue()!= null) {
-            Log.d("CEVA", String.valueOf(model.getSelected().getValue()));
-            newLocation=model.getSelected().getValue();
-            et_searchText.setText(newLocation.getLocationName());
-            model.setNewLocation(null);
-        }
+        model.getSelected().observe(this, new Observer<NewLocation>() {
+            @Override
+            public void onChanged(@Nullable NewLocation location) {
+                Log.d("CEVA", String.valueOf(model.getSelected().getValue()));
+                newLocation=model.getSelected().getValue();
+                et_searchText.setText(newLocation.getLocationName());
+                mMap.setOnMarkerClickListener(clickMarker());
+                geoLocate();
+            }
+        });
+
         return view;
 
     }
 
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+
         mMap = googleMap;
 
         LatLng bucharest = new LatLng(44.4268, 26.1025);
         moveCamera(new LatLng(bucharest.latitude,bucharest.longitude), Constants.DEFAULT_ZOOM,"București");
+
     }
-
-
 
     private void moveCamera(final LatLng latLng, float zoom, String title){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
         MarkerOptions options = new MarkerOptions().position(latLng).title(title);
         mMap.addMarker(options);
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                return true;
-            };
-        });
+
     }
 
     private void geoLocate(){
@@ -131,6 +144,10 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
             moveCamera(new LatLng(address.getLatitude(),
                             address.getLongitude()),
                     Constants.DEFAULT_ZOOM,address.getAddressLine(0));
+            if(newLocation!=null) {
+                newLocation.setLatitude(address.getLatitude());
+                newLocation.setLongitude(address.getLongitude());
+            }
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -158,4 +175,52 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
             }
         };
     }
+
+    private View.OnClickListener clickSearchIcon() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(et_searchText.getText().length() > 0){
+                   geoLocate();
+               }
+            }
+        };
+    }
+
+    private GoogleMap.OnMarkerClickListener clickMarker() {
+        return new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                if(model.getSelected().getValue().getLongitude() != 0.0 && model.getSelected().getValue().getLatitude() != 0.0 ){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle(getString(R.string.searchLocation_fragment_alertDialog_addLatLong_titile))
+                            .setMessage(getString(R.string.searchLocation_fragment_alertDialog_addLatLong_message_hint))
+                            .setNegativeButton(getString(R.string.searchLocation_fragment_alertDialog_addLatLong_negativeButton), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switchFragment.onSwitchFragment(R.id.navigation_newLocations);
+                                    et_searchText.setText("");
+                                    mMap.clear();
+                                }
+                            })
+                            .setPositiveButton(getString(R.string.searchLocation_fragment_alertDialog_addLatLong_positiveButton), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switchFragment.onSwitchFragment(R.id.navigation_newLocations);
+                                    model.setNewLocation(newLocation);
+                                    et_searchText.setText("");
+                                    mMap.clear();
+                                }
+                            });
+                    Dialog dialog = builder.create();
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                }
+                return false;
+            }
+        };
+    }
+
+
 }

@@ -134,6 +134,12 @@ public class LoginActivity extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), HomeAdminActivity.class);
                             startActivity(intent);
                         } else if (user.getRole() == 1) {
+                            sharedPreferences=getSharedPreferences(Constants.APP_SHAREDPREF,MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            Gson gson = new Gson();
+                            String json = gson.toJson(user);
+                            editor.putString(Constants.CURRENT_USER,json);
+                            editor.apply();
                             intent = new Intent(getApplicationContext(), HomeAdminLocationActivity.class);
                             startActivity(intent);
                         } else {

@@ -1,22 +1,53 @@
 package com.example.teammanagement.Utils;
 
-public class Activity  {
+import java.io.Serializable;
 
+public class Activity  implements Serializable {
+
+    private int activityID;
+    private int locationID;
     private String activityName;
     private String trainer;
     private String sport;
-    private boolean reservation;
+    private int reservation;
     private int difficultyLevel;
     private double price;
 
+    public Activity() {
+        this.activityID=-1;
+        this.locationID=-1;
+        activityName="";
+        trainer="";
+        sport="";
+        reservation=0;
+        difficultyLevel=0;
+        price=0.0;
+    }
 
-    public Activity(String activityName, String trainer, String sport, boolean reservation, int difficultyLevel, double price) {
+
+    public Activity(String activityName, String trainer, String sport, int reservation, int difficultyLevel, double price) {
         this.activityName = activityName;
         this.trainer = trainer;
         this.sport = sport;
         this.reservation = reservation;
         this.difficultyLevel = difficultyLevel;
         this.price = price;
+    }
+
+    public int getActivityID() {
+        return activityID;
+    }
+
+    public void setActivityID(int activityID) {
+        this.activityID = activityID;
+    }
+
+    public int getLocationID() {
+        return locationID;
+    }
+
+    public void setLocationID(int locationID) {
+        this.locationID = locationID;
     }
 
     public String getActivityName() {
@@ -43,11 +74,11 @@ public class Activity  {
         this.sport = sport;
     }
 
-    public boolean getReservation() {
+    public int getReservation() {
         return reservation;
     }
 
-    public void setReservation(boolean reservation) {
+    public void setReservation(int reservation) {
         this.reservation = reservation;
     }
 
@@ -65,17 +96,5 @@ public class Activity  {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "activityName='" + activityName + '\'' +
-                ", trainer='" + trainer + '\'' +
-                ", sport='" + sport + '\'' +
-                ", reservation=" + reservation +
-                ", difficultyLevel=" + difficultyLevel +
-                ", price=" + price +
-                '}';
     }
 }

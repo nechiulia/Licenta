@@ -37,6 +37,8 @@ public class ExpandableListNewLocationAdminAdapter  extends BaseExpandableListAd
 
     private SharedViewModel model;
 
+    private OnSwitchFragment switchFragment;
+
 
     public ExpandableListNewLocationAdminAdapter(Context context, List<String> listParent,
                                             HashMap<String, NewLocation> locations) {
@@ -44,6 +46,7 @@ public class ExpandableListNewLocationAdminAdapter  extends BaseExpandableListAd
         this.listParent = listParent;
         this.infoLocation = locations;
         model = ViewModelProviders.of((FragmentActivity) context).get(SharedViewModel.class);
+        switchFragment = (OnSwitchFragment) context;
     }
 
 
@@ -145,16 +148,21 @@ public class ExpandableListNewLocationAdminAdapter  extends BaseExpandableListAd
             public void onClick(View v) {
                 Log.d("ceva","altceva");
                 model.setNewLocation(location);
-                ((FragmentActivity)_context).getSupportFragmentManager().beginTransaction().replace(R.id.home_admin_fragment_containerAdmin, new SearchLocationFragment()).
-                        addToBackStack(null).commit();
+                switchFragment.onSwitchFragment(R.id.navigation_map);
 
             }
         });
         if(location.getLatitude() != 0.0) {
             tv_latitude.setText(String.valueOf(location.getLatitude()));
         }
+        else{
+            tv_latitude.setText("-");
+        }
         if(location.getLongitude() != 0.0) {
             tv_longitude.setText(String.valueOf(location.getLongitude()));
+        }
+        else{
+            tv_longitude.setText("-");
         }
         if(location.getResevation() == 0){
             tv_reservation.setText(_context.getString(R.string.reservation_no));
@@ -191,4 +199,9 @@ public class ExpandableListNewLocationAdminAdapter  extends BaseExpandableListAd
     public void setSelectedLocation(NewLocation selectedLocation) {
         this.selectedLocation = selectedLocation;
     }
+
+    public interface OnSwitchFragment{
+        void onSwitchFragment(int id);
+    }
+
 }

@@ -7,11 +7,18 @@
 
     <TextView
         android:id="@+id/list_group_report_tv"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.96"
+        android:layout_weight="0.5"
         android:paddingStart="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textColor="@color/darkGrey" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:textColor="@color/darkGrey"/>
 
     <CheckBox
         android:id="@+id/list_group_report_cb"
@@ -20,6 +27,6 @@
         android:backgroundTint="@color/darkGrey"
         android:buttonTint="@color/darkGrey"
         android:focusable="false"
-        android:layout_weight="0.04"
+        android:layout_weight="1.0"
         android:foregroundTint="@color/darkGrey" />
 </LinearLayout>

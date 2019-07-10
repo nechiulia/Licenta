@@ -2,6 +2,7 @@ package com.example.teammanagement.fragments;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,6 +52,7 @@ public class NewLocationsFragment extends Fragment  {
 
     private SharedViewModel model;
 
+    private NewLocation selectedLocation;
     private HashMap<String, NewLocation> mapLocations = new HashMap<>();
     private List<String> listUsersDate = new ArrayList<>();
     private List<NewLocation> listNewLocations = new ArrayList<>();
@@ -82,6 +84,24 @@ public class NewLocationsFragment extends Fragment  {
 
 
         model = ViewModelProviders.of(this.getActivity()).get(SharedViewModel.class);
+        model.getSelected().observe(this, new Observer<NewLocation>() {
+            @Override
+            public void onChanged(@Nullable NewLocation location) {
+                Log.d("CEVA", String.valueOf(model.getSelected().getValue()));
+                selectedLocation=model.getSelected().getValue();
+                if(selectedLocation.getLatitude() != 0.0 && selectedLocation.getLongitude() != 0.0){
+                    for(NewLocation selectedLoc:listNewLocations){
+                        if(selectedLoc.getLocationID() == selectedLocation.getLocationID()){
+                            selectedLoc.setLongitude(selectedLocation.getLongitude());
+                            selectedLoc.setLatitude(selectedLocation.getLatitude());
+                            listAdapter.notifyDataSetChanged();
+                            updateLonLat(selectedLocation);
+                        }
+                    }
+                }
+
+            }
+        });
 
 
         return view;
@@ -97,6 +117,8 @@ public class NewLocationsFragment extends Fragment  {
                     newLocation.setLocationName(r.getString(2));
                     newLocation.setPostalCode(r.getString(3));
                     newLocation.setAddress(r.getString(4));
+                    newLocation.setLatitude(r.getDouble(5));
+                    newLocation.setLongitude(r.getDouble(6));
                     newLocation.setResevation(r.getByte(7));
                     newLocation.setState(r.getInt(8));
                     newLocation.setUserID(r.getInt(9));
@@ -123,6 +145,61 @@ public class NewLocationsFragment extends Fragment  {
         }
     }
 
+    public void updateLonLat(NewLocation selLocation){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("UPDATE LOCATII SET LATITUDINE ="+selLocation.getLatitude()+", LONGITUDINE="+selLocation.getLongitude()+" WHERE ID="+selLocation.getLocationID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateStateLocation(NewLocation aprovedLocation){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("UPDATE LOCATII SET STARE=0 WHERE ID="+aprovedLocation.getLocationID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateUserState(NewLocation aprovedLocation){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("UPDATE UTILIZATORI SET STARE=0 WHERE ID="+aprovedLocation.getUserID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteLocation(NewLocation location){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM LOCATII WHERE ID="+location.getLocationID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteUser(NewLocation location){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM UTILIZATORI WHERE ID="+location.getUserID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public void deleteGroupsFromList(){
+        int listDimenssion= listAdapter.getmCheckedItems().size();
+        List<Long> list = new ArrayList<>(listAdapter.getmCheckedItems());
+        Collections.sort(list);
+        Collections.reverse(list);
+        for(int i=0; i< listDimenssion;i++){
+            mapLocations.remove(listAdapter.getListParent().get(list.get(i).intValue()));
+            listUsersDate.remove(listAdapter.getListParent().get(list.get(i).intValue()));
+        }
+        listAdapter.getmCheckedItems().clear();
+        list.clear();
+        listAdapter.notifyDataSetChanged();
+    }
+
     private View.OnClickListener clickRemove() {
         return new View.OnClickListener() {
             @Override
@@ -130,18 +207,24 @@ public class NewLocationsFragment extends Fragment  {
                 if(listAdapter.getmCheckedItems().size() > 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                    builder.setTitle("Respinge raportare feedback")
-                            .setMessage("Sunteți sigur că doriți să ștergeți aceast raport?")
-                            .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                    builder.setTitle(getString(R.string.newLocations_fragment_alertDialog_delete_title))
+                            .setMessage(getString(R.string.newLocations_fragment_alertDialog_delete_message_hint))
+                            .setNegativeButton(getString(R.string.newLocations_fragment_alertDialog_delete_negativeButton_hint), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getString(R.string.newLocations_fragment_alertDialog_delete_positiveButton_hint), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                    int listDimenssion= listAdapter.getmCheckedItems().size();
+                                    List<Long> list = new ArrayList<>(listAdapter.getmCheckedItems());
+                                    for(int i=0; i< listDimenssion;i++) {
+                                        deleteLocation(listNewLocations.get(list.get(i).intValue()));
+                                        deleteUser(listNewLocations.get(list.get(i).intValue()));
+                                    }
                                     deleteGroupsFromList();
                                 }
                             });
@@ -161,18 +244,26 @@ public class NewLocationsFragment extends Fragment  {
                 if(listAdapter.getmCheckedItems().size() > 0) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-                    builder.setTitle("Aprobă raportare feedback")
-                            .setMessage("Sunteți sigur că doriți să aprobați cererea și să ștergeți feedback-ul?")
-                            .setNegativeButton("Nu", new DialogInterface.OnClickListener() {
+                    builder.setTitle(getString(R.string.newLocations_fragment_alertDialog_aprove_title))
+                            .setMessage(getString(R.string.newLocations_fragment_alertDialog_aprove_message_hint))
+                            .setNegativeButton(getString(R.string.newLocations_fragment_alertDialog_aprove_negativeButton_hint), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
                                 }
                             })
-                            .setPositiveButton("Da", new DialogInterface.OnClickListener() {
+                            .setPositiveButton(getString(R.string.newLocations_fragment_alertDialog_aprove_positiveButton_hint), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
+                                    int listDimenssion= listAdapter.getmCheckedItems().size();
+                                    List<Long> list = new ArrayList<>(listAdapter.getmCheckedItems());
+                                    for(int i=0; i< listDimenssion;i++) {
+                                        if(listNewLocations.get(list.get(i).intValue()).getLongitude()!= 0.0 && listNewLocations.get(list.get(i).intValue()).getLatitude() !=0.0) {
+                                            updateStateLocation(listNewLocations.get(list.get(i).intValue()));
+                                            updateUserState(listNewLocations.get(list.get(i).intValue()));
+                                        }
+                                    }
                                     deleteGroupsFromList();
                                 }
                             });
@@ -182,20 +273,6 @@ public class NewLocationsFragment extends Fragment  {
                 }
             }
         };
-    }
-
-    public void deleteGroupsFromList(){
-        int listDimenssion= listAdapter.getmCheckedItems().size();
-        List<Long> list = new ArrayList<>(listAdapter.getmCheckedItems());
-        Collections.sort(list);
-        Collections.reverse(list);
-        for(int i=0; i< listDimenssion;i++){
-            mapLocations.remove(listAdapter.getListParent().get(list.get(i).intValue()));
-            listUsersDate.remove(listAdapter.getListParent().get(list.get(i).intValue()));
-        }
-        listAdapter.getmCheckedItems().clear();
-        list.clear();
-        listAdapter.notifyDataSetChanged();
     }
 
 

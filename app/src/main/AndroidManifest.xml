@@ -25,7 +25,7 @@
         <activity
             android:name=".activities.HomeAdminLocationActivity"
             android:label="@string/title_activity_home_admin_location"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.EditTeamActivity"
             android:screenOrientation="portrait"

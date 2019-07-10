@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:theme="@style/OrangeLight">
     <!--android:theme="@style/Theme.Design.Light.NoActionBar"-->
 
 
@@ -39,6 +40,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/fragment_locations_reservations_tv_title_hint"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.391"
         app:layout_constraintStart_toEndOf="@+id/fragment_locations_reservations_ibtn_logout"
