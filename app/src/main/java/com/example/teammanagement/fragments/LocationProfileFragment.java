@@ -89,22 +89,19 @@ public class LocationProfileFragment extends Fragment {
 
         tv_program.setOnClickListener(showProgram());
         tv_activities.setOnClickListener(showActivities());
-        layout_hours.setVisibility(View.GONE);
-        lv_activities.setVisibility(View.GONE);
         ibtn_logOut.setOnClickListener(clickLogOut());
 
         getCurrentUserID();
         selectLocationInfo();
         selectUserInfo();
-        /*selectActivities();
-        selectProgram();*/
+        selectActivities();
+        selectProgram();
 
         tv_locationName.setText(currentLocation.getLocationName());
         tv_email.setText(currentLocation.getEmail());
         tv_postalCode.setText(currentLocation.getPostalCode());
         tv_address.setText(currentLocation.getAddress());
 
-        initData();
         if(listParentActivities.size() != 0 && mapActivity.size() !=0) {
             listAdapter = new ExpandableListLocationActivitiesAdapter(this.getContext(), listParentActivities, mapActivity);
             lv_activities.setAdapter(listAdapter);
@@ -112,51 +109,20 @@ public class LocationProfileFragment extends Fragment {
         return view;
     }
 
+    public String getLevel(int level){
+        if(level ==0)return getString(R.string.user_sport_level_0);
+        else if(level == 1)return getString(R.string.user_sport_level_1);
+        else if(level == 2)return getString(R.string.user_sport_level_2);
+        else if(level == 3)return getString(R.string.user_sport_level_3);
+        else if(level == 4)return getString(R.string.user_sport_level_4);
+        return getString(R.string.user_sport_level_5);
+    }
 
     public void getKeys(List<Activity> list_Activities){
 
         for(Activity a: list_Activities){
             listParentActivities.add(a.getActivityName());
         }
-    }
-
-
-    public void initData(){
-        listActivities.add(new Activity("Tae Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Bachatta","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Kango Jumps","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taeds Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taesdassdda Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taedasfa Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taea Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taeasa Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taeb Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taec Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Tae gBo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Taeh Bo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Tae lBo","Mirela Dan","Fitness",0,1,25.00));
-        listActivities.add(new Activity("Tae jhBo","Mirela Dan","Fitness",0,1,25.00));
-
-        getKeys(listActivities);
-
-        mapActivity.put(listParentActivities.get(0), listActivities.get(0));
-        mapActivity.put(listParentActivities.get(1), listActivities.get(1));
-        mapActivity.put(listParentActivities.get(2), listActivities.get(2));
-        mapActivity.put(listParentActivities.get(3), listActivities.get(3));
-        mapActivity.put(listParentActivities.get(4), listActivities.get(4));
-        mapActivity.put(listParentActivities.get(5), listActivities.get(5));
-        mapActivity.put(listParentActivities.get(6), listActivities.get(6));
-        mapActivity.put(listParentActivities.get(7), listActivities.get(7));
-        mapActivity.put(listParentActivities.get(8), listActivities.get(8));
-        mapActivity.put(listParentActivities.get(9), listActivities.get(9));
-        mapActivity.put(listParentActivities.get(10), listActivities.get(10));
-        mapActivity.put(listParentActivities.get(11), listActivities.get(11));
-        mapActivity.put(listParentActivities.get(12), listActivities.get(12));
-        mapActivity.put(listParentActivities.get(13), listActivities.get(13));
-
-        selectLocationInfo();
-
-
     }
 
     public void getCurrentUserID(){
@@ -184,6 +150,44 @@ public class LocationProfileFragment extends Fragment {
         }
     }
 
+    public void selectProgram(){
+        try(Statement s = c.createStatement()){
+            for(int i=0; i< 7; i++) {
+                try (ResultSet r = s.executeQuery("SELECT INTERVALORAR FROM PROGRAME WHERE IDLOCATIE=" + currentLocation.getLocationID()+" AND ZI="+i)) {
+                    if(r.next()) {
+                        String interval = r.getString(1);
+                        if(interval.equals("--:-----:--")){
+                            interval="Închis";
+                        }
+                        if(i == 0){
+                            tv_monday.setText(interval);
+                        }
+                        else if(i == 1){
+                            tv_tuesday.setText(interval);
+                        }
+                        else if(i == 2){
+                            tv_wednesday.setText(interval);
+                        }
+                        else if(i == 3){
+                            tv_thursday.setText(interval);
+                        }
+                        else if(i == 4){
+                            tv_friday.setText(interval);
+                        }
+                        else if(i == 5){
+                            tv_saturday.setText(interval);
+                        }
+                        else if(i == 6){
+                            tv_sunday.setText(interval);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void selectUserInfo(){
         try(Statement s =c.createStatement()){
             try(ResultSet r = s.executeQuery("SELECT EMAIL FROM UTILIZATORI WHERE ID="+currentUserID)){
@@ -201,7 +205,18 @@ public class LocationProfileFragment extends Fragment {
             try(ResultSet r = s.executeQuery("SELECT * FROM ACTIVITATI WHERE IDLOCATIE="+currentLocation.getLocationID())){
                 while(r.next()){
                     Activity activity = new Activity();
-
+                    activity.setActivityID(r.getInt(1));
+                    activity.setActivityName(r.getString(2));
+                    activity.setSport(r.getString(3));
+                    activity.setTrainer(r.getString(4));
+                    String difficulty = getLevel(r.getInt(5));
+                    activity.setDifficultyLevel(difficulty);
+                    activity.setPrice(r.getDouble(6));
+                    activity.setReservation(r.getInt(7));
+                    activity.setLocationID(currentLocation.getLocationID());
+                    listActivities.add(activity);
+                    listParentActivities.add(activity.getActivityName());
+                    mapActivity.put(activity.getActivityName(),activity);
                 }
             }
         } catch (SQLException e) {

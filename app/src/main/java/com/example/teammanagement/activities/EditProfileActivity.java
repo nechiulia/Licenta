@@ -46,7 +46,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class EditProfileActivity extends AppCompatActivity implements AddSportDialog.AddSportDialogListener{
@@ -422,15 +421,15 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
 
     private boolean isValidUserName(){
         if(iet_userName.getText().length()<3){
-            iet_userName.setError(getString(R.string.register1_firstNameLength_error_hint));
+            iet_userName.setError(getString(R.string.register1_nameLength_error_hint));
             return false;
         }
         else if(!Character.isUpperCase(iet_userName.getText().toString().charAt(0))){
-            iet_userName.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
+            iet_userName.setError(getString(R.string.register1_nameCapitalLetter_error_hint));
             return false;
         }
         else if(!iet_userName.getText().toString().matches("^[a-zA-Z_ ]*$")){
-            iet_userName.setError(getString(R.string.register1_firstNameLetters_error_hint));
+            iet_userName.setError(getString(R.string.register1_nameLetters_error_hint));
             return false;
         }
         return true;

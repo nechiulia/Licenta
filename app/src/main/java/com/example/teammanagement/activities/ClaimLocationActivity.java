@@ -20,9 +20,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ClaimLocationActivity extends AppCompatActivity {
 
@@ -372,15 +369,15 @@ public class ClaimLocationActivity extends AppCompatActivity {
 
     private boolean isValidUserName(){
         if(iet_username.getText().length()<3){
-            iet_username.setError(getString(R.string.register1_firstNameLength_error_hint));
+            iet_username.setError(getString(R.string.register1_nameLength_error_hint));
             return false;
         }
         else if(!Character.isUpperCase(iet_username.getText().toString().charAt(0))){
-            iet_username.setError(getString(R.string.register1_firstNameCapitalLetter_error_hint));
+            iet_username.setError(getString(R.string.register1_nameCapitalLetter_error_hint));
             return false;
         }
         else if(!iet_username.getText().toString().matches("^[a-zA-Z_ ]*$")){
-            iet_username.setError(getString(R.string.register1_firstNameLetters_error_hint));
+            iet_username.setError(getString(R.string.register1_nameLetters_error_hint));
             return false;
         }
         return true;

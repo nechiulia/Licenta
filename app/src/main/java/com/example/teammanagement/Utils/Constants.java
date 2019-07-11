@@ -34,6 +34,7 @@ public interface Constants {
     String ADDED_TEAMMATES="Added teammates";
     String CURRENT_TEAM_ID ="Current team ID";
     String CURRENT_USER_ID ="Current location ID";
+    String CURRENT_LOCATION_ID="LocationID";
 
     int ADD_TEAMMATES_CODE =101;
 }

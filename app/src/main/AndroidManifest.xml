@@ -19,13 +19,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.StatisticsActivity"></activity>
+        <activity android:name=".activities.StatisticsActivity"/>
         <activity android:name=".activities.AddTeammatesActivity" />
         <activity android:name=".activities.AddTeam2Activity" />
         <activity
             android:name=".activities.HomeAdminLocationActivity"
             android:label="@string/title_activity_home_admin_location"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".activities.EditTeamActivity"
             android:screenOrientation="portrait"

@@ -10,7 +10,7 @@ public class Activity  implements Serializable {
     private String trainer;
     private String sport;
     private int reservation;
-    private int difficultyLevel;
+    private String difficultyLevel;
     private double price;
 
     public Activity() {
@@ -20,12 +20,12 @@ public class Activity  implements Serializable {
         trainer="";
         sport="";
         reservation=0;
-        difficultyLevel=0;
+        difficultyLevel="";
         price=0.0;
     }
 
 
-    public Activity(String activityName, String trainer, String sport, int reservation, int difficultyLevel, double price) {
+    public Activity(String activityName, String trainer, String sport, int reservation, String difficultyLevel, double price) {
         this.activityName = activityName;
         this.trainer = trainer;
         this.sport = sport;
@@ -82,11 +82,11 @@ public class Activity  implements Serializable {
         this.reservation = reservation;
     }
 
-    public int getDifficultyLevel() {
+    public String getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(int difficultyLevel) {
+    public void setDifficultyLevel(String difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
 

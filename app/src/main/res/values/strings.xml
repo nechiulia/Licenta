@@ -79,10 +79,9 @@
     <string name="disableAccount_btn_yes_hint">Da</string>
     <string name="feedback_ibtn_back_hint">Înapoi</string>
     <string name="feedback_tv_title_hint">Feedback</string>
-    <string name="register1_firstNameLength_error_hint">Prenumele trebuie să aibă cel puțin 3 litere</string>
-    <string name="register1_firstNameCapitalLetter_error_hint">Prima literă trebuie să fie literă mare</string>
-    <string name="register1_lastNameLength_error_hint">Numele de familie trebuie să aibă cel puțin 3 litere</string>
-    <string name="register1_firstNameLetters_error_hint">Singurele caractere permise sunt literele, spațiile și _</string>
+    <string name="register1_nameLength_error_hint">Numele trebuie să aibă cel puțin 3 litere</string>
+    <string name="register1_nameCapitalLetter_error_hint">Prima literă trebuie să fie literă mare</string>
+    <string name="register1_nameLetters_error_hint">Singurele caractere permise sunt literele, spațiile și _</string>
     <string name="lv_feedback_tv_userName_hint">Nume utilizator</string>
     <string name="lv_feedback_ibtn_more_hint">Mai multe</string>
     <string name="lv_feedback_tv_comment_hint">Comentariu</string>
@@ -379,39 +378,20 @@
     <string name="add_activity_dialog_ck_reservation_hint">Rezervare</string>
     <string name="add_activity_dialog_btn_save_hint">Salvează</string>
     <string name="add_activity_dialog_tv_title_hint">Gestiune activitate</string>
-    <string-array name="hours">
-        <item>--</item>
-        <item>00</item>
-        <item>01</item>
-        <item>02</item>
-        <item>03</item>
-        <item>04</item>
-        <item>05</item>
-        <item>06</item>
-        <item>07</item>
-        <item>08</item>
-        <item>08</item>
-        <item>10</item>
-        <item>11</item>
-        <item>12</item>
-        <item>13</item>
-        <item>14</item>
-        <item>15</item>
-        <item>16</item>
-        <item>17</item>
-        <item>18</item>
-        <item>19</item>
-        <item>20</item>
-        <item>21</item>
-        <item>22</item>
-        <item>23</item>
-    </string-array>
-    <string-array name="minutes">
-        <item>--</item>
-        <item>00</item>
-        <item>15</item>
-        <item>30</item>
-        <item>45</item>
-    </string-array>
+    <string name="hour_separator">:</string>
+    <string name="close_hint">--</string>
+    <string name="fragment_edit_location_program_more_hint">Mai multe</string>
+    <string name="hour_error">Ora trebuie să conțină două caractere</string>
+    <string name="minutes_error">Minutele sunt formate din două caractere</string>
+    <string name="line_error_hours">Dacă locația este închisă într-o anumită zi, lasați necompletat, în caz contrat completați toată linia cu date corespunzătoare.</string>
+    <string name="edit_location_fragment_alertDialog_save_message">Informațiile introfuse au fost salvate cu succes. Acestea pot fi vizualizate în pagina de profil a locației</string>
+    <string name="edit_location_fragment_alertDialog_save_title">Salvare informații</string>
+    <string name="edit_location_fragment_alertDialog_save_btn">Ok</string>
+    <string name="add_activity_dialog_btn_cancel_hint">Anulează</string>
+    <string name="no">Nu</string>
+    <string name="yes">Da</string>
+    <string name="lei">lei</string>
+    <string name="location_closed">--:-----:--</string>
+    <string name="closed_location_bd">:-:</string>
 
 </resources>

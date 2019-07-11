@@ -103,9 +103,16 @@ public class ExpandableListLocationActivitiesAdapter extends BaseExpandableListA
         tv_activityName.setText(activity.getActivityName());
         tv_sport.setText(activity.getSport());
         tv_trainer.setText(activity.getTrainer());
-        tv_reservation.setText(String.valueOf(activity.getReservation()));
+        String reservation;
+        if(activity.getReservation() ==0){
+            reservation=_context.getString(R.string.no);
+        }
+        else{
+            reservation=_context.getString(R.string.yes);
+        }
+        tv_reservation.setText(reservation);
         tv_difficultyLevel.setText(String.valueOf(activity.getDifficultyLevel()));
-        tv_price.setText(String.valueOf(activity.getPrice()));
+        tv_price.setText(String.valueOf(activity.getPrice()+" " + _context.getString(R.string.lei)));
 
         return convertView;
 
@@ -113,7 +120,7 @@ public class ExpandableListLocationActivitiesAdapter extends BaseExpandableListA
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;//true
+        return false;
     }
 
     public List<String> getListParent() {

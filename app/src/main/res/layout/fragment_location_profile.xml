@@ -389,6 +389,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:text="@string/fragment_location_sunday_hint"
+                        android:layout_gravity="center"
                         android:textColor="@color/darkGrey" />
 
                     <TextView

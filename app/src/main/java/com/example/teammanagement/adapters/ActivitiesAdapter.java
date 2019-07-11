@@ -71,8 +71,4 @@ public class ActivitiesAdapter extends ArrayAdapter<Activity> {
     public List<Activity> getCheckedActivities() {
         return checkedActivities;
     }
-
-    public void setCheckedActivities(List<Activity> checkedActivities) {
-        this.checkedActivities = checkedActivities;
-    }
 }

@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:windowSoftInputMode="adjustResize">
 
 
     <android.support.design.widget.TextInputLayout
@@ -98,7 +99,7 @@
             android:textColor="@color/darkGrey"
             android:textColorHint="@color/darkGrey"
             android:hint="@string/add_activity_dialog_til_price_hint"
-            android:inputType="number" />
+            android:inputType="numberDecimal" />
     </android.support.design.widget.TextInputLayout>
 
     <CheckBox
@@ -106,15 +107,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/add_activity_dialog_ck_reservation_hint"
         android:backgroundTint="@color/darkGrey"
         android:buttonTint="@color/darkGrey"
         android:foregroundTint="@color/darkGrey"
+        android:text="@string/add_activity_dialog_ck_reservation_hint"
         android:textColor="@color/darkGrey"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_activity_dialog_til_price" />
 
@@ -143,7 +143,7 @@
         <ImageView
             android:id="@+id/add_activity_dialog_program_more"
             android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_groupindicator" />
 
@@ -152,7 +152,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="fill_parent"
-        android:layout_height="150dp"
+        android:layout_height="220dp"
         android:fillViewport="false"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -166,7 +166,7 @@
             android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/add_activity_dialog_container_program"
+                android:id="@+id/add_activity_dialog_location_container_program"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
@@ -189,18 +189,38 @@
                         android:text="@string/fragment_location_monday_hint"
                         android:textColor="@color/darkGrey" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_monday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_monday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_monday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -214,18 +234,38 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_monday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_monday__closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_monday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
@@ -247,18 +287,38 @@
                         android:text="@string/fragment_location_tuesday_hint"
                         android:textColor="@color/darkGrey" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_tuesday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_tuesday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_tuesday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -272,18 +332,38 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_tuesday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_tuesday_closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_tuesday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
@@ -305,18 +385,38 @@
                         android:text="@string/fragment_location_wednesday_hint"
                         android:textColor="@color/darkGrey" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_wednesday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_wednesday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_wednesday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -330,18 +430,39 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_wednesday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
-                    <Spinner
+                    <TextView
+                        android:id="@+id/add_activity_dialog_wednesday_closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <EditText
                         android:id="@+id/add_activity_dialog_wednesday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
@@ -363,18 +484,38 @@
                         android:text="@string/fragment_location_thursday_hint"
                         android:textColor="@color/darkGrey" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_thursday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_thursday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_thursday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -388,18 +529,38 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_thursday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_thursday_closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_thursday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
@@ -421,18 +582,38 @@
                         android:text="@string/fragment_location_friday_hint"
                         android:textColor="@color/darkGrey" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_friday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_friday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_friday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -446,18 +627,38 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_friday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_friday_closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_friday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
@@ -479,18 +680,38 @@
                         android:text="@string/fragment_location_saturday_hint"
                         android:textColor="@color/darkGrey" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_saturday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_saturday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_saturday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -504,20 +725,38 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_saturday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
-                        android:spinnerMode="dropdown"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_saturday_closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_saturday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
-                        android:spinnerMode="dropdown"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
@@ -541,20 +780,38 @@
                         android:textColor="@color/darkGrey"
                         android:theme="@style/BlackTextDialog" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_sunday_open_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
-                        android:spinnerMode="dropdown"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_sunday_openHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_sunday_open_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
-                        android:spinnerMode="dropdown"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                     <TextView
@@ -568,26 +825,63 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_sunday_close_hours"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
-                        android:gravity="start"
-                        android:spinnerMode="dropdown"
-                        android:textAlignment="gravity"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
+                    <TextView
+                        android:id="@+id/add_activity_dialog_sunday_closeHour_separator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="@string/hour_separator"
+                        android:textColor="@color/darkGrey"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                    <Spinner
+                    <EditText
                         android:id="@+id/add_activity_dialog_sunday_close_minutes"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1.0"
-                        android:spinnerMode="dropdown"
+                        android:inputType="number"
+                        android:hint="@string/close_hint"
+                        android:layout_gravity="center_horizontal"
+                        android:gravity="center_horizontal"
+                        android:background="@null"
                         android:theme="@style/BlackTextDialog" />
 
                 </LinearLayout>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+            <Button
+                android:id="@+id/add_activity_dialog_btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_weight="1.0"
+                android:text="@string/add_activity_dialog_btn_cancel_hint" />
+            <Button
+                android:id="@+id/add_activity_dialog_btn_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="@string/add_activity_dialog_btn_save_hint" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
