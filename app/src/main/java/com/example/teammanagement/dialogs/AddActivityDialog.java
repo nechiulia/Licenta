@@ -2,40 +2,39 @@ package com.example.teammanagement.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
 import com.example.teammanagement.Utils.Constants;
-import com.example.teammanagement.Utils.Location;
 import com.example.teammanagement.Utils.NewLocation;
 import com.example.teammanagement.Utils.Sport;
-import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.SpinnerAdapter;
 import com.example.teammanagement.database.JDBCController;
+import com.example.teammanagement.fragments.EditLocationFragment;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddActivityDialog extends AppCompatDialogFragment {
 
@@ -88,18 +87,28 @@ public class AddActivityDialog extends AppCompatDialogFragment {
     private JDBCController jdbcController;
     private Connection c;
 
+    private AddActivityListener listener;
+
 
     private int ok1=0;
     private int ok2=0;
-    private int currentUserID;
+    private int newActivityID;
+    private int clickedActivityID;
     private  int currentLocationID;
     private NewLocation currentLocation;
     private List<String> spn_difiiculty_items = new ArrayList<>();
     private ArrayList<String> list_toGoToDialog = new ArrayList<>() ;
+    private Map<Integer,String> mapOrar = new HashMap<>();
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        try {
+            listener=(AddActivityListener) getTargetFragment();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(getString(R.string.addSportDialog_error_classCastException));
+        }
 
         jdbcController= JDBCController.getInstance();
         c=jdbcController.openConnection();
@@ -110,13 +119,12 @@ public class AddActivityDialog extends AppCompatDialogFragment {
 
         dialog = builder.create();
         dialog.show();
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
         return dialog;
     }
 
     public void createBuilder(){
         builder.setView(view)
-                .setTitle("Adăugare activitate")
+                .setTitle(R.string.add_activity_dialog_title)
                 .setCancelable(false);
     }
 
@@ -170,6 +178,9 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         et_sunday_close_minute=view.findViewById(R.id.add_activity_dialog_sunday_close_minutes);
 
         getLocationID();
+        getClickedActivityID();
+        initializeMap();
+
 
         list_toGoToDialog.add(getString(R.string.register2_sportSpinner_item0));
         initDataSpinner();
@@ -188,10 +199,49 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         btn_cancel.setOnClickListener(clickCancel());
         btn_save.setOnClickListener(clickSave());
 
+        if(clickedActivityID != -1){
+            selectActivity();
+            selectOrar();
+            iet_activityName.setText(activity.getActivityName());
+            iet_activityName.setEnabled(false);
+            iet_trainer.setText(activity.getTrainer());
+            iet_price.setText(String.valueOf(activity.getPrice()));
+            spn_sport.setSelection(getItemSport());
+            spn_sport.setEnabled(false);
+            spn_difiiculty.setSelection(getItemDifficulty());
+            boolean checked=false;
+            if(activity.getReservation() == 1){
+                checked=true;
+            }
+            ck_reservation.setChecked(checked);
+        }
+
+    }
+
+    public int getItemSport(){
+        for(int i=0; i< list_toGoToDialog.size(); i++){
+            if(list_toGoToDialog.get(i).equals(activity.getSport())){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getItemDifficulty(){
+        for(int i=0; i< spn_difiiculty_items.size(); i++){
+            if(spn_difiiculty_items.get(i).equals(activity.getDifficultyLevel())){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void getLocationID(){
         currentLocationID = (int) getArguments().get(Constants.CURRENT_LOCATION_ID);
+    }
+
+    public void getClickedActivityID(){
+        clickedActivityID = (int) getArguments().get(Constants.CLICKED_ACTIVITY_ID);
     }
 
     public void initDataSpinner(){
@@ -208,17 +258,192 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         }
     }
 
-    public void insertActivity(){
+    public void selectActivity(){
         try(Statement s = c.createStatement()){
-            int reservation=0;
-            if(ck_reservation.isChecked()){
-                reservation=1;
+            String command ="SELECT * FROM ACTIVITATI WHERE ID="+clickedActivityID;
+            try(ResultSet r =s.executeQuery(command)) {
+                if(r.next()){
+                    activity = new Activity();
+                    activity.setActivityID(r.getInt(1));
+                    activity.setActivityName(r.getString(2));
+                    activity.setSport(r.getString(3));
+                    activity.setTrainer(r.getString(4));
+                    String difficulty = getLevel(r.getInt(5));
+                    activity.setDifficultyLevel(difficulty);
+                    activity.setPrice(r.getDouble(6));
+                    activity.setReservation(r.getInt(7));
+                    activity.setLocationID(currentLocationID);
+                }
             }
-            int level=getLevelInt(spn_difiiculty.getSelectedItem().toString());
-            s.executeUpdate("INSERT INTO ACTIVITATI VALUES('"+iet_activityName.getText().toString().trim()
-                    +"','"+spn_sport.getSelectedItem().toString().trim()+"','"+
-                    iet_trainer.getText().toString().trim()+"',"+ level+","+
-                    Double.parseDouble(iet_price.getText().toString().trim())+","+ reservation+","+currentLocationID+")");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertActivity(){
+        int reservation=0;
+        if(ck_reservation.isChecked()){
+            reservation=1;
+        }
+        int level=getLevelInt(spn_difiiculty.getSelectedItem().toString());
+        try(PreparedStatement s = c.prepareStatement("INSERT INTO ACTIVITATI VALUES(N'"+iet_activityName.getText().toString().trim()
+                +"',N'"+spn_sport.getSelectedItem().toString().trim()+"','"+
+                iet_trainer.getText().toString().trim()+"',"+ level+","+
+                Double.parseDouble(iet_price.getText().toString().trim())+","+ reservation+","+currentLocationID+")",Statement.RETURN_GENERATED_KEYS)){
+            int updatedRows=s.executeUpdate();
+            ResultSet r=s.getGeneratedKeys();
+            if(r.next()){
+                if(updatedRows >0 ) {
+                    Log.d("databaseUpdateUser", String.valueOf(updatedRows));
+                    newActivityID=r.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectOrar(){
+        try(Statement s = c.createStatement()){
+            for(int i=0; i< mapOrar.size(); i++) {
+                try (ResultSet r = s.executeQuery("SELECT INTERVALORAR FROM ORAR WHERE IDACTIVITATE=" + clickedActivityID+" AND ZI="+i)) {
+                    if(r.next()) {
+                        String interval = r.getString(1);
+                        String[] openClose= interval.trim().split("");
+                        String open_hour=openClose[1]+openClose[2];
+                        String open_minute=openClose[4]+openClose[5];
+                        String close_hour = openClose[7]+openClose[8];
+                        String close_minute=openClose[10]+openClose[11];
+                        if(open_hour.equals("--")){
+                            open_hour="";
+                            open_minute="";
+                            close_hour="";
+                            close_minute="";
+                        }
+                        else if(open_minute.equals("--")){
+                            open_hour="";
+                            open_minute="";
+                            close_hour="";
+                            close_minute="";
+                        }
+                        else if(close_hour.equals("--")){
+                            open_hour="";
+                            open_minute="";
+                            close_hour="";
+                            close_minute="";
+                        }
+                        else if(close_minute.equals("--")){
+                            open_hour="";
+                            open_minute="";
+                            close_hour="";
+                            close_minute="";
+                        }
+                        if(i == 0){
+                            et_monday_open_hour.setText(open_hour);
+                            et_monday_open_minute.setText(open_minute);
+                            et_monday_close_hour.setText(close_hour);
+                            et_monday_close_minute.setText(close_minute);
+                        }
+                        else if(i == 1){
+                            et_tuesday_open_hour.setText(open_hour);
+                            et_tuesday_open_minute.setText(open_minute);
+                            et_tuesday_close_hour.setText(close_hour);
+                            et_tuesday_close_minute.setText(close_minute);
+                        }
+                        else if(i == 2){
+                            et_wednesday_open_hour.setText(open_hour);
+                            et_wednesday_open_minute.setText(open_minute);
+                            et_wednesday_close_hour.setText(close_hour);
+                            et_wednesday_close_minute.setText(close_minute);
+                        }
+                        else if(i == 3){
+                            et_thursday_open_hour.setText(open_hour);
+                            et_thursday_open_minute.setText(open_minute);
+                            et_thursday_close_hour.setText(close_hour);
+                            et_thursday_close_minute.setText(close_minute);
+                        }
+                        else if(i == 4){
+                            et_friday_open_hour.setText(open_hour);
+                            et_friday_open_minute.setText(open_minute);
+                            et_friday_close_hour.setText(close_hour);
+                            et_friday_close_minute.setText(close_minute);
+                        }
+                        else if(i == 5){
+                            et_saturday_open_hour.setText(open_hour);
+                            et_saturday_open_minute.setText(open_minute);
+                            et_saturday_close_hour.setText(close_hour);
+                            et_saturday_close_minute.setText(close_minute);
+                        }
+                        else if(i == 6){
+                            et_sunday_open_hour.setText(open_hour);
+                            et_sunday_open_minute.setText(open_minute);
+                            et_sunday_close_hour.setText(close_hour);
+                            et_sunday_close_minute.setText(close_minute);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void initializeMap(){
+        mapOrar.put(0,"");
+        mapOrar.put(1,"");
+        mapOrar.put(2,"");
+        mapOrar.put(3,"");
+        mapOrar.put(4,"");
+        mapOrar.put(5,"");
+        mapOrar.put(6,"");
+    }
+
+    public void getOrar(){
+
+        mapOrar.put(0, et_monday_open_hour.getText().toString().trim() +":"+ et_monday_open_minute.getText().toString().trim() +"-"+ et_monday_close_hour.getText().toString().trim() +":"+ et_monday_close_minute.getText().toString().trim());
+        mapOrar.put(1, et_tuesday_open_hour.getText().toString().trim() +":"+ et_tuesday_open_minute.getText().toString().trim() +"-"+ et_tuesday_close_hour.getText().toString().trim() +":"+ et_tuesday_close_minute.getText().toString().trim());
+        mapOrar.put(2, et_wednesday_open_hour.getText().toString().trim() +":"+ et_wednesday_open_minute.getText().toString().trim() +"-"+ et_wednesday_close_hour.getText().toString().trim() +":"+ et_wednesday_close_minute.getText().toString().trim());
+        mapOrar.put(3, et_thursday_open_hour.getText().toString().trim() +":"+ et_thursday_open_minute.getText().toString().trim() +"-"+ et_thursday_close_hour.getText().toString().trim() +":"+ et_thursday_close_minute.getText().toString().trim());
+        mapOrar.put(4, et_friday_open_hour.getText().toString().trim() +":"+ et_friday_open_minute.getText().toString().trim() +"-"+ et_friday_close_hour.getText().toString().trim() +":"+ et_friday_close_minute.getText().toString().trim());
+        mapOrar.put(5, et_saturday_open_hour.getText().toString().trim() +":"+ et_saturday_open_minute.getText().toString().trim() +"-"+ et_saturday_close_hour.getText().toString().trim() +":"+ et_saturday_close_minute.getText().toString().trim());
+        mapOrar.put(6, et_sunday_open_hour.getText().toString().trim() +":"+ et_sunday_open_minute.getText().toString().trim() +"-"+ et_sunday_close_hour.getText().toString().trim() +":"+ et_sunday_close_minute.getText().toString().trim());
+
+        for(int i=0; i< mapOrar.size();i++) {
+            if(mapOrar.get(i).equals(getString(R.string.closed_location_bd))){
+                mapOrar.put(i,getString(R.string.location_closed));
+            }
+        }
+    }
+
+
+    public void insertOrar(){
+        try(Statement s = c.createStatement()){
+            for(int i=0; i< mapOrar.size();i++) {
+                s.executeUpdate("INSERT INTO ORAR VALUES("+i+",'"+mapOrar.get(i)+"',"+newActivityID+")");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateOrar(){
+        try(Statement s = c.createStatement()){
+            for(int i=0; i< mapOrar.size();i++) {
+                s.executeUpdate("UPDATE ORAR SET INTERVALORAR='"+mapOrar.get(i)+"' WHERE IDACTIVITATE="+clickedActivityID+" AND ZI="+i);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateActivity(){
+        int reservation=0;
+        if(ck_reservation.isChecked()){
+            reservation=1;
+        }
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("UPDATE ACTIVITATI SET ANTRENOR=N'"+iet_trainer.getText().toString().trim()+
+                    "', PRET="+Double.parseDouble(iet_price.getText().toString().trim())+", REZERVARI="+reservation+" WHERE ID="+clickedActivityID);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -234,28 +459,30 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         return -2;
     }
 
-
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            listener=(AddActivityDialog.AddActivityDialogListner) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()+getString(R.string.addSportDialog_error_classCastException));
-        }
+    public String getLevel(int level){
+        if(level ==0)return getString(R.string.user_sport_level_0);
+        else if(level == 1)return getString(R.string.user_sport_level_1);
+        else if(level == 2)return getString(R.string.user_sport_level_2);
+        else if(level == 3)return getString(R.string.user_sport_level_3);
+        else if(level == 4)return getString(R.string.user_sport_level_4);
+        return getString(R.string.user_sport_level_5);
     }
-
-    public interface AddActivityDialogListner{
-        void applyTexts( String message, int ok);
-    }*/
 
     private View.OnClickListener clickSave() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isValid()){
-                    insertActivity();
+                    getOrar();
+                    if(clickedActivityID != -1){
+                        updateActivity();
+                        updateOrar();
+                    }
+                    else{
+                        insertActivity();
+                        insertOrar();
+                    }
+                    listener.notifyChanges();
                     dialog.dismiss();
                 }
             }
@@ -623,4 +850,9 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         et_sunday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
+
+    public interface AddActivityListener{
+        void notifyChanges();
+    }
+
 }

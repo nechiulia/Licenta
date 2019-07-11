@@ -162,7 +162,7 @@
         <item>Volei</item>
     </string-array>
     <string-array name="dialog_level">
-        <item>Selectează nivelul tău</item>
+        <item>Selectează nivelul</item>
         <item>Începător</item>
         <item>Elementar</item>
         <item>Intermediar</item>
@@ -384,7 +384,7 @@
     <string name="hour_error">Ora trebuie să conțină două caractere</string>
     <string name="minutes_error">Minutele sunt formate din două caractere</string>
     <string name="line_error_hours">Dacă locația este închisă într-o anumită zi, lasați necompletat, în caz contrat completați toată linia cu date corespunzătoare.</string>
-    <string name="edit_location_fragment_alertDialog_save_message">Informațiile introfuse au fost salvate cu succes. Acestea pot fi vizualizate în pagina de profil a locației</string>
+    <string name="edit_location_fragment_alertDialog_save_message">Informațiile introduse au fost salvate cu succes. Acestea pot fi vizualizate în pagina de profil a locației</string>
     <string name="edit_location_fragment_alertDialog_save_title">Salvare informații</string>
     <string name="edit_location_fragment_alertDialog_save_btn">Ok</string>
     <string name="add_activity_dialog_btn_cancel_hint">Anulează</string>
@@ -393,5 +393,7 @@
     <string name="lei">lei</string>
     <string name="location_closed">--:-----:--</string>
     <string name="closed_location_bd">:-:</string>
+    <string name="add_activity_dialog_title">Gestiune activitate</string>
+    <string name="fragment_locations_reservations_spn_item0_hint">Selectează activitatea dorită</string>
 
 </resources>

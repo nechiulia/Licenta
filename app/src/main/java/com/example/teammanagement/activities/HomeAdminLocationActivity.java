@@ -1,5 +1,6 @@
 package com.example.teammanagement.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,12 +12,13 @@ import android.view.MenuItem;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.User;
+import com.example.teammanagement.dialogs.AddActivityDialog;
 import com.example.teammanagement.fragments.EditLocationFragment;
 import com.example.teammanagement.fragments.LocationProfileFragment;
 import com.example.teammanagement.fragments.LocationsReservationsFragment;
 import com.google.gson.Gson;
 
-public class HomeAdminLocationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class HomeAdminLocationActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
 
     private User currentUser;
@@ -69,4 +71,9 @@ public class HomeAdminLocationActivity extends AppCompatActivity implements Bott
         return loadFragment(fragment);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent=new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
 }

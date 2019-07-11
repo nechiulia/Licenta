@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -22,8 +23,10 @@ import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
+import com.example.teammanagement.Utils.Announcement;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.NewLocation;
+import com.example.teammanagement.Utils.Teammate;
 import com.example.teammanagement.activities.AddTeam2Activity;
 import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.ActivitiesAdapter;
@@ -41,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EditLocationFragment extends Fragment {
+public class EditLocationFragment extends Fragment implements AddActivityDialog.AddActivityListener {
 
     private ImageButton ibtn_logOut;
     private TextView tv_program;
@@ -90,21 +93,25 @@ public class EditLocationFragment extends Fragment {
 
     private ActivitiesAdapter adapter;
 
+
     private JDBCController jdbcController;
     private Connection c;
 
     private int currentUserID;
+    private int clickedActivityID=-1;
     private NewLocation currentLocation;
     private Map<Integer,String> mapProgram = new HashMap<>();
-    private HashMap<String, Activity> mapActivity = new HashMap<>();
     private List<String> listParentActivities = new ArrayList<>();
     private List<Activity> listActivities=new ArrayList<>();
+    private List<Activity> checkedActivities = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_edit_location,null);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+
+
         jdbcController= JDBCController.getInstance();
         c=jdbcController.openConnection();
 
@@ -148,7 +155,7 @@ public class EditLocationFragment extends Fragment {
         et_friday_close_minute =view.findViewById(R.id.fragment_edit_location_friday_close_minutes);
         et_saturday_close_minute =view.findViewById(R.id.fragment_edit_location_saturday_close_minutes);
         et_sunday_close_minute =view.findViewById(R.id.fragment_edit_location_sunday_close_minutes);
-        
+
         ibtn_logOut.setOnClickListener(clickLogOut());
         ibtn_addActivity.setOnClickListener(clickAddActivity());
         ibtn_removeActivity.setOnClickListener(clickRemoveActivity());
@@ -160,10 +167,10 @@ public class EditLocationFragment extends Fragment {
         selectProgram();
         selectActivities();
 
-        if(listActivities.size() != 0 && mapActivity.size() !=0) {
-            adapter = new ActivitiesAdapter(getActivity().getApplicationContext(),R.layout.list_item_edit_location_activities, listActivities, getLayoutInflater());
-            lv_activities.setAdapter(adapter);
-        }
+        adapter = new ActivitiesAdapter(getActivity().getApplicationContext(),R.layout.list_item_edit_location_activities, listActivities, getLayoutInflater());
+        lv_activities.setAdapter(adapter);
+        lv_activities.setOnItemClickListener(clickActivity());
+
 
         return view;
     }
@@ -198,12 +205,21 @@ public class EditLocationFragment extends Fragment {
     private void openDialog(){
         Bundle args = new Bundle();
         args.putSerializable(Constants.CURRENT_LOCATION_ID, currentLocation.getLocationID());
+        args.putSerializable(Constants.CLICKED_ACTIVITY_ID, clickedActivityID);
 
         AddActivityDialog addActivityDialog = new AddActivityDialog();
         addActivityDialog.show(getActivity().getSupportFragmentManager(),getString(R.string.register2_addSport_hint));
 
         addActivityDialog.setArguments(args);
+        addActivityDialog.setTargetFragment(this,0);
         addActivityDialog.setCancelable(false);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        selectActivities();
+        adapter.notifyDataSetChanged();
     }
 
     public void selectLocationInfo(){
@@ -360,9 +376,24 @@ public class EditLocationFragment extends Fragment {
                     activity.setReservation(r.getInt(7));
                     activity.setLocationID(currentLocation.getLocationID());
                     listActivities.add(activity);
-                    mapActivity.put(activity.getActivityName(),activity);
                 }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteOrar(Activity activity){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM ORAR WHERE IDACTIVITATE="+activity.getActivityID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteActivity(Activity activity){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM ACTIVITATI WHERE ID="+activity.getActivityID());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -394,6 +425,7 @@ public class EditLocationFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                clickedActivityID=-1;
                 openDialog();
             }
         };
@@ -402,8 +434,14 @@ public class EditLocationFragment extends Fragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                intent=new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                checkedActivities=adapter.getCheckedActivities();
+                for(Activity a : checkedActivities){
+                    deleteOrar(a);
+                    deleteActivity(a);
+                }
+                listActivities.removeAll(checkedActivities);
+                checkedActivities.clear();
+                adapter.notifyDataSetChanged();
             }
         };
     }
@@ -434,19 +472,18 @@ public class EditLocationFragment extends Fragment {
         };
     }
 
-    /*private View.OnClickListener clickProgram() {
-        return new View.OnClickListener() {
+    private AdapterView.OnItemClickListener clickActivity(){
+        return new AdapterView.OnItemClickListener(){
             @Override
-            public void onClick(View v) {
-                if(linearLayout.getVisibility() == View.GONE) {
-                    linearLayout.setVisibility(View.VISIBLE);
-                }
-                else{
-                    linearLayout.setVisibility(View.GONE);
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                clickedActivityID=listActivities.get(position).getActivityID();
+                openDialog();
+
+
             }
         };
-    }*/
+    }
 
     public boolean isValid(){
         if(et_monday_open_hour.getText().toString().trim().length() !=2 && et_monday_open_hour.getText().toString().trim().length() !=0){
@@ -731,4 +768,11 @@ public class EditLocationFragment extends Fragment {
         return false;
     }
 
+
+    @Override
+    public void notifyChanges() {
+        listActivities.clear();
+        selectActivities();
+        adapter.notifyDataSetChanged();
+    }
 }
