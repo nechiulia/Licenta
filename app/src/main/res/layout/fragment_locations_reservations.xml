@@ -80,4 +80,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/fragment_locations_reservations_spn_activity" />
 
+
 </android.support.constraint.ConstraintLayout>

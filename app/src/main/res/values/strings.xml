@@ -350,19 +350,19 @@
     <string name="searchLocation_fragment_alertDialog_addLatLong_negativeButton">Nu</string>
     <string name="searchLocation_fragment_alertDialog_addLatLong_positiveButton">Da</string>
     <string name="newLocations_fragment_alertDialog_aprove_title">Aprobă locație</string>
-    <string name="newLocations_fragment_alertDialog_aprove_message_hint">Sunteți sigur că doriți să aprobați noua locație?</string>
+    <string name="newLocations_fragment_alertDialog_aprove_message_hint">Sunteți sigur că doriți să aprobați locațiile selectate?</string>
     <string name="newLocations_fragment_alertDialog_aprove_negativeButton_hint">Nu</string>
     <string name="newLocations_fragment_alertDialog_aprove_positiveButton_hint">Da</string>
     <string name="newLocations_fragment_alertDialog_delete_title">Respinge cerere</string>
-    <string name="newLocations_fragment_alertDialog_delete_message_hint">Sunteți sigur că doriți să ștergeți această cerere?</string>
+    <string name="newLocations_fragment_alertDialog_delete_message_hint">Sunteți sigur că doriți să ștergeți cererile selectate?</string>
     <string name="newLocations_fragment_alertDialog_delete_negativeButton_hint">Nu</string>
     <string name="newLocations_fragment_alertDialog_delete_positiveButton_hint">Da</string>
     <string name="reports_fragment_alertDialog_removeFeedback_title">Respinge raportare feedback</string>
-    <string name="reports_fragment_alertDialog_removeFeedback_message">Sunteți sigur că doriți să ștergeți aceast raport?</string>
+    <string name="reports_fragment_alertDialog_removeFeedback_message">Sunteți sigur că doriți să ștergeți rapoartele selectate?</string>
     <string name="reports_fragment_alertDialog_removeFeedback_negativeButton_hint">Nu</string>
     <string name="reports_fragment_alertDialog_removeFeedback_positiveButton_hint">Da</string>
     <string name="reports_fragment_alertDialog_aproveFeedback_title">Aprobă raportare feedback</string>
-    <string name="reports_fragment_alertDialog_aproveFeedback_message_hint">Sunteți sigur că doriți să aprobați cererea și să ștergeți feedback-ul?</string>
+    <string name="reports_fragment_alertDialog_aproveFeedback_message_hint">Sunteți sigur că doriți să aprobați cererile și să ștergeți feedback-urile selectate?</string>
     <string name="reports_fragment_alertDialog_aproveFeedback_negativeButton_hint">Nu</string>
     <string name="reports_fragment_alertDialog_aproveFeedback_positiveButton_hint">Da</string>
     <string name="fragment_edit_location_delete_hint">Șterge cont</string>
@@ -391,9 +391,20 @@
     <string name="no">Nu</string>
     <string name="yes">Da</string>
     <string name="lei">lei</string>
-    <string name="location_closed">--:-----:--</string>
-    <string name="closed_location_bd">:-:</string>
+    <string name="location_closed">-</string>
+    <string name="closed_location_bd">-</string>
     <string name="add_activity_dialog_title">Gestiune activitate</string>
     <string name="fragment_locations_reservations_spn_item0_hint">Selectează activitatea dorită</string>
+    <string name="closed_hours">--</string>
+    <string name="empty_string" />
+    <string name="list_item_location_reservation_dialog_tv_startHour_hint">00</string>
+    <string name="list_item_location_reservation_dialog_tv_finishHour_hint">00</string>
+    <string name="list_item_location_reservation_dialog_tv_separator_hint">-</string>
+    <string name="list_item_location_reservation_dialog_tv_userName_hint">Nume utilizator/echipa</string>
+    <string name="reservation_dialog_tv_noOrar_hint">Activitatea selectată nu are loc în această zi a săptămânii</string>
+    <string name="location_marker_dialog_btn_reservation_hint">Rezervă</string>
+    <string name="location_marker_exit_hint">X</string>
+    <string name="location_marker_dialog_tag">LocationMarkerDialog</string>
+    <string name="location_marker_dialog_locationName_hint">Denumire locație</string>
 
 </resources>

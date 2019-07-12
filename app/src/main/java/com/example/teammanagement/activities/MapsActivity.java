@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Location;
+import com.example.teammanagement.dialogs.LocationMarkerDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -40,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private AutoCompleteTextView et_searchText;
     private static final String TAG = "MapsActivity";
     private Map<Integer,String> program = new HashMap<>();
+    private Address address;
     Location l1;
 
     Intent intent;
@@ -71,7 +73,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
         ibtn_back.setOnClickListener(clickBack());
 
     }
@@ -90,7 +91,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ex.printStackTrace();
         }
         if(list.size() != 0){
-            Address address = list.get(0);
+            address = list.get(0);
             Log.d(TAG,"geoLocate found a location "+address.toString());
             moveCamera(new LatLng(address.getLatitude(),
                     address.getLongitude()),
@@ -113,6 +114,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        LatLng bucharest = new LatLng(44.4268, 26.1025);
+        moveCamera(new LatLng(bucharest.latitude,bucharest.longitude), Constants.DEFAULT_ZOOM,"București");
+        mMap.setOnMarkerClickListener(clickMarker());
+    }
+
+    private void moveCamera(final LatLng latLng, float zoom, String title){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+        MarkerOptions options = new MarkerOptions().position(latLng).title(title);
+        mMap.addMarker(options);
+
+    }
+
+
+    private void openDialog(){
+        Bundle args = new Bundle();
+        args.putSerializable(Constants.MAP_LOCATION_POSTALCODE,address.getPostalCode());
+
+        LocationMarkerDialog locationMarkerDialog = new LocationMarkerDialog();
+        locationMarkerDialog.show(getSupportFragmentManager(),getString(R.string.location_marker_dialog_tag));
+
+        locationMarkerDialog .setArguments(args);
+        locationMarkerDialog .setCancelable(false);
+    }
+
+
+    private GoogleMap.OnMarkerClickListener clickMarker() {
+        return new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(final Marker marker) {
+                openDialog();
+                return false;
+            }
+        };
+    }
+
     private View.OnClickListener clickBack(){
         return new View.OnClickListener() {
             @Override
@@ -123,36 +163,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         };
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-
-        LatLng bucharest = new LatLng(44.4268, 26.1025);
-        moveCamera(new LatLng(bucharest.latitude,bucharest.longitude), Constants.DEFAULT_ZOOM,"București");
-    }
-
-    private void moveCamera(final LatLng latLng, float zoom, String title){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
-        MarkerOptions options = new MarkerOptions().position(latLng).title(title);
-        mMap.addMarker(options);
-        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                return true;
-            };
-        });
-    }
-    /* Log.d("lat lonf",String.valueOf(latLng.latitude)+"---"+String.valueOf(latLng.longitude));*/
-    public void initData(){
-        l1=new Location("075100", "Patinoar Țiriac Telekom Arena","Bulevardul Mărăști",44.471133,26.064298);
-        program.put(0,"08:00-23:00");
-        program.put(1,"08:00-23:00");
-        program.put(2,"08:00-23:00");
-        program.put(3,"08:00-23:00");
-        program.put(4,"08:00-23:00");
-        program.put(5,"08:00-23:00");
-        program.put(6,"08:00-23:00");
-    }
 
 
 }

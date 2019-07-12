@@ -27,6 +27,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class LocationsReservationsFragment extends Fragment {
@@ -44,6 +45,8 @@ public class LocationsReservationsFragment extends Fragment {
     private Connection c;
 
     private int currentUserID;
+    private String selectedDate;
+    private int selectedActivityID;
     private int currentLocationID;
     private List<String> spn_activities_items = new ArrayList<>();
 
@@ -80,6 +83,7 @@ public class LocationsReservationsFragment extends Fragment {
         spn_activity.setAdapter(adapter);
         spn_activity.setOnItemSelectedListener(isSelectedActivity());
 
+
         return view;
     }
 
@@ -90,6 +94,8 @@ public class LocationsReservationsFragment extends Fragment {
     private void openDialog(){
         Bundle args = new Bundle();
         args.putSerializable(Constants.CURRENT_LOCATION_ID, currentLocationID);
+        args.putSerializable(Constants.SELECTED_ACTIVITY_NAME,spn_activity.getSelectedItem().toString());
+        args.putSerializable(Constants.SELECTED_DATE,selectedDate);
 
         ReservationDialog reservationDialog = new ReservationDialog();
         reservationDialog.show(getActivity().getSupportFragmentManager(),getString(R.string.register2_addSport_hint));
@@ -122,12 +128,52 @@ public class LocationsReservationsFragment extends Fragment {
         }
     }
 
+    public void getActivityID(String activityName){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT ID FROM ACTIVITATI WHERE DENUMIRE='"+activityName+"'")){
+                if(r.next()){
+                    selectedActivityID = r.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean selectOrar(String date){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT INTERVALORAR FROM ACTIVITATI WHERE ID="+selectedActivityID+" AND ZI=")) {
+                while (r.next()){
+
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /*public int dayOfWeek(Date date){
+        if(calendarView.getDate() == 0)return 6;
+    }*/
+
     public AdapterView.OnItemSelectedListener isSelectedActivity(){
         return new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0){
+                    getActivityID(spn_activities_items.get(position));
                     calendarView.setOnClickListener(clickDate());
+                    calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                        @Override
+                        public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                            int monthCorrect= month+1;
+                            selectedDate = dayOfMonth+"/"+monthCorrect+"/"+year;
+                            /*selectOrar(selectedDate);*/
+                            openDialog();
+                        }
+                    });
+
                 }
 
             }

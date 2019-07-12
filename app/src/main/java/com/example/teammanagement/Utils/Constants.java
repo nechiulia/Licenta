@@ -36,6 +36,9 @@ public interface Constants {
     String CURRENT_USER_ID ="Current location ID";
     String CURRENT_LOCATION_ID="LocationID";
     String CLICKED_ACTIVITY_ID="Clicked activity ID";
+    String SELECTED_ACTIVITY_NAME="SelectedActivityName";
+    String SELECTED_DATE="SelectedDate";
+    String MAP_LOCATION_POSTALCODE="Location PostalCode";
 
     int ADD_TEAMMATES_CODE =101;
 }

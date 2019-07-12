@@ -53,7 +53,10 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
 
     private SharedViewModel model;
 
+    private Address address;
+
     private NewLocation newLocation;
+    private int ok=0;
 
     private static final String TAG = "MapsActivity";
 
@@ -96,9 +99,12 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
             public void onChanged(@Nullable NewLocation location) {
                 Log.d("CEVA", String.valueOf(model.getSelected().getValue()));
                 newLocation=model.getSelected().getValue();
-                et_searchText.setText(newLocation.getLocationName());
-                mMap.setOnMarkerClickListener(clickMarker());
-                geoLocate();
+                if(!newLocation.getLocationName().equals("") && address == null) {
+                    ok=1;
+                    et_searchText.setText(newLocation.getLocationName());
+                    et_searchText.setEnabled(false);
+                    geoLocate();
+                }
             }
         });
 
@@ -112,7 +118,7 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
 
 
         mMap = googleMap;
-
+        mMap.setOnMarkerClickListener(clickMarker());
         LatLng bucharest = new LatLng(44.4268, 26.1025);
         moveCamera(new LatLng(bucharest.latitude,bucharest.longitude), Constants.DEFAULT_ZOOM,"București");
 
@@ -139,15 +145,16 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
             ex.printStackTrace();
         }
         if(list.size() != 0){
-            Address address = list.get(0);
+            address = list.get(0);
             Log.d(TAG,"geoLocate found a location "+address.toString());
             moveCamera(new LatLng(address.getLatitude(),
                             address.getLongitude()),
                     Constants.DEFAULT_ZOOM,address.getAddressLine(0));
-            if(newLocation!=null) {
+            /*if(newLocation!=null && !newLocation.getLocationName().equals("") && newLocation.getLocationName().equals(searchText)) {
+                et_searchText.setEnabled(false);
                 newLocation.setLatitude(address.getLatitude());
                 newLocation.setLongitude(address.getLongitude());
-            }
+            }*/
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -157,6 +164,10 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
                     .setNeutralButton(getString(R.string.maps_alertDialog_errorLocation_positiveButton_hint), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            et_searchText.setEnabled(true);
+                            address=null;
+                            ok=0;
+                            mMap.clear();
                             dialog.dismiss();
                         }
                     });
@@ -191,7 +202,8 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
         return new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(final Marker marker) {
-                if(model.getSelected().getValue().getLongitude() != 0.0 && model.getSelected().getValue().getLatitude() != 0.0 ){
+               /* if(model.getSelected().getValue().getLongitude() != 0.0 && model.getSelected().getValue().getLatitude() != 0.0 ){*/
+                if(ok==1){
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
                     builder.setTitle(getString(R.string.searchLocation_fragment_alertDialog_addLatLong_titile))
@@ -200,7 +212,10 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     switchFragment.onSwitchFragment(R.id.navigation_newLocations);
+                                    et_searchText.setEnabled(true);
                                     et_searchText.setText("");
+                                    address=null;
+                                    ok=0;
                                     mMap.clear();
                                 }
                             })
@@ -208,7 +223,12 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     switchFragment.onSwitchFragment(R.id.navigation_newLocations);
+                                    newLocation.setLatitude(address.getLatitude());
+                                    newLocation.setLongitude(address.getLongitude());
                                     model.setNewLocation(newLocation);
+                                    address=null;
+                                    ok=0;
+                                    et_searchText.setEnabled(true);
                                     et_searchText.setText("");
                                     mMap.clear();
                                 }
@@ -216,6 +236,11 @@ public class SearchLocationFragment extends Fragment implements OnMapReadyCallba
                     Dialog dialog = builder.create();
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
+                }else{
+                    address=null;
+                    et_searchText.setEnabled(true);
+                    et_searchText.setText("");
+                    mMap.clear();
                 }
                 return false;
             }

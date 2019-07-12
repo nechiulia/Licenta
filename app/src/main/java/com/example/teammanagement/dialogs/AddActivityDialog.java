@@ -63,20 +63,6 @@ public class AddActivityDialog extends AppCompatDialogFragment {
     private EditText et_friday_close_hour;
     private EditText et_saturday_close_hour;
     private EditText et_sunday_close_hour;
-    private EditText et_monday_open_minute;
-    private EditText et_tuesday_open_minute;
-    private EditText et_wednesday_open_minute;
-    private EditText et_thursday_open_minute;
-    private EditText et_friday_open_minute;
-    private EditText et_saturday_open_minute;
-    private EditText et_sunday_open_minute;
-    private EditText et_monday_close_minute;
-    private EditText et_tuesday_close_minute;
-    private EditText et_wednesday_close_minute;
-    private EditText et_thursday_close_minute;
-    private EditText et_friday_close_minute;
-    private EditText et_saturday_close_minute;
-    private EditText et_sunday_close_minute;
 
     private AlertDialog.Builder builder;
     private LayoutInflater inflater;
@@ -160,22 +146,6 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         et_friday_close_hour=view.findViewById(R.id.add_activity_dialog_friday_close_hours);
         et_saturday_close_hour=view.findViewById(R.id.add_activity_dialog_saturday_close_hours);
         et_sunday_close_hour=view.findViewById(R.id.add_activity_dialog_sunday_close_hours);
-
-        et_monday_open_minute=view.findViewById(R.id.add_activity_dialog_monday_open_minutes);
-        et_tuesday_open_minute=view.findViewById(R.id.add_activity_dialog_tuesday_open_minutes);
-        et_wednesday_open_minute=view.findViewById(R.id.add_activity_dialog_wednesday_open_minutes);
-        et_thursday_open_minute=view.findViewById(R.id.add_activity_dialog_thursday_open_minutes);
-        et_friday_open_minute=view.findViewById(R.id.add_activity_dialog_friday_open_minutes);
-        et_saturday_open_minute=view.findViewById(R.id.add_activity_dialog_saturday_open_minutes);
-        et_sunday_open_minute=view.findViewById(R.id.add_activity_dialog_sunday_open_minutes);
-
-        et_monday_close_minute=view.findViewById(R.id.add_activity_dialog_monday_close_minutes);
-        et_tuesday_close_minute=view.findViewById(R.id.add_activity_dialog_tuesday_close_minutes);
-        et_wednesday_close_minute=view.findViewById(R.id.add_activity_dialog_wednesday_close_minutes);
-        et_thursday_close_minute=view.findViewById(R.id.add_activity_dialog_thursday_close_minutes);
-        et_friday_close_minute=view.findViewById(R.id.add_activity_dialog_friday_close_minutes);
-        et_saturday_close_minute=view.findViewById(R.id.add_activity_dialog_saturday_close_minutes);
-        et_sunday_close_minute=view.findViewById(R.id.add_activity_dialog_sunday_close_minutes);
 
         getLocationID();
         getClickedActivityID();
@@ -310,75 +280,50 @@ public class AddActivityDialog extends AppCompatDialogFragment {
                     if(r.next()) {
                         String interval = r.getString(1);
                         String[] openClose= interval.trim().split("");
-                        String open_hour=openClose[1]+openClose[2];
-                        String open_minute=openClose[4]+openClose[5];
-                        String close_hour = openClose[7]+openClose[8];
-                        String close_minute=openClose[10]+openClose[11];
-                        if(open_hour.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                        String open_hour;
+                        String close_hour;
+                        if(openClose.length>2) {
+                            open_hour = openClose[1] + openClose[2];
+                            close_hour = openClose[4] + openClose[5];
+                        }else{
+                            open_hour=openClose[1];
+                            close_hour=openClose[1];
                         }
-                        else if(open_minute.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                        if(open_hour.equals(getString(R.string.closed_location_bd))){
+                            open_hour=getString(R.string.empty_string);
+                            close_hour=getString(R.string.empty_string);
                         }
-                        else if(close_hour.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
-                        }
-                        else if(close_minute.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                        else if(close_hour.equals(getString(R.string.closed_location_bd))){
+                            open_hour=getString(R.string.empty_string);
+                            close_hour=getString(R.string.empty_string);
                         }
                         if(i == 0){
                             et_monday_open_hour.setText(open_hour);
-                            et_monday_open_minute.setText(open_minute);
                             et_monday_close_hour.setText(close_hour);
-                            et_monday_close_minute.setText(close_minute);
                         }
                         else if(i == 1){
                             et_tuesday_open_hour.setText(open_hour);
-                            et_tuesday_open_minute.setText(open_minute);
                             et_tuesday_close_hour.setText(close_hour);
-                            et_tuesday_close_minute.setText(close_minute);
                         }
                         else if(i == 2){
                             et_wednesday_open_hour.setText(open_hour);
-                            et_wednesday_open_minute.setText(open_minute);
                             et_wednesday_close_hour.setText(close_hour);
-                            et_wednesday_close_minute.setText(close_minute);
                         }
                         else if(i == 3){
                             et_thursday_open_hour.setText(open_hour);
-                            et_thursday_open_minute.setText(open_minute);
                             et_thursday_close_hour.setText(close_hour);
-                            et_thursday_close_minute.setText(close_minute);
                         }
                         else if(i == 4){
                             et_friday_open_hour.setText(open_hour);
-                            et_friday_open_minute.setText(open_minute);
                             et_friday_close_hour.setText(close_hour);
-                            et_friday_close_minute.setText(close_minute);
                         }
                         else if(i == 5){
                             et_saturday_open_hour.setText(open_hour);
-                            et_saturday_open_minute.setText(open_minute);
                             et_saturday_close_hour.setText(close_hour);
-                            et_saturday_close_minute.setText(close_minute);
                         }
                         else if(i == 6){
                             et_sunday_open_hour.setText(open_hour);
-                            et_sunday_open_minute.setText(open_minute);
                             et_sunday_close_hour.setText(close_hour);
-                            et_sunday_close_minute.setText(close_minute);
                         }
                     }
                 }
@@ -389,30 +334,25 @@ public class AddActivityDialog extends AppCompatDialogFragment {
     }
 
     public void initializeMap(){
-        mapOrar.put(0,"");
-        mapOrar.put(1,"");
-        mapOrar.put(2,"");
-        mapOrar.put(3,"");
-        mapOrar.put(4,"");
-        mapOrar.put(5,"");
-        mapOrar.put(6,"");
+        mapOrar.put(0,getString(R.string.empty_string));
+        mapOrar.put(1,getString(R.string.empty_string));
+        mapOrar.put(2,getString(R.string.empty_string));
+        mapOrar.put(3,getString(R.string.empty_string));
+        mapOrar.put(4,getString(R.string.empty_string));
+        mapOrar.put(5,getString(R.string.empty_string));
+        mapOrar.put(6,getString(R.string.empty_string));
     }
 
     public void getOrar(){
 
-        mapOrar.put(0, et_monday_open_hour.getText().toString().trim() +":"+ et_monday_open_minute.getText().toString().trim() +"-"+ et_monday_close_hour.getText().toString().trim() +":"+ et_monday_close_minute.getText().toString().trim());
-        mapOrar.put(1, et_tuesday_open_hour.getText().toString().trim() +":"+ et_tuesday_open_minute.getText().toString().trim() +"-"+ et_tuesday_close_hour.getText().toString().trim() +":"+ et_tuesday_close_minute.getText().toString().trim());
-        mapOrar.put(2, et_wednesday_open_hour.getText().toString().trim() +":"+ et_wednesday_open_minute.getText().toString().trim() +"-"+ et_wednesday_close_hour.getText().toString().trim() +":"+ et_wednesday_close_minute.getText().toString().trim());
-        mapOrar.put(3, et_thursday_open_hour.getText().toString().trim() +":"+ et_thursday_open_minute.getText().toString().trim() +"-"+ et_thursday_close_hour.getText().toString().trim() +":"+ et_thursday_close_minute.getText().toString().trim());
-        mapOrar.put(4, et_friday_open_hour.getText().toString().trim() +":"+ et_friday_open_minute.getText().toString().trim() +"-"+ et_friday_close_hour.getText().toString().trim() +":"+ et_friday_close_minute.getText().toString().trim());
-        mapOrar.put(5, et_saturday_open_hour.getText().toString().trim() +":"+ et_saturday_open_minute.getText().toString().trim() +"-"+ et_saturday_close_hour.getText().toString().trim() +":"+ et_saturday_close_minute.getText().toString().trim());
-        mapOrar.put(6, et_sunday_open_hour.getText().toString().trim() +":"+ et_sunday_open_minute.getText().toString().trim() +"-"+ et_sunday_close_hour.getText().toString().trim() +":"+ et_sunday_close_minute.getText().toString().trim());
+        mapOrar.put(0, et_monday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_monday_close_hour.getText().toString().trim() );
+        mapOrar.put(1, et_tuesday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_tuesday_close_hour.getText().toString().trim() );
+        mapOrar.put(2, et_wednesday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_wednesday_close_hour.getText().toString().trim());
+        mapOrar.put(3, et_thursday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_thursday_close_hour.getText().toString().trim() );
+        mapOrar.put(4, et_friday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_friday_close_hour.getText().toString().trim());
+        mapOrar.put(5, et_saturday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_saturday_close_hour.getText().toString().trim() );
+        mapOrar.put(6, et_sunday_open_hour.getText().toString().trim() +getString(R.string.closed_location_bd)+ et_sunday_close_hour.getText().toString().trim());
 
-        for(int i=0; i< mapOrar.size();i++) {
-            if(mapOrar.get(i).equals(getString(R.string.closed_location_bd))){
-                mapOrar.put(i,getString(R.string.location_closed));
-            }
-        }
     }
 
 
@@ -449,6 +389,20 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         }
     }
 
+    public boolean selectActivityName(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT ID FROM ACTIVITATI WHERE IDLOCATIE="+currentLocationID+" AND DENUMIRE='"+iet_activityName.getText().toString().trim()+"'")){
+                if(r.next()){
+                    iet_activityName.setError("Ați adăugat deja o activitate cu acest nume");
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     private int getLevelInt(String level){
         if(level.equals(getString(R.string.user_sport_level_0)))return 0;
         if(level.equals(getString(R.string.user_sport_level_1)))return 1;
@@ -472,18 +426,22 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isValid()){
+                if (isValid()) {
                     getOrar();
-                    if(clickedActivityID != -1){
+                    if (clickedActivityID != -1) {
                         updateActivity();
                         updateOrar();
+                        listener.notifyChanges();
+                        dialog.dismiss();
+                    } else {
+                        if(!selectActivityName()) {
+                            insertActivity();
+                            insertOrar();
+                            listener.notifyChanges();
+                            dialog.dismiss();
+                        }
                     }
-                    else{
-                        insertActivity();
-                        insertOrar();
-                    }
-                    listener.notifyChanges();
-                    dialog.dismiss();
+
                 }
             }
         };
@@ -538,7 +496,7 @@ public class AddActivityDialog extends AppCompatDialogFragment {
 
     public boolean isValid(){
         if(isValidActivityName() && isValidTrainer() && isValidHoursLength() && isValidMonday()
-        &&isValidTuesday() && isValidWednesday() && isValidThursday() && isValidSaturday() && isValidSunday()){
+        &&isValidTuesday() && isValidWednesday() && isValidThursday() && isValidFriday() &&  isValidSaturday() && isValidSunday()){
             return true;
         }
         return false;
@@ -573,16 +531,8 @@ public class AddActivityDialog extends AppCompatDialogFragment {
             et_monday_open_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_monday_open_minute.getText().toString().trim().length()!=2 && et_monday_open_minute.getText().toString().trim().length() !=0) {
-            et_monday_open_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
         if(et_monday_close_hour.getText().toString().trim().length() != 2 && et_monday_close_hour.getText().toString().trim().length() !=0){
             et_monday_close_hour.setError(getString(R.string.hour_error));
-            return false;
-        }
-        if(et_monday_close_minute.getText().toString().trim().length()!=2 && et_monday_close_hour.getText().toString().trim().length() !=0) {
-            et_monday_close_minute.setError(getString(R.string.minutes_error));
             return false;
         }
 
@@ -590,262 +540,125 @@ public class AddActivityDialog extends AppCompatDialogFragment {
             et_tuesday_open_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_tuesday_open_minute.getText().toString().trim().length()!=2 && et_tuesday_open_minute.getText().toString().trim().length()!=0) {
-            et_tuesday_open_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
         if(et_tuesday_close_hour.getText().toString().trim().length() != 2 && et_tuesday_close_hour.getText().toString().trim().length() != 0){
             et_tuesday_close_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_tuesday_close_minute.getText().toString().trim().length()!=2 && et_tuesday_close_minute.getText().toString().trim().length()!=0) {
-            et_tuesday_close_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
-
         if(et_wednesday_open_hour.getText().toString().trim().length() !=2 && et_wednesday_open_hour.getText().toString().trim().length() !=0){
             et_wednesday_open_hour.setError(getString(R.string.hour_error));
-            return false;
-        }
-        if(et_wednesday_open_minute.getText().toString().trim().length()!=2 && et_wednesday_open_minute.getText().toString().trim().length()!=0) {
-            et_wednesday_open_minute.setError(getString(R.string.minutes_error));
             return false;
         }
         if(et_wednesday_close_hour.getText().toString().trim().length() != 2 && et_wednesday_close_hour.getText().toString().trim().length() != 0){
             et_wednesday_close_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_wednesday_close_minute.getText().toString().trim().length()!=2 && et_wednesday_close_minute.getText().toString().trim().length()!=0) {
-            et_wednesday_close_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
-
         if(et_thursday_open_hour.getText().toString().trim().length() !=2 && et_thursday_open_hour.getText().toString().trim().length() !=0){
             et_thursday_open_hour.setError(getString(R.string.hour_error));
-            return false;
-        }
-        if(et_thursday_open_minute.getText().toString().trim().length()!=2 && et_thursday_open_minute.getText().toString().trim().length()!=0) {
-            et_thursday_open_minute.setError(getString(R.string.minutes_error));
             return false;
         }
         if(et_thursday_close_hour.getText().toString().trim().length() != 2 && et_thursday_close_hour.getText().toString().trim().length() != 0){
             et_thursday_close_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_thursday_close_minute.getText().toString().trim().length()!=2 && et_thursday_close_minute.getText().toString().trim().length()!=0) {
-            et_thursday_close_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
-
         if(et_friday_open_hour.getText().toString().trim().length() !=2 && et_friday_open_hour.getText().toString().trim().length() !=0){
             et_friday_open_hour.setError(getString(R.string.hour_error));
-            return false;
-        }
-        if(et_friday_open_minute.getText().toString().trim().length()!=2 && et_friday_open_minute.getText().toString().trim().length()!=0) {
-            et_friday_open_minute.setError(getString(R.string.minutes_error));
             return false;
         }
         if(et_friday_close_hour.getText().toString().trim().length() != 2 && et_friday_close_hour.getText().toString().trim().length() != 0){
             et_friday_close_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_friday_close_minute.getText().toString().trim().length()!=2 && et_friday_close_minute.getText().toString().trim().length()!=0) {
-            et_friday_close_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
-
         if(et_saturday_open_hour.getText().toString().trim().length() !=2 && et_saturday_open_hour.getText().toString().trim().length() !=0){
             et_saturday_open_hour.setError(getString(R.string.hour_error));
-            return false;
-        }
-        if(et_saturday_open_minute.getText().toString().trim().length()!=2 && et_saturday_open_minute.getText().toString().trim().length()!=0 ) {
-            et_saturday_open_minute.setError(getString(R.string.minutes_error));
             return false;
         }
         if(et_saturday_close_hour.getText().toString().trim().length() != 2 && et_saturday_close_hour.getText().toString().trim().length() != 0){
             et_saturday_close_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_saturday_close_minute.getText().toString().trim().length()!=2 && et_saturday_close_minute.getText().toString().trim().length()!=0) {
-            et_saturday_close_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
-
         if(et_sunday_open_hour.getText().toString().trim().length() !=2 && et_sunday_open_hour.getText().toString().trim().length() !=0){
             et_sunday_open_hour.setError(getString(R.string.hour_error));
-            return false;
-        }
-        if(et_sunday_open_minute.getText().toString().trim().length()!=2 && et_sunday_open_minute.getText().toString().trim().length()!=0) {
-            et_sunday_open_minute.setError(getString(R.string.minutes_error));
             return false;
         }
         if(et_sunday_close_hour.getText().toString().trim().length() != 2 && et_sunday_close_hour.getText().toString().trim().length() != 0){
             et_sunday_close_hour.setError(getString(R.string.hour_error));
             return false;
         }
-        if(et_sunday_close_minute.getText().toString().trim().length()!=2 && et_sunday_close_minute.getText().toString().trim().length()!=0) {
-            et_sunday_close_minute.setError(getString(R.string.minutes_error));
-            return false;
-        }
         return true;
     }
 
     public boolean isValidMonday(){
-        if(et_monday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_monday_open_minute.getText().toString().trim().length() ==2){
-                if(et_monday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_monday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_monday_open_hour.getText().toString().trim().length() ==2 && et_monday_close_hour.getText().toString().trim().length() ==2) {
+            return true;
         }
-        else if(et_monday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_monday_open_minute.getText().toString().trim().length() ==0){
-                if(et_monday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_monday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_monday_open_hour.getText().toString().trim().length() ==0 && et_monday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_monday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
 
     public boolean isValidTuesday(){
-        if(et_tuesday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_tuesday_open_minute.getText().toString().trim().length() ==2){
-                if(et_tuesday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_tuesday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_tuesday_open_hour.getText().toString().trim().length() ==2 && et_tuesday_close_hour.getText().toString().trim().length() ==2) {
+            return true;
         }
-        else if(et_tuesday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_tuesday_open_minute.getText().toString().trim().length() ==0){
-                if(et_tuesday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_tuesday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_tuesday_open_hour.getText().toString().trim().length() ==0 && et_tuesday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_tuesday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
 
     public boolean isValidWednesday(){
-        if(et_wednesday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_wednesday_open_minute.getText().toString().trim().length() ==2){
-                if(et_wednesday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_wednesday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_wednesday_open_hour.getText().toString().trim().length() ==2 && et_wednesday_close_hour.getText().toString().trim().length() ==2) {
+            return true;
         }
-        else if(et_wednesday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_wednesday_open_minute.getText().toString().trim().length() ==0){
-                if(et_wednesday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_wednesday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_wednesday_open_hour.getText().toString().trim().length() ==0 && et_wednesday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_wednesday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
 
     public boolean isValidThursday(){
-        if(et_thursday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_thursday_open_minute.getText().toString().trim().length() ==2){
-                if(et_thursday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_thursday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_thursday_open_hour.getText().toString().trim().length() ==2 && et_thursday_close_hour.getText().toString().trim().length() ==2) {
+            return true;
         }
-        else if(et_thursday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_thursday_open_minute.getText().toString().trim().length() ==0){
-                if(et_thursday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_thursday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_thursday_open_hour.getText().toString().trim().length() ==0 && et_thursday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_thursday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
 
     public boolean isValidFriday(){
-        if(et_friday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_friday_open_minute.getText().toString().trim().length() ==2){
-                if(et_friday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_friday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_friday_open_hour.getText().toString().trim().length() ==2 && et_friday_close_hour.getText().toString().trim().length() ==2) {
+            return true;
         }
-        else if(et_friday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_friday_open_minute.getText().toString().trim().length() ==0){
-                if(et_friday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_friday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_friday_open_hour.getText().toString().trim().length() ==0 && et_friday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_friday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
 
     public boolean isValidSaturday(){
-        if(et_saturday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_saturday_open_minute.getText().toString().trim().length() ==2){
-                if(et_saturday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_saturday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_saturday_open_hour.getText().toString().trim().length() ==2 && et_saturday_close_hour.getText().toString().trim().length() ==2 ) {
+            return true;
         }
-        else if(et_saturday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_saturday_open_minute.getText().toString().trim().length() ==0){
-                if(et_saturday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_saturday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_saturday_open_hour.getText().toString().trim().length() ==0 && et_saturday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_saturday_open_hour.setError(getString(R.string.line_error_hours));
         return false;
     }
 
     public boolean isValidSunday(){
-        if(et_sunday_open_hour.getText().toString().trim().length() ==2) {
-            if(et_sunday_open_minute.getText().toString().trim().length() ==2){
-                if(et_sunday_close_hour.getText().toString().trim().length() ==2){
-                    if(et_sunday_close_minute.getText().toString().trim().length() ==2){
-                        return true;
-                    }
-                }
-            }
+        if(et_sunday_open_hour.getText().toString().trim().length() ==2 && et_sunday_close_hour.getText().toString().trim().length() ==2) {
+            return true;
         }
-        else if(et_sunday_open_hour.getText().toString().trim().length() ==0) {
-            if(et_sunday_open_minute.getText().toString().trim().length() ==0){
-                if(et_sunday_close_hour.getText().toString().trim().length() ==0){
-                    if(et_sunday_close_minute.getText().toString().trim().length() ==0){
-                        return true;
-                    }
-                }
-            }
+        else if(et_sunday_open_hour.getText().toString().trim().length() ==0 && et_sunday_close_hour.getText().toString().trim().length() ==0) {
+            return true;
         }
         et_sunday_open_hour.setError(getString(R.string.line_error_hours));
         return false;

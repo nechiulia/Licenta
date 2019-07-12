@@ -432,7 +432,7 @@ public class ClaimLocationActivity extends AppCompatActivity {
     }
 
     private boolean isValidStreetNumber(){
-        if(!iet_streetNumber.getText().toString().matches("^[a-zA-Z0-9_ ]*$")){
+        if(!iet_streetNumber.getText().toString().matches("^[a-zA-Z0-9_ -]*$")){
             iet_streetNumber.setError(getString(R.string.claim_location_isvalid_lettersAndDigits_error_hint));
             return false;
         }

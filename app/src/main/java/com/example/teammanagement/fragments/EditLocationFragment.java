@@ -176,13 +176,13 @@ public class EditLocationFragment extends Fragment implements AddActivityDialog.
     }
 
     public void initializeMap(){
-        mapProgram.put(0,"");
-        mapProgram.put(1,"");
-        mapProgram.put(2,"");
-        mapProgram.put(3,"");
-        mapProgram.put(4,"");
-        mapProgram.put(5,"");
-        mapProgram.put(6,"");
+        mapProgram.put(0,getString(R.string.empty_string));
+        mapProgram.put(1,getString(R.string.empty_string));
+        mapProgram.put(2,getString(R.string.empty_string));
+        mapProgram.put(3,getString(R.string.empty_string));
+        mapProgram.put(4,getString(R.string.empty_string));
+        mapProgram.put(5,getString(R.string.empty_string));
+        mapProgram.put(6,getString(R.string.empty_string));
     }
 
     public void getProgram(){
@@ -196,8 +196,8 @@ public class EditLocationFragment extends Fragment implements AddActivityDialog.
         mapProgram.put(6, et_sunday_open_hour.getText().toString().trim() +":"+ et_sunday_open_minute.getText().toString().trim() +"-"+ et_sunday_close_hour.getText().toString().trim() +":"+ et_sunday_close_minute.getText().toString().trim());
 
         for(int i=0; i< mapProgram.size();i++) {
-            if(mapProgram.get(i).equals(getString(R.string.closed_location_bd))){
-                mapProgram.put(i,getString(R.string.location_closed));
+            if(mapProgram.get(i).equals(":-:")){
+                mapProgram.put(i,"--:-----:--");
             }
         }
     }
@@ -255,28 +255,28 @@ public class EditLocationFragment extends Fragment implements AddActivityDialog.
                         String close_hour = openClose[7]+openClose[8];
                         String close_minute=openClose[10]+openClose[11];
                         if(open_hour.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                            open_hour=getString(R.string.empty_string);
+                            open_minute=getString(R.string.empty_string);
+                            close_hour=getString(R.string.empty_string);
+                            close_minute=getString(R.string.empty_string);
                         }
                         else if(open_minute.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                            open_hour=getString(R.string.empty_string);
+                            open_minute=getString(R.string.empty_string);
+                            close_hour=getString(R.string.empty_string);
+                            close_minute=getString(R.string.empty_string);
                         }
                         else if(close_hour.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                            open_hour=getString(R.string.empty_string);
+                            open_minute=getString(R.string.empty_string);
+                            close_hour=getString(R.string.empty_string);
+                            close_minute=getString(R.string.empty_string);
                         }
                         else if(close_minute.equals("--")){
-                            open_hour="";
-                            open_minute="";
-                            close_hour="";
-                            close_minute="";
+                            open_hour=getString(R.string.empty_string);
+                            open_minute=getString(R.string.empty_string);
+                            close_hour=getString(R.string.empty_string);
+                            close_minute=getString(R.string.empty_string);
                         }
                         if(i == 0){
                             et_monday_open_hour.setText(open_hour);

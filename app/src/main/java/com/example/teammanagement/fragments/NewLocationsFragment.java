@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
@@ -52,6 +53,9 @@ public class NewLocationsFragment extends Fragment  {
 
     private SharedViewModel model;
 
+    private double lat;
+    private int ok=0;
+    private double longitude;
     private NewLocation selectedLocation;
     private HashMap<String, NewLocation> mapLocations = new HashMap<>();
     private List<String> listUsersDate = new ArrayList<>();
@@ -62,6 +66,7 @@ public class NewLocationsFragment extends Fragment  {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_newlocations,null);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
         jdbcController =JDBCController.getInstance();
         c=jdbcController.openConnection();
@@ -91,7 +96,8 @@ public class NewLocationsFragment extends Fragment  {
                 selectedLocation=model.getSelected().getValue();
                 if(selectedLocation.getLatitude() != 0.0 && selectedLocation.getLongitude() != 0.0){
                     for(NewLocation selectedLoc:listNewLocations){
-                        if(selectedLoc.getLocationID() == selectedLocation.getLocationID()){
+                        selectLocationVerify(selectedLoc);
+                        if(selectedLoc.getLocationID() == selectedLocation.getLocationID() && (selectedLocation.getLatitude()!= lat || selectedLocation.getLongitude() != longitude)){
                             selectedLoc.setLongitude(selectedLocation.getLongitude());
                             selectedLoc.setLatitude(selectedLocation.getLatitude());
                             listAdapter.notifyDataSetChanged();
@@ -106,6 +112,19 @@ public class NewLocationsFragment extends Fragment  {
 
         return view;
 
+    }
+
+    public void selectLocationVerify(NewLocation location){
+        try(Statement s = c.createStatement()) {
+            try (ResultSet r = s.executeQuery("SELECT LATITUDINE,LONGITUDINE FROM LOCATII WHERE STARE=2 AND ID="+location.getLocationID())) {
+                if(r.next()){
+                    lat=r.getDouble(1);
+                    longitude=r.getDouble(2);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void selectLocations(){
