@@ -1,18 +1,14 @@
 package com.example.teammanagement.dialogs;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatDialogFragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -20,10 +16,12 @@ import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
-import com.example.teammanagement.Utils.Announcement;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.NewLocation;
+import com.example.teammanagement.Utils.Program;
+import com.example.teammanagement.activities.AddReservationActivity;
 import com.example.teammanagement.adapters.ExpandableListLocationActivitiesAdapter;
+import com.example.teammanagement.adapters.ProgramAdapter;
 import com.example.teammanagement.database.JDBCController;
 
 import java.sql.Connection;
@@ -45,6 +43,13 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
     private Button btn_reservation;
     private ImageButton ibtn_close;
     private TextView tv_locationName;
+    private TextView tv_noLocation;
+    private TextView tv_address_hint;
+    private TextView tv_postalCode_hint;
+    private TextView tv_email_hint;
+    private TextView tv_program;
+    private TextView tv_activities;
+
 
     private AlertDialog.Builder builder;
     private LayoutInflater inflater;
@@ -55,12 +60,19 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
     private Connection c;
 
     private ExpandableListLocationActivitiesAdapter listAdapter;
+    private ProgramAdapter adapter;
 
-    private String locationPostalCode;
+    private Intent intent;
+
+    private Double latitude;
+    private Double longitude;
+    private List<Integer> listActivitiesID = new ArrayList<>();
     private NewLocation currentLocation = new NewLocation();
     private HashMap<String, Activity> mapActivity = new HashMap<>();
     private List<String> listParentActivities = new ArrayList<>();
     private List<Activity> listActivities=new ArrayList<>();
+    private List<Program> listProgram = new ArrayList<>();
+    private List<Program> listOrar = new ArrayList<>();
 
 
     @Override
@@ -93,26 +105,63 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
         tv_address=view.findViewById(R.id.location_marker_dialog_locationAddress);
         tv_postalCode=view.findViewById(R.id.location_marker_dialog_postalCode);
         tv_email=view.findViewById(R.id.location_marker_dialog_email);
+        tv_address_hint=view.findViewById(R.id.location_marker_dialog_locationAddress_hint);
+        tv_postalCode_hint=view.findViewById(R.id.location_marker_dialog_postalCode_hint);
+        tv_activities=view.findViewById(R.id.location_marker_dialog_tv_activities_hint);
+        tv_program=view.findViewById(R.id.location_marker_dialog_tv_program_hint);
+        tv_email_hint=view.findViewById(R.id.location_marker_dialog_email_hint);
         lv_program=view.findViewById(R.id.location_marker_dialog_lv_program);
         elv_activities=view.findViewById(R.id.location_marker_dialog_lv_activities);
         ibtn_close=view.findViewById(R.id.location_marker_dialog_ibtn_close);
         btn_reservation=view.findViewById(R.id.location_marker_dialog_btn_reservation);
         tv_locationName=view.findViewById(R.id.location_marker_dialog_locationName);
+        tv_noLocation=view.findViewById(R.id.location_marker_dialog_tv_noLocationFound);
 
-        btn_reservation.setVisibility(View.GONE);
 
-        getLocationPostalCode();
-        getLocationInfo();
-        selectUserInfo();
-        initData();
-        selectActivities();
-
-        btn_reservation.setOnClickListener(clickReservation());
         ibtn_close.setOnClickListener(clickClose());
 
-        if(listParentActivities.size() != 0 && mapActivity.size() !=0) {
-            listAdapter = new ExpandableListLocationActivitiesAdapter(this.getContext(), listParentActivities, mapActivity);
+        getLocationLatLong();
+        getLocationInfo();
+        if(currentLocation.getLocationID()!=-1 && currentLocation.getState() == 0) {
+            selectUserInfo();
+            initData();
+            selectProgram();
+            selectActivities();
+            if(listActivities.size()==0){
+                elv_activities.setVisibility(View.GONE);
+            }
+            if(listProgram.size() ==0){
+                lv_program.setVisibility(View.GONE);
+            }
+
+            int reservationActivities=selectCountReservationActivities();
+            if (currentLocation.getReservation() == 1 && reservationActivities>=1) {
+                btn_reservation.setVisibility(View.VISIBLE);
+                btn_reservation.setOnClickListener(clickReservation());
+            }
+
+            adapter = new ProgramAdapter(this.getContext(), R.layout.list_item_program_location_marker_dialog, listProgram, inflater);
+            lv_program.setAdapter(adapter);
+
+            listAdapter = new ExpandableListLocationActivitiesAdapter(this.getContext(), listParentActivities, mapActivity, listActivitiesID, currentLocation);
             elv_activities.setAdapter(listAdapter);
+
+
+        }
+        else{
+            tv_address.setVisibility(View.GONE);
+            tv_postalCode.setVisibility(View.GONE);
+            tv_email.setVisibility(View.GONE);
+            tv_address_hint.setVisibility(View.GONE);
+            tv_postalCode_hint.setVisibility(View.GONE);
+            tv_email_hint.setVisibility(View.GONE);
+            tv_activities.setVisibility(View.GONE);
+            tv_program.setVisibility(View.GONE);
+            lv_program.setVisibility(View.GONE);
+            elv_activities.setVisibility(View.GONE);
+            btn_reservation.setVisibility(View.GONE);
+            tv_locationName.setVisibility(View.GONE);
+            tv_noLocation.setVisibility(View.VISIBLE);
         }
     }
 
@@ -130,13 +179,36 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        return getString(R.string.user_sport_level_5);
+        else if(level == 5) getString(R.string.user_sport_level_5);
+        return "-";
     }
 
+    public String getDayString(int day){
+        if(day == 0)return "L:";
+        else if(day==1)return "M:";
+        else if(day==2)return "M:";
+        else if(day==3)return "J:";
+        else if(day==4)return "V:";
+        else if(day==5)return "S:";
+        else return "D:";
+    }
+
+    public int selectCountReservationActivities(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT COUNT(*) FROM ACTIVITATI WHERE REZERVARI = 1 AND IDLOCATIE="+currentLocation.getLocationID())){
+                if(r.next()){
+                    return r.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
 
     public void getLocationInfo(){
         try(Statement s = c.createStatement()){
-            try(ResultSet r = s.executeQuery("SELECT * FROM LOCATII WHERE CODPOSTAL='"+locationPostalCode+"'")){
+            try(ResultSet r = s.executeQuery("SELECT * FROM LOCATII WHERE LATITUDINE="+latitude+" AND LONGITUDINE ="+longitude)){
                 if(r.next()){
                     currentLocation.setLocationID(r.getInt(1));
                     currentLocation.setLocationName(r.getString(2));
@@ -144,7 +216,7 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
                     currentLocation.setAddress(r.getString(4));
                     currentLocation.setLatitude(r.getDouble(5));
                     currentLocation.setLongitude(r.getDouble(6));
-                    currentLocation.setResevation(r.getByte(7));
+                    currentLocation.setReservation(r.getByte(7));
                     currentLocation.setState(r.getInt(8));
                     currentLocation.setUserID(r.getInt(9));
                 }
@@ -165,43 +237,25 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
         }
     }
 
-   /* public void selectProgram(){
+    public void selectProgram(){
         try(Statement s = c.createStatement()){
-            for(int i=0; i< 7; i++) {
-                try (ResultSet r = s.executeQuery("SELECT INTERVALORAR FROM PROGRAME WHERE IDLOCATIE=" + currentLocation.getLocationID()+" AND ZI="+i)) {
-                    if(r.next()) {
-                        String interval = r.getString(1);
+                try (ResultSet r = s.executeQuery("SELECT ZI,INTERVALORAR FROM PROGRAME WHERE IDLOCATIE=" + currentLocation.getLocationID())) {
+                    while(r.next()) {
+                        Program program = new Program();
+                        int day = r.getInt(1);
+                        String interval = r.getString(2);
                         if(interval.equals("--:-----:--")){
                             interval="Închis";
                         }
-                        if(i == 0){
-                            tv_monday.setText(interval);
-                        }
-                        else if(i == 1){
-                            tv_tuesday.setText(interval);
-                        }
-                        else if(i == 2){
-                            tv_wednesday.setText(interval);
-                        }
-                        else if(i == 3){
-                            tv_thursday.setText(interval);
-                        }
-                        else if(i == 4){
-                            tv_friday.setText(interval);
-                        }
-                        else if(i == 5){
-                            tv_saturday.setText(interval);
-                        }
-                        else if(i == 6){
-                            tv_sunday.setText(interval);
-                        }
+                        program.setDay(getDayString(day));
+                        program.setIntervalHours(interval);
+                       listProgram.add(program);
                     }
                 }
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public void selectActivities(){
         try(Statement s = c.createStatement()){
@@ -219,6 +273,7 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
                     activity.setLocationID(currentLocation.getLocationID());
                     listActivities.add(activity);
                     listParentActivities.add(activity.getActivityName());
+                    listActivitiesID.add(activity.getActivityID());
                     mapActivity.put(activity.getActivityName(),activity);
                 }
             }
@@ -227,15 +282,19 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
         }
     }
 
-    public void getLocationPostalCode(){
-        locationPostalCode = (String) getArguments().get(Constants.MAP_LOCATION_POSTALCODE);
+
+    public void getLocationLatLong(){
+        latitude = (Double) getArguments().get(Constants.MAP_LATITUDE);
+        longitude = (Double)getArguments().get(Constants.MAP_LONGITUDE);
     }
 
     private View.OnClickListener clickReservation() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
+                intent = new Intent(getContext(), AddReservationActivity.class);
+                intent.putExtra(Constants.CURRENT_LOCATION_ID,currentLocation.getLocationID());
+                startActivity(intent);
             }
         };
     }
@@ -248,4 +307,5 @@ public class LocationMarkerDialog extends AppCompatDialogFragment {
             }
         };
     }
+
 }

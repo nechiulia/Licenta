@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.0">
+        android:orientation="vertical">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/fragment_location_toolbar"
@@ -16,7 +21,6 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,23 +40,17 @@
             android:id="@+id/fragment_location_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
             android:text="@string/fragment_location_tv_title_hint"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.391"
+            app:layout_constraintHorizontal_bias="0.385"
             app:layout_constraintStart_toEndOf="@+id/fragment_location_ibtn_logout"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="520dp"
-        android:fillViewport="false"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_location_toolbar">
+    </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -62,7 +60,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.0"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
@@ -71,8 +68,8 @@
                     android:id="@+id/fragment_location_locationName_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:text="@string/fragment_location_locationName_hint"
+                    android:layout_weight="1"
                     android:textColor="@color/darkGrey"
                     android:textStyle="bold" />
 
@@ -88,7 +85,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
@@ -114,7 +110,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
@@ -140,7 +135,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
@@ -166,7 +160,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp">
@@ -190,223 +183,16 @@
                     app:srcCompat="@drawable/ic_groupindicator" />
 
             </LinearLayout>
+            <ListView
+                android:id="@+id/fragment_location_lv_program"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp" />
 
             <LinearLayout
-                android:id="@+id/fragment_location_container_program"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.0"
-                android:orientation="vertical">
-
-                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_monday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_monday_hint"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location_monday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_tuesday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_tuesday_hint"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location__tuesday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_wednesday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_wednesday_hint"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location_wednesday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_thursday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_thursday_hint"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location_thursday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_friday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_friday_hint"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location_friday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_saturday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_saturday_hint"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location_saturday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:layout_weight="1"
-                    android:orientation="horizontal"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp">
-
-                    <TextView
-                        android:id="@+id/fragment_location_sunday_hint"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:text="@string/fragment_location_sunday_hint"
-                        android:layout_gravity="center"
-                        android:textColor="@color/darkGrey" />
-
-                    <TextView
-                        android:id="@+id/fragment_location_sunday_Hours"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="@string/fragment_location_hours_hint"
-                        android:textColor="@color/darkGrey" />
-                </LinearLayout>
-            </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:orientation="horizontal"
                     android:paddingStart="10dp"
                     android:paddingEnd="10dp">
@@ -434,11 +220,13 @@
             <ExpandableListView
                 android:id="@+id/fragment_location_lv_activities"
                 android:layout_width="match_parent"
-                android:layout_height="400dp"
+                android:layout_height="190dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
                 android:groupIndicator="@drawable/ic_groupindicator">
             </ExpandableListView>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
         </LinearLayout>
-    </ScrollView>
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>

@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,14 +21,10 @@ import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
-import com.example.teammanagement.Utils.Announcement;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.NewLocation;
-import com.example.teammanagement.Utils.Teammate;
-import com.example.teammanagement.activities.AddTeam2Activity;
 import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.ActivitiesAdapter;
-import com.example.teammanagement.adapters.ExpandableListLocationActivitiesAdapter;
 import com.example.teammanagement.database.JDBCController;
 import com.example.teammanagement.dialogs.AddActivityDialog;
 
@@ -39,7 +33,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -233,7 +226,7 @@ public class EditLocationFragment extends Fragment implements AddActivityDialog.
                     currentLocation.setAddress(r.getString(4));
                     currentLocation.setLatitude(r.getDouble(5));
                     currentLocation.setLongitude(r.getDouble(6));
-                    currentLocation.setResevation(r.getByte(7));
+                    currentLocation.setReservation(r.getByte(7));
                     currentLocation.setState(r.getInt(8));
                     currentLocation.setUserID(r.getInt(9));
                 }
@@ -409,7 +402,8 @@ public class EditLocationFragment extends Fragment implements AddActivityDialog.
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        return getString(R.string.user_sport_level_5);
+        else if(level == 5) getString(R.string.user_sport_level_5);
+        return "-";
     }
 
     private View.OnClickListener clickLogOut() {

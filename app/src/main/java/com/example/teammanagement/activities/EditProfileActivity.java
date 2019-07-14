@@ -172,13 +172,25 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
         }
     }
 
+    private int getLevelInt(String level){
+        if(level.equals(getString(R.string.user_sport_level_0)))return 0;
+        else if(level.equals(getString(R.string.user_sport_level_1)))return 1;
+        else if(level.equals(getString(R.string.user_sport_level_2)))return 2;
+        else if(level.equals(getString(R.string.user_sport_level_3)))return 3;
+        else if(level.equals(getString(R.string.user_sport_level_4)))return 4;
+        else if(level.equals(getString(R.string.user_sport_level_5)))return 5;
+        else if(level.equals("-"))return 6;
+        return -2;
+    }
+
     public String getLevel(int level){
         if(level ==0)return getString(R.string.user_sport_level_0);
         else if(level == 1)return getString(R.string.user_sport_level_1);
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        return getString(R.string.user_sport_level_5);
+        else if(level == 5) getString(R.string.user_sport_level_5);
+        return "-";
     }
 
     private AdapterView.OnItemClickListener listItemClick(){
@@ -280,16 +292,6 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
         } catch (SQLException e1) {
             e1.printStackTrace();
         }
-    }
-
-    private int getLevelInt(String level){
-        if(level.equals(getString(R.string.user_sport_level_0)))return 0;
-        if(level.equals(getString(R.string.user_sport_level_1)))return 1;
-        if(level.equals(getString(R.string.user_sport_level_2)))return 2;
-        if(level.equals(getString(R.string.user_sport_level_3)))return 3;
-        if(level.equals(getString(R.string.user_sport_level_4)))return 4;
-        if(level.equals(getString(R.string.user_sport_level_5)))return 5;
-        return -2;
     }
 
     public void updateProfilePicture(){

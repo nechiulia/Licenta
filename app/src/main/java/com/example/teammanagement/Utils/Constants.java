@@ -39,6 +39,8 @@ public interface Constants {
     String SELECTED_ACTIVITY_NAME="SelectedActivityName";
     String SELECTED_DATE="SelectedDate";
     String MAP_LOCATION_POSTALCODE="Location PostalCode";
+    String MAP_LONGITUDE ="Longitude";
+    String MAP_LATITUDE="Latitude";
 
     int ADD_TEAMMATES_CODE =101;
 }

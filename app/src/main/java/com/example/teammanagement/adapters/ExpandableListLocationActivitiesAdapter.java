@@ -3,31 +3,58 @@ package com.example.teammanagement.adapters;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
 import com.example.teammanagement.Utils.NewLocation;
+import com.example.teammanagement.Utils.Orar;
+import com.example.teammanagement.Utils.Program;
+import com.example.teammanagement.database.JDBCController;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExpandableListLocationActivitiesAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
     private List<String> listParent;
     private HashMap<String, Activity> infoActivity;
+    private List<Integer> listActivitiesID;
+    private Map<Integer,List<Program>> mapOrare = new HashMap<>();
+    private ProgramAdapter adapter;
+    private NewLocation currentLocation;
+
+    private JDBCController jdbcController;
+    private Connection c;
 
     public ExpandableListLocationActivitiesAdapter(Context context, List<String> listParent,
-                                                 HashMap<String, Activity> activities) {
+                                                 HashMap<String, Activity> activities, List<Integer> objects,NewLocation currentL) {
         this._context = context;
         this.listParent = listParent;
         this.infoActivity = activities;
+        this.listActivitiesID=objects;
+        this.currentLocation = currentL;
+
+        jdbcController= JDBCController.getInstance();
+        c=jdbcController.openConnection();
+
+        for(int i=0;i<listActivitiesID.size();i++) {
+            selectOrar(listActivitiesID.get(i));
+        }
+
     }
 
     @Override
@@ -98,8 +125,12 @@ public class ExpandableListLocationActivitiesAdapter extends BaseExpandableListA
         TextView tv_reservation = convertView.findViewById(R.id.list_item_location_admin_activities_reservation);
         TextView tv_difficultyLevel = convertView.findViewById(R.id.list_item_location_admin_activities_difficultyLevel);
         TextView tv_price = convertView.findViewById(R.id.list_item_location_admin_activities_price);
+        ListView lv_orar = convertView.findViewById(R.id.list_item_location_admin_lv_orar);
 
+        List<Program> listOrar = mapOrare.get(listActivitiesID.get(groupPosition));
 
+        adapter = new ProgramAdapter(_context,R.layout.list_item_program_location_marker_dialog,listOrar,(LayoutInflater) this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE));
+        lv_orar.setAdapter(adapter);
         tv_activityName.setText(activity.getActivityName());
         tv_sport.setText(activity.getSport());
         tv_trainer.setText(activity.getTrainer());
@@ -130,6 +161,36 @@ public class ExpandableListLocationActivitiesAdapter extends BaseExpandableListA
 
     public HashMap<String, Activity> getInfoActivity() {
         return infoActivity;
+    }
+
+    public String getDayString(int day){
+        if(day == 0)return "L:";
+        else if(day==1)return "M:";
+        else if(day==2)return "M:";
+        else if(day==3)return "J:";
+        else if(day==4)return "V:";
+        else if(day==5)return "S:";
+        else return "D:";
+    }
+
+
+    public void selectOrar(int idActivity){
+        List<Program> listOrar = new ArrayList<>();
+        try(Statement s = c.createStatement()){
+            try (ResultSet r = s.executeQuery("SELECT ZI,INTERVALORAR,IDACTIVITATE FROM ORAR WHERE IDACTIVITATE=" + idActivity)) {
+                while(r.next()) {
+                    Program orar = new Program();
+                    int day = r.getInt(1);
+                    String interval = r.getString(2);
+                    orar.setDay(getDayString(day));
+                    orar.setIntervalHours(interval);
+                    listOrar.add(orar);
+                }
+                mapOrare.put(idActivity,listOrar);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.0"
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
@@ -26,6 +25,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+            <TextView
+                android:id="@+id/list_item_teammates_ck_tv_userName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="@string/register1_userName_hint"
+                android:textColor="@color/darkGrey" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,13 +39,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/list_item_teammates_ck_tv_userName"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/list_item_teammates_ck_tv_role"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_weight="1.0"
-                    android:text="@string/register1_userName_hint"
+                    android:text="@string/list_item_usersExplorer_tv_role_hint"
                     android:textColor="@color/darkGrey" />
-
                 <CheckBox
                     android:id="@+id/list_item_teammates_ck_checkBox"
                     android:layout_width="wrap_content"
@@ -49,14 +56,10 @@
                     android:clickable="false"
                     android:focusable="false"
                     android:foregroundTint="@color/darkGrey" />
+
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/list_item_teammates_ck_tv_role"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/list_item_usersExplorer_tv_role_hint"
-                android:textColor="@color/darkGrey" />
+
         </LinearLayout>
     </LinearLayout>
 

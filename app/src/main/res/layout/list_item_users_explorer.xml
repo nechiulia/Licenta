@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <ImageView
@@ -12,21 +11,16 @@
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:contentDescription="@string/profile_img_profile_hint"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/woman" />
+        android:src="@drawable/woman"
+        android:contentDescription="@string/profile_img_profile_hint" />
 
     <TextView
         android:id="@+id/list_item_usersExplorer_tv_userName"
-        android:layout_width="100dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="228dp"
+        android:layout_marginEnd="10dp"
+        android:layout_gravity="center"
         android:text="@string/register1_userName_hint"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:textColor="@color/darkGrey"
-        app:layout_constraintStart_toEndOf="@id/list_item_usersExplorer_iv_userPicture"
-        app:layout_constraintTop_toTopOf="parent" />
-</android.support.constraint.ConstraintLayout>
+        android:textColor="@color/darkGrey" />
+</LinearLayout>

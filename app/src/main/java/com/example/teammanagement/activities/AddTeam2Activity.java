@@ -49,6 +49,7 @@ public class AddTeam2Activity extends AppCompatActivity {
     private Connection c;
 
     private Team team;
+    private int teamID=-1;
     private User currentUser;
     private List<User> checkedUsers = new ArrayList<>();
     private List<User> listUsers = new ArrayList<>();
@@ -222,10 +223,21 @@ public class AddTeam2Activity extends AppCompatActivity {
         }
     }
 
+    public void deleteEchipa(){
+        try(Statement s = c.createStatement()){
+            s.executeUpdate("DELETE FROM ECHIPE WHERE ID="+teamID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private View.OnClickListener clickCancel() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(teamID!=-1){
+                    deleteEchipa();
+                }
                 Intent intent=new Intent(getApplicationContext(),TeamsActivity.class);
                 startActivity(intent);
             }
@@ -236,34 +248,52 @@ public class AddTeam2Activity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int teamID=insertTeam();
-                if(teamID != -1) {
-                    int minPlayers= getMinPlayers();
-                    checkedUsers = adapter.getCheckedUsers();
-                    if(checkedUsers.size() >=(minPlayers-1)  && checkedUsers.size()>0) {
-                        for(User user:checkedUsers) {
-                            insertRole(teamID,user);
+                if (listUsers.size() != 0 ) {
+                    teamID = insertTeam();
+                    if (teamID != -1) {
+                        int minPlayers = getMinPlayers();
+                        checkedUsers = adapter.getCheckedUsers();
+                        if (checkedUsers.size() >= (minPlayers - 1) && checkedUsers.size() > 0) {
+                            for (User user : checkedUsers) {
+                                insertRole(teamID, user);
+                            }
+                            insertRoleCaptain(teamID, currentUser);
+                            Intent intent = new Intent(getApplicationContext(), TeamsActivity.class);
+                            startActivity(intent);
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(AddTeam2Activity.this);
+                            builder.setTitle(getString(R.string.add_team2_alertDialog_title))
+                                    .setMessage(getString(R.string.add_team2_alertDialog_message) + " " + minPlayers)
+                                    .setCancelable(false)
+                                    .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
                         }
-                        insertRoleCaptain(teamID,currentUser);
-                        Intent intent = new Intent(getApplicationContext(), TeamsActivity.class);
-                        startActivity(intent);
-                    }
-                    else{
-                        AlertDialog.Builder builder = new AlertDialog.Builder(AddTeam2Activity.this);
-                        builder.setTitle(getString(R.string.add_team2_alertDialog_title))
-                                .setMessage(getString(R.string.add_team2_alertDialog_message)+" "+minPlayers)
-                                .setCancelable(false)
-                                .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();
                     }
                 }
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AddTeam2Activity.this);
+                    builder.setTitle(getString(R.string.add_team2_alertDialog_title))
+                            .setMessage("Nu există suficienți jucători în cadrul aplicației pentru a putea forma o echipa")
+                            .setCancelable(false)
+                            .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                    Intent intent=new Intent(getApplicationContext(),TeamsActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
             }
+
         };
     }
 

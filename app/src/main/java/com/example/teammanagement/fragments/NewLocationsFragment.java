@@ -15,10 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.NewLocation;
@@ -138,7 +136,7 @@ public class NewLocationsFragment extends Fragment  {
                     newLocation.setAddress(r.getString(4));
                     newLocation.setLatitude(r.getDouble(5));
                     newLocation.setLongitude(r.getDouble(6));
-                    newLocation.setResevation(r.getByte(7));
+                    newLocation.setReservation(r.getByte(7));
                     newLocation.setState(r.getInt(8));
                     newLocation.setUserID(r.getInt(9));
                     listUsersDate.add(r.getString(2));

@@ -2,6 +2,7 @@ package com.example.teammanagement.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
@@ -15,8 +16,11 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.Orar;
+import com.example.teammanagement.Utils.Reservation;
+import com.example.teammanagement.Utils.User;
 import com.example.teammanagement.adapters.ReservationAdapter;
 import com.example.teammanagement.database.JDBCController;
+import com.google.gson.Gson;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,7 +35,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ReservationDialog extends AppCompatDialogFragment {
+public class ReservationAdminLocationDialog extends AppCompatDialogFragment {
 
     private AlertDialog.Builder builder;
     private LayoutInflater inflater;
@@ -56,6 +60,7 @@ public class ReservationDialog extends AppCompatDialogFragment {
     private String name;
     private int currentDayOfWeek;
     private List<Orar> listOrar = new ArrayList<>();
+    private List<Reservation> list_reservations = new ArrayList<>();
 
     @Override
     @NonNull
@@ -89,6 +94,7 @@ public class ReservationDialog extends AppCompatDialogFragment {
         getActivityID();
         getSelectedDayOrar();
         createViewHours();
+        selectReservations();
 
         if(lv_reservations.getVisibility()== View.VISIBLE) {
             adapter = new ReservationAdapter(getActivity().getApplicationContext(), R.layout.list_item_reservation_dialog, listOrar, inflater);
@@ -96,7 +102,10 @@ public class ReservationDialog extends AppCompatDialogFragment {
         }
 
         lv_reservations.setOnItemLongClickListener(clickDelete());
+
+
     }
+
 
     public void createBuilder(){
         builder.setView(view)
@@ -104,7 +113,7 @@ public class ReservationDialog extends AppCompatDialogFragment {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        dialog.dismiss();
                     }
                 });
     }
@@ -230,6 +239,49 @@ public class ReservationDialog extends AppCompatDialogFragment {
         catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    public void selectReservations(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM REZERVARI WHERE IDACTIVITATE="+selectedActivityID+" AND DATA='"+selectedDate+"' AND STARE!=1")){
+                while(r.next()){
+                    Reservation reservation = new Reservation();
+                    reservation.setReservationID(r.getInt(1));
+                    reservation.setReservationDate(r.getString(2));
+                    reservation.setBookedDate(r.getString(3));
+                    String startHour = r.getString(4);
+                    String finishHour=r.getString(5);
+                    reservation.setIntervalOrar(startHour+"-"+finishHour);
+                    reservation.setIDTeam(r.getInt(6));
+                    reservation.setIDActivity(r.getInt(7));
+                    reservation.setIDUser(r.getInt(8));
+                    reservation.setState(r.getInt(9));
+                    list_reservations.add(reservation);
+                    String nameOrar = selectTeamName(reservation.getIDTeam());
+                    for(int i=0;i< listOrar.size();i++){
+                        if(startHour.equals(listOrar.get(i).getStartHour())){
+                            listOrar.get(i).setName(nameOrar);
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String selectTeamName(int teamID){
+        try(Statement s =c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT DENUMIRE FROM ECHIPE WHERE ID="+teamID) ){
+                if(r.next()){
+                    return r.getString(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     public void getDayDB(int dayWeek){

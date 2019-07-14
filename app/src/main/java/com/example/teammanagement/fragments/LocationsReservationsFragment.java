@@ -1,5 +1,7 @@
 package com.example.teammanagement.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,16 +18,19 @@ import android.widget.TextView;
 
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Constants;
-import com.example.teammanagement.Utils.NewLocation;
+import com.example.teammanagement.activities.AddReservationActivity;
+import com.example.teammanagement.activities.HomeAdminLocationActivity;
 import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.SpinnerAdapter;
 import com.example.teammanagement.database.JDBCController;
-import com.example.teammanagement.dialogs.ReservationDialog;
+import com.example.teammanagement.dialogs.ReservationAdminLocationDialog;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,9 +84,53 @@ public class LocationsReservationsFragment extends Fragment {
 
         }
 
-        adapter= new SpinnerAdapter(getContext(),R.layout.spinner_item,spn_activities_items,inflater);
+        adapter= new SpinnerAdapter(getContext(),R.layout.grey_spinner_center,spn_activities_items,inflater);
         spn_activity.setAdapter(adapter);
         spn_activity.setOnItemSelectedListener(isSelectedActivity());
+
+        calendarView.setOnClickListener(clickDate());
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                if(spn_activity.getSelectedItemPosition()!=0) {
+                    int monthCorrect = month + 1;
+                    selectedDate = dayOfMonth + "/" + monthCorrect + "/" + year;
+                    try {
+                        Date date = new SimpleDateFormat("dd/MM/yyyy").parse(selectedDate);
+                        Date currentDate = new Date();
+                        if (date.after(currentDate)) {
+                            openDialog();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("Detalii rezervare")
+                                    .setMessage("Nu puteți face rezervări pentru zilele anterioare. Selectați o dată viitoare.")
+                                    .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+                        }
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Detalii rezervare")
+                            .setMessage("Pentru a putea vizualiza orele disponibile pentru rezervare, este necesar să selectați o activitate.")
+                            .setPositiveButton(getString(R.string.editProfile_alertDialog_listEmpty_hint), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            }
+        });
 
 
         return view;
@@ -97,11 +146,11 @@ public class LocationsReservationsFragment extends Fragment {
         args.putSerializable(Constants.SELECTED_ACTIVITY_NAME,spn_activity.getSelectedItem().toString());
         args.putSerializable(Constants.SELECTED_DATE,selectedDate);
 
-        ReservationDialog reservationDialog = new ReservationDialog();
-        reservationDialog.show(getActivity().getSupportFragmentManager(),getString(R.string.register2_addSport_hint));
+        ReservationAdminLocationDialog reservationAdminLocationDialog = new ReservationAdminLocationDialog();
+        reservationAdminLocationDialog.show(getActivity().getSupportFragmentManager(),getString(R.string.register2_addSport_hint));
 
-        reservationDialog.setArguments(args);
-        reservationDialog.setCancelable(false);
+        reservationAdminLocationDialog.setArguments(args);
+        reservationAdminLocationDialog.setCancelable(false);
     }
 
     public void getLocationID(){
@@ -130,7 +179,7 @@ public class LocationsReservationsFragment extends Fragment {
 
     public void getActivityID(String activityName){
         try(Statement s = c.createStatement()){
-            try(ResultSet r = s.executeQuery("SELECT ID FROM ACTIVITATI WHERE DENUMIRE='"+activityName+"'")){
+            try(ResultSet r = s.executeQuery("SELECT ID FROM ACTIVITATI WHERE DENUMIRE='"+activityName+"' AND IDLOCATIE="+currentLocationID)){
                 if(r.next()){
                     selectedActivityID = r.getInt(1);
                 }
@@ -140,40 +189,12 @@ public class LocationsReservationsFragment extends Fragment {
         }
     }
 
-    public boolean selectOrar(String date){
-        try(Statement s = c.createStatement()){
-            try(ResultSet r = s.executeQuery("SELECT INTERVALORAR FROM ACTIVITATI WHERE ID="+selectedActivityID+" AND ZI=")) {
-                while (r.next()){
-
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /*public int dayOfWeek(Date date){
-        if(calendarView.getDate() == 0)return 6;
-    }*/
-
     public AdapterView.OnItemSelectedListener isSelectedActivity(){
         return new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position != 0){
                     getActivityID(spn_activities_items.get(position));
-                    calendarView.setOnClickListener(clickDate());
-                    calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-                        @Override
-                        public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                            int monthCorrect= month+1;
-                            selectedDate = dayOfMonth+"/"+monthCorrect+"/"+year;
-                            /*selectOrar(selectedDate);*/
-                            openDialog();
-                        }
-                    });
-
                 }
 
             }

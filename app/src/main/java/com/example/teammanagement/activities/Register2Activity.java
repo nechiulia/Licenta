@@ -278,12 +278,14 @@ public class Register2Activity extends AppCompatActivity implements AddSportDial
 
     private int getLevelInt(String level){
         if(level.equals(getString(R.string.user_sport_level_0)))return 0;
-        if(level.equals(getString(R.string.user_sport_level_1)))return 1;
-        if(level.equals(getString(R.string.user_sport_level_2)))return 2;
-        if(level.equals(getString(R.string.user_sport_level_3)))return 3;
-        if(level.equals(getString(R.string.user_sport_level_4)))return 4;
-        if(level.equals(getString(R.string.user_sport_level_5)))return 5;
+        else if(level.equals(getString(R.string.user_sport_level_1)))return 1;
+        else if(level.equals(getString(R.string.user_sport_level_2)))return 2;
+        else if(level.equals(getString(R.string.user_sport_level_3)))return 3;
+        else if(level.equals(getString(R.string.user_sport_level_4)))return 4;
+        else if(level.equals(getString(R.string.user_sport_level_5)))return 5;
+        else if(level.equals("-"))return 6;
         return -2;
     }
+
 
 }

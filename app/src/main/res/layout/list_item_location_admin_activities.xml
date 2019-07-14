@@ -148,4 +148,20 @@
             android:layout_weight="1" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/list_item_location_admin_tv_program_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/darkGrey"
+        android:paddingStart="30dp"
+        android:paddingEnd="10dp"
+        android:text="@string/list_item_location_admin_tv_program_hint" />
+
+    <ListView
+        android:id="@+id/list_item_location_admin_lv_orar"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="10dp" />
+
 </LinearLayout>

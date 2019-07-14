@@ -10,14 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.Activity;
 import com.example.teammanagement.Utils.Constants;
 import com.example.teammanagement.Utils.NewLocation;
+import com.example.teammanagement.Utils.Program;
 import com.example.teammanagement.activities.LoginActivity;
 import com.example.teammanagement.adapters.ExpandableListLocationActivitiesAdapter;
+import com.example.teammanagement.adapters.ProgramAdapter;
 import com.example.teammanagement.database.JDBCController;
 
 import java.sql.Connection;
@@ -34,31 +36,30 @@ public class LocationProfileFragment extends Fragment {
     private TextView tv_email;
     private TextView tv_postalCode;
     private TextView tv_address;
-    private TextView tv_monday;
-    private TextView tv_tuesday;
-    private TextView tv_wednesday;
-    private TextView tv_thursday;
-    private TextView tv_friday;
-    private TextView tv_saturday;
-    private TextView tv_sunday;
     private TextView tv_program;
     private TextView tv_activities;
     private ImageButton ibtn_logOut;
-    private LinearLayout layout_hours;
     private ExpandableListView lv_activities;
+    private ListView lv_program;
 
     private ExpandableListLocationActivitiesAdapter listAdapter;
+    private ProgramAdapter adapter;
 
     private Intent intent;
 
     private JDBCController jdbcController;
     private Connection c;
 
+
     private int currentUserID;
+    private int clickedActivityID;
     private NewLocation currentLocation;
     private HashMap<String, Activity> mapActivity = new HashMap<>();
     private List<String> listParentActivities = new ArrayList<>();
     private List<Activity> listActivities=new ArrayList<>();
+    private List<Program> listProgram = new ArrayList<>();
+    private List<Program> listOrar = new ArrayList<>();
+    private List<Integer> listActivitiesID = new ArrayList<>();
 
     @Nullable
     @Override
@@ -73,18 +74,11 @@ public class LocationProfileFragment extends Fragment {
         tv_email=view.findViewById(R.id.fragment_location_email);
         tv_postalCode=view.findViewById(R.id.fragment_location_postalCode);
         tv_address=view.findViewById(R.id.fragment_location_locationAddress);
-        tv_monday=view.findViewById(R.id.fragment_location_monday_Hours);
-        tv_tuesday=view.findViewById(R.id.fragment_location__tuesday_Hours);
-        tv_wednesday =view.findViewById(R.id.fragment_location_wednesday_Hours);
-        tv_thursday=view.findViewById(R.id.fragment_location_thursday_Hours);
-        tv_friday=view.findViewById(R.id.fragment_location_friday_Hours);
-        tv_saturday=view.findViewById(R.id.fragment_location_saturday_Hours);
-        tv_sunday=view.findViewById(R.id.fragment_location_sunday_Hours);
-        layout_hours=view.findViewById(R.id.fragment_location_container_program);
         tv_program=view.findViewById(R.id.fragment_location_program_hint);
         tv_activities=view.findViewById(R.id.fragment_location_activities_hint);
         lv_activities=view.findViewById(R.id.fragment_location_lv_activities);
         ibtn_logOut=view.findViewById(R.id.fragment_location_ibtn_logout);
+        lv_program = view.findViewById(R.id.fragment_location_lv_program);
 
 
         tv_program.setOnClickListener(showProgram());
@@ -96,16 +90,34 @@ public class LocationProfileFragment extends Fragment {
         selectUserInfo();
         selectActivities();
         selectProgram();
+        /*selectOrar();*/
 
         tv_locationName.setText(currentLocation.getLocationName());
         tv_email.setText(currentLocation.getEmail());
         tv_postalCode.setText(currentLocation.getPostalCode());
         tv_address.setText(currentLocation.getAddress());
 
-        if(listParentActivities.size() != 0 && mapActivity.size() !=0) {
-            listAdapter = new ExpandableListLocationActivitiesAdapter(this.getContext(), listParentActivities, mapActivity);
-            lv_activities.setAdapter(listAdapter);
+        adapter = new ProgramAdapter(this.getContext(),R.layout.list_item_program_location_marker_dialog,listProgram,inflater);
+        lv_program.setAdapter(adapter);
+
+        listAdapter = new ExpandableListLocationActivitiesAdapter(this.getContext(), listParentActivities, mapActivity, listActivitiesID,currentLocation);
+        lv_activities.setAdapter(listAdapter);
+
+
+        if (adapter != null) {
+            int totalHeight = 0;
+            for (int i = 0; i < adapter.getCount(); i++) {
+                View listItem = adapter.getView(i, null, lv_activities);
+                listItem.measure(0, 0);
+                totalHeight += listItem.getMeasuredHeight();
+            }
+            totalHeight+=225;
+            ViewGroup.LayoutParams params = lv_activities.getLayoutParams();
+            params.height = totalHeight + (lv_activities.getDividerHeight() * (adapter.getCount() - 1));
+            lv_activities.setLayoutParams(params);
+            lv_activities.requestLayout();
         }
+
         return view;
     }
 
@@ -115,18 +127,22 @@ public class LocationProfileFragment extends Fragment {
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        return getString(R.string.user_sport_level_5);
-    }
-
-    public void getKeys(List<Activity> list_Activities){
-
-        for(Activity a: list_Activities){
-            listParentActivities.add(a.getActivityName());
-        }
+        else if(level == 5) getString(R.string.user_sport_level_5);
+        return "-";
     }
 
     public void getCurrentUserID(){
         currentUserID = (int) getArguments().get(Constants.CURRENT_USER_ID);
+    }
+
+    public String getDayString(int day){
+        if(day == 0)return "L:";
+        else if(day==1)return "M:";
+        else if(day==2)return "M:";
+        else if(day==3)return "J:";
+        else if(day==4)return "V:";
+        else if(day==5)return "S:";
+        else return "D:";
     }
 
     public void selectLocationInfo(){
@@ -140,7 +156,7 @@ public class LocationProfileFragment extends Fragment {
                     currentLocation.setAddress(r.getString(4));
                     currentLocation.setLatitude(r.getDouble(5));
                     currentLocation.setLongitude(r.getDouble(6));
-                    currentLocation.setResevation(r.getByte(7));
+                    currentLocation.setReservation(r.getByte(7));
                     currentLocation.setState(r.getInt(8));
                     currentLocation.setUserID(r.getInt(9));
                 }
@@ -152,35 +168,17 @@ public class LocationProfileFragment extends Fragment {
 
     public void selectProgram(){
         try(Statement s = c.createStatement()){
-            for(int i=0; i< 7; i++) {
-                try (ResultSet r = s.executeQuery("SELECT INTERVALORAR FROM PROGRAME WHERE IDLOCATIE=" + currentLocation.getLocationID()+" AND ZI="+i)) {
-                    if(r.next()) {
-                        String interval = r.getString(1);
-                        if(interval.equals("--:-----:--")){
-                            interval="Închis";
-                        }
-                        if(i == 0){
-                            tv_monday.setText(interval);
-                        }
-                        else if(i == 1){
-                            tv_tuesday.setText(interval);
-                        }
-                        else if(i == 2){
-                            tv_wednesday.setText(interval);
-                        }
-                        else if(i == 3){
-                            tv_thursday.setText(interval);
-                        }
-                        else if(i == 4){
-                            tv_friday.setText(interval);
-                        }
-                        else if(i == 5){
-                            tv_saturday.setText(interval);
-                        }
-                        else if(i == 6){
-                            tv_sunday.setText(interval);
-                        }
+            try (ResultSet r = s.executeQuery("SELECT ZI,INTERVALORAR FROM PROGRAME WHERE IDLOCATIE=" + currentLocation.getLocationID())) {
+                while(r.next()) {
+                    Program program = new Program();
+                    int day = r.getInt(1);
+                    String interval = r.getString(2);
+                    if(interval.equals("--:-----:--")){
+                        interval="Închis";
                     }
+                    program.setDay(getDayString(day));
+                    program.setIntervalHours(interval);
+                    listProgram.add(program);
                 }
             }
         } catch (SQLException e) {
@@ -216,6 +214,7 @@ public class LocationProfileFragment extends Fragment {
                     activity.setLocationID(currentLocation.getLocationID());
                     listActivities.add(activity);
                     listParentActivities.add(activity.getActivityName());
+                    listActivitiesID.add(activity.getActivityID());
                     mapActivity.put(activity.getActivityName(),activity);
                 }
             }
@@ -229,13 +228,39 @@ public class LocationProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(layout_hours.getVisibility() == View.GONE) {
-                    layout_hours.setVisibility(View.VISIBLE);
-                }
-                else{
-                    layout_hours.setVisibility(View.GONE);
+                if (lv_program.getVisibility() == View.GONE) {
+                    lv_program.setVisibility(View.VISIBLE);
+                    if (adapter != null) {
+                        int totalHeight = 0;
+                        for (int i = 0; i < adapter.getCount(); i++) {
+                            View listItem = adapter.getView(i, null, lv_activities);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
+                        totalHeight+=235;
+                        ViewGroup.LayoutParams params = lv_activities.getLayoutParams();
+                        params.height = totalHeight + (lv_activities.getDividerHeight() * (adapter.getCount() - 1));
+                        lv_activities.setLayoutParams(params);
+                        lv_activities.requestLayout();
+                    }
+                } else {
+                    lv_program.setVisibility(View.GONE);
+                    if (adapter != null) {
+                        int totalHeight = 0;
+                        for (int i = 0; i < adapter.getCount(); i++) {
+                            View listItem = adapter.getView(i, null, lv_activities);
+                            listItem.measure(0, 0);
+                            totalHeight += listItem.getMeasuredHeight();
+                        }
+                        totalHeight+=690;
+                        ViewGroup.LayoutParams params = lv_activities.getLayoutParams();
+                        params.height = totalHeight + (lv_activities.getDividerHeight() * (adapter.getCount() - 1));
+                        lv_activities.setLayoutParams(params);
+                        lv_activities.requestLayout();
+                    }
                 }
             }
+
         };
     }
     private View.OnClickListener showActivities() {

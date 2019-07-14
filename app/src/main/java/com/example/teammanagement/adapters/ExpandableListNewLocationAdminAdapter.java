@@ -3,11 +3,7 @@ package com.example.teammanagement.adapters;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.graphics.Typeface;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,9 +16,6 @@ import android.widget.TextView;
 import com.example.teammanagement.R;
 import com.example.teammanagement.Utils.NewLocation;
 import com.example.teammanagement.Utils.SharedViewModel;
-import com.example.teammanagement.activities.HomeAdminActivity;
-import com.example.teammanagement.fragments.NewLocationsFragment;
-import com.example.teammanagement.fragments.SearchLocationFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -164,7 +157,7 @@ public class ExpandableListNewLocationAdminAdapter  extends BaseExpandableListAd
         else{
             tv_longitude.setText("-");
         }
-        if(location.getResevation() == 0){
+        if(location.getReservation() == 0){
             tv_reservation.setText(_context.getString(R.string.reservation_no));
         }
         else{

@@ -10,24 +10,27 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.teammanagement.R;
+import com.example.teammanagement.Utils.Program;
 
 import java.util.List;
 
-public class HoursAdapter extends ArrayAdapter<String> implements android.widget.SpinnerAdapter {
+public class ProgramAdapter extends ArrayAdapter<Program>  {
     private Context context;
     private int resource;
-    private List<String> spn_list;
+    private List<Program> program;
     private LayoutInflater inflater;
-    TextView tv_item;
 
-    public HoursAdapter(@NonNull Context context,
+    private TextView tv_day;
+    private TextView tv_hours;
+
+    public ProgramAdapter(@NonNull Context context,
                           int resource,
-                          @NonNull List<String> objects,
+                          @NonNull List<Program> objects,
                           LayoutInflater inflater) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
-        this.spn_list= objects;
+        this.program= objects;
         this.inflater = inflater;
     }
 
@@ -47,21 +50,15 @@ public class HoursAdapter extends ArrayAdapter<String> implements android.widget
         if(convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(resource,parent, false);
         }
-        tv_item = convertView.findViewById(R.id.spn_item_tv_text);
-        String item = getItem(position);
-        tv_item.setText(item);
+        tv_day = convertView.findViewById(R.id.list_item_program_location_marker_dialog_tv_day_hint);
+        tv_hours=convertView.findViewById(R.id.list_item_program_location_marker_dialog_tv_hours);
+
+        Program program = getItem(position);
+
+        tv_day.setText(program.getDay());
+        tv_hours.setText(program.getIntervalHours());
 
         return convertView;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        if(position == 0){
-            return false;
-        }
-        else{
-            return true;
-        }
     }
 
 }

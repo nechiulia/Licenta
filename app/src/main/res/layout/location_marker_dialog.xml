@@ -15,6 +15,8 @@
         android:layout_gravity="end"
         android:src="@drawable/ic_exit"
         android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="1"
         android:contentDescription="@string/location_marker_exit_hint"
         android:background="@drawable/transparent"/>
@@ -28,8 +30,10 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textStyle="bold"
+        android:layout_marginBottom="20dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:textSize="16sp"
         android:text="@string/location_marker_dialog_locationName_hint"/>
 
     <LinearLayout
@@ -44,6 +48,7 @@
             android:id="@+id/location_marker_dialog_locationAddress_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:text="@string/list_item_location_locationAddress_hint"
             android:textColor="@color/darkGrey"
@@ -71,6 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/list_item_location_postalCode_hint"
+            android:textStyle="bold"
             android:layout_weight="1"
             android:textColor="@color/darkGrey"
             tools:ignore="NestedWeights" />
@@ -95,6 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/list_item_location_email_hint"
+            android:textStyle="bold"
             android:textColor="@color/darkGrey"
             android:layout_weight="1"
             tools:ignore="NestedWeights" />
@@ -112,13 +119,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/darkGrey"
+        android:textStyle="bold"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:text="@string/fragment_location_program_hint" />
     <ListView
         android:id="@+id/location_marker_dialog_lv_program"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp" />
 
@@ -128,6 +136,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:textStyle="bold"
         android:textColor="@color/darkGrey"
         android:text="@string/fragment_location_activities_hint" />
 
@@ -136,6 +145,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:groupIndicator="@drawable/ic_groupindicator">
     </ExpandableListView>
@@ -148,6 +158,20 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/location_marker_dialog_btn_reservation_hint"
+        android:visibility="gone"
         android:layout_gravity="center"/>
+
+    <TextView
+        android:id="@+id/location_marker_dialog_tv_noLocationFound"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/darkGrey"
+        android:text="@string/location_marker_dialog_tv_noLocationFound_hint" />
 
 </LinearLayout>

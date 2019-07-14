@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
-
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_weight="1.0"
         android:orientation="horizontal">
 
         <ImageView
@@ -27,20 +21,20 @@
 
             <TextView
                 android:id="@+id/list_item_teammates_tv_userName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/register1_userName_hint"
                 android:textColor="@color/darkGrey" />
 
             <TextView
                 android:id="@+id/list_item_teammates_tv_role"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/list_item_usersExplorer_tv_role_hint"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/darkGrey" />
         </LinearLayout>
-
-    </LinearLayout>
-
-
 </LinearLayout>

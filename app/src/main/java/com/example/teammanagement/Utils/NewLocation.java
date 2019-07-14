@@ -12,7 +12,7 @@ public class NewLocation implements Serializable {
     private String address;
     private double latitude;
     private double longitude;
-    private int resevation;
+    private int reservation;
     private int state;
     private String userName;
 
@@ -23,7 +23,7 @@ public class NewLocation implements Serializable {
         this.locationName = "";
         this.postalCode = "";
         this.address = "";
-        this.resevation = -1;
+        this.reservation = -1;
         this.state = -1;
         this.userName="";
     }
@@ -60,12 +60,12 @@ public class NewLocation implements Serializable {
         this.longitude = longitude;
     }
 
-    public int getResevation() {
-        return resevation;
+    public int getReservation() {
+        return reservation;
     }
 
-    public void setResevation(int resevation) {
-        this.resevation = resevation;
+    public void setReservation(int reservation) {
+        this.reservation = reservation;
     }
 
     public int getState() {

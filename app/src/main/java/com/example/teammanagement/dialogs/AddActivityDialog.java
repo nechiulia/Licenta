@@ -1,7 +1,6 @@
 package com.example.teammanagement.dialogs;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -23,7 +22,6 @@ import com.example.teammanagement.Utils.NewLocation;
 import com.example.teammanagement.Utils.Sport;
 import com.example.teammanagement.adapters.SpinnerAdapter;
 import com.example.teammanagement.database.JDBCController;
-import com.example.teammanagement.fragments.EditLocationFragment;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -150,12 +148,17 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         getLocationID();
         getClickedActivityID();
         initializeMap();
+        selectLocationInfo();
+
+        if(currentLocation.getReservation() == 0){
+            ck_reservation.setVisibility(View.GONE);
+        }
 
 
         list_toGoToDialog.add(getString(R.string.register2_sportSpinner_item0));
         initDataSpinner();
 
-        spn_difiiculty_items= Arrays.asList(getResources().getStringArray(R.array.dialog_level));
+        spn_difiiculty_items= Arrays.asList(getResources().getStringArray(R.array.dialog_difficulty));
 
         SpinnerAdapter sport_adapter=new SpinnerAdapter(getContext(),R.layout.spinner_item,list_toGoToDialog,inflater);
         spn_sport.setAdapter(sport_adapter);
@@ -179,11 +182,14 @@ public class AddActivityDialog extends AppCompatDialogFragment {
             spn_sport.setSelection(getItemSport());
             spn_sport.setEnabled(false);
             spn_difiiculty.setSelection(getItemDifficulty());
+            spn_difiiculty.setEnabled(false);
+            iet_trainer.setEnabled(false);
             boolean checked=false;
             if(activity.getReservation() == 1){
                 checked=true;
             }
             ck_reservation.setChecked(checked);
+            ck_reservation.setEnabled(false);
         }
 
     }
@@ -256,9 +262,13 @@ public class AddActivityDialog extends AppCompatDialogFragment {
             reservation=1;
         }
         int level=getLevelInt(spn_difiiculty.getSelectedItem().toString());
+        String trainer="-";
+        if(iet_trainer.getText().length() !=0){
+            trainer=iet_trainer.getText().toString().trim();
+        }
         try(PreparedStatement s = c.prepareStatement("INSERT INTO ACTIVITATI VALUES(N'"+iet_activityName.getText().toString().trim()
                 +"',N'"+spn_sport.getSelectedItem().toString().trim()+"','"+
-                iet_trainer.getText().toString().trim()+"',"+ level+","+
+                trainer+"',"+ level+","+
                 Double.parseDouble(iet_price.getText().toString().trim())+","+ reservation+","+currentLocationID+")",Statement.RETURN_GENERATED_KEYS)){
             int updatedRows=s.executeUpdate();
             ResultSet r=s.getGeneratedKeys();
@@ -381,8 +391,12 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         if(ck_reservation.isChecked()){
             reservation=1;
         }
+        String trainer="-";
+        if(iet_trainer.getText().length() !=0){
+            trainer=iet_trainer.getText().toString().trim();
+        }
         try(Statement s = c.createStatement()){
-            s.executeUpdate("UPDATE ACTIVITATI SET ANTRENOR=N'"+iet_trainer.getText().toString().trim()+
+            s.executeUpdate("UPDATE ACTIVITATI SET ANTRENOR=N'"+trainer+
                     "', PRET="+Double.parseDouble(iet_price.getText().toString().trim())+", REZERVARI="+reservation+" WHERE ID="+clickedActivityID);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -403,13 +417,35 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         return false;
     }
 
+    public void selectLocationInfo(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM LOCATII WHERE ID="+currentLocationID)){
+                if(r.next()){
+                    currentLocation = new NewLocation();
+                    currentLocation.setLocationID(r.getInt(1));
+                    currentLocation.setLocationName(r.getString(2));
+                    currentLocation.setPostalCode(r.getString(3));
+                    currentLocation.setAddress(r.getString(4));
+                    currentLocation.setLatitude(r.getDouble(5));
+                    currentLocation.setLongitude(r.getDouble(6));
+                    currentLocation.setReservation(r.getByte(7));
+                    currentLocation.setState(r.getInt(8));
+                    currentLocation.setUserID(r.getInt(9));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private int getLevelInt(String level){
         if(level.equals(getString(R.string.user_sport_level_0)))return 0;
-        if(level.equals(getString(R.string.user_sport_level_1)))return 1;
-        if(level.equals(getString(R.string.user_sport_level_2)))return 2;
-        if(level.equals(getString(R.string.user_sport_level_3)))return 3;
-        if(level.equals(getString(R.string.user_sport_level_4)))return 4;
-        if(level.equals(getString(R.string.user_sport_level_5)))return 5;
+        else if(level.equals(getString(R.string.user_sport_level_1)))return 1;
+        else if(level.equals(getString(R.string.user_sport_level_2)))return 2;
+        else if(level.equals(getString(R.string.user_sport_level_3)))return 3;
+        else if(level.equals(getString(R.string.user_sport_level_4)))return 4;
+        else if(level.equals(getString(R.string.user_sport_level_5)))return 5;
+        else if(level.equals("-"))return 6;
         return -2;
     }
 
@@ -419,7 +455,8 @@ public class AddActivityDialog extends AppCompatDialogFragment {
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        return getString(R.string.user_sport_level_5);
+        else if(level == 5) getString(R.string.user_sport_level_5);
+        return "-";
     }
 
     private View.OnClickListener clickSave() {
@@ -485,6 +522,13 @@ public class AddActivityDialog extends AppCompatDialogFragment {
                 if(ok1 ==1 && ok2 ==1){
                     btn_save.setEnabled(true);
                 }
+                if(position ==7){
+                    iet_trainer.setText("");
+                    iet_trainer.setEnabled(false);
+                }
+                else{
+                    iet_trainer.setEnabled(true);
+                }
             }
 
             @Override
@@ -515,13 +559,14 @@ public class AddActivityDialog extends AppCompatDialogFragment {
     }
 
     public boolean isValidTrainer(){
-        if(iet_trainer.getText().length()<3){
-            iet_trainer.setError(getString(R.string.register1_nameLength_error_hint));
-            return false;
-        }
-        else if(!Character.isUpperCase(iet_trainer.getText().toString().charAt(0))){
-            iet_trainer.setError(getString(R.string.register1_nameCapitalLetter_error_hint));
-            return false;
+        if(iet_trainer.length() != 0) {
+            if (iet_trainer.getText().length() < 3) {
+                iet_trainer.setError(getString(R.string.register1_nameLength_error_hint));
+                return false;
+            } else if (!Character.isUpperCase(iet_trainer.getText().toString().charAt(0))) {
+                iet_trainer.setError(getString(R.string.register1_nameCapitalLetter_error_hint));
+                return false;
+            }
         }
         return true;
     }
