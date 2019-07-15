@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/BlackTextDialog"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/add_feedback_tv_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:maxLines="5"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="20dp"
+        android:textColor="@color/darkGrey"
+        android:hint="@string/add_announcement_tv_message_hint"
+        android:textColorHint="@color/grey"
+        android:justificationMode="inter_word"
+        android:scrollbars="vertical" />
+
+    <RatingBar
+        android:id="@+id/add_feedback_ratingbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:stepSize="0.1" />
+</LinearLayout>

@@ -11,6 +11,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="end"
+        android:textSize="16sp"
+        android:textColor="@color/white"
         android:text="@string/list_group_activity_team_reservations_date_hint" />
 
     <TextView
@@ -20,6 +22,8 @@
         android:layout_weight="1"
         android:textStyle="bold"
         android:gravity="center"
+        android:textSize="16sp"
+        android:textColor="@color/white"
         android:background="@color/darkOrange"
         android:text="@string/list_group_activity_team_reservations_tv_hours_hint" />
 </LinearLayout>

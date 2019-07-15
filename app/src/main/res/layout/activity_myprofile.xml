@@ -60,6 +60,8 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:text="@string/myProfile_tv_userName_hint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -71,13 +73,13 @@
         android:layout_width="wrap_content"
         android:layout_height="29dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:text="@string/myProfile_tv_sports_hint"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.091"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myProfile_iv_profileImage" />
 
@@ -88,7 +90,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/rectangle_border"
+        android:background="@drawable/rounded_border"
         android:scrollbars="vertical"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -96,87 +98,85 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myProfile_tv_sports" />
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintLayout"
         android:layout_width="373dp"
-        android:layout_height="112dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:scrollbars="vertical"
-        android:verticalScrollbarPosition="right"
+        android:background="@drawable/rounded_border"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/rectangle_border"
         app:layout_constraintTop_toBottomOf="@+id/myProfile_tv_feedback">
 
-        <ImageButton
-            android:id="@+id/myProfile_ibtn_more"
-            android:layout_width="28dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/transparent"
-            android:contentDescription="@string/myProfile_ibtn_more_hint"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.927"
-            app:layout_constraintStart_toEndOf="@+id/myProfile_rb_userGivenRating"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/more" />
-
-        <RatingBar
-            android:id="@+id/myProfile_rb_userGivenRating"
-            style="@style/Widget.AppCompat.RatingBar.Small"
-            android:layout_width="wrap_content"
-            android:layout_height="18dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:rating="5"
-            android:stepSize="0.1"
-            android:visibility="visible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.061"
-            app:layout_constraintStart_toEndOf="@+id/myProfile_tv_commentUserName"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/myProfile_tv_commentUserName"
-            android:layout_width="119dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/myProfile_tv_userName_comment_hint"
-            android:textStyle="bold"
-            android:visibility="visible"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
+            android:scrollbars="vertical"
+            android:verticalScrollbarPosition="right"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/profile_tv_feedback">
+
+            <TextView
+                android:id="@+id/myProfile_tv_commentUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1.0"
+                android:text="@string/profile_tv_userName_comment_hint"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+            <RatingBar
+                android:id="@+id/myProfile_rb_userGivenRating"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:rating="5"
+                android:stepSize="0.1"
+                android:visibility="visible" />
+
+            <ImageButton
+                android:id="@+id/myProfile_ibtn_more"
+                android:layout_width="28dp"
+                android:layout_height="21dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/transparent"
+                android:contentDescription="@string/profile_ibtn_more_hint" />
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:scrollbars="vertical"
             android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/myProfile_tv_commentUserName">
+            android:scrollbars="vertical">
+
             <TextView
                 android:id="@+id/myProfile_tv_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:justificationMode="inter_word"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                android:justificationMode="inter_word"
                 android:scrollbars="vertical"
-                android:text="@string/myProfile_tv_comment_hint"
-                />
+                android:text="@string/profile_tv_comment_hint" />
         </ScrollView>
-    </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/myProfile_tv_moreFeedback"
@@ -186,7 +186,6 @@
         android:layout_marginEnd="8dp"
         android:text="@string/myProfile_tv_moreFeedback_hint"
         android:textStyle="bold|italic"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
@@ -196,12 +195,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:text="@string/myProfile_tv_settings_hint"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintHorizontal_bias="0.121"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myProfile_tv_moreFeedback" />
 
@@ -220,7 +220,7 @@
 
     <TextView
         android:id="@+id/myProfile_tv_commentStars"
-        android:layout_width="21dp"
+        android:layout_width="wrap_content"
         android:layout_height="34dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
@@ -292,10 +292,10 @@
         android:layout_marginEnd="8dp"
         android:text="@string/myProfile_tv_feedback_hint"
         android:textSize="18sp"
-        android:textStyle="bold"
+        android:textStyle="bold|italic"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintHorizontal_bias="0.451"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myProfile_lv_sports" />
 

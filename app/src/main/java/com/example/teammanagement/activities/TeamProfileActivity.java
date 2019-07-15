@@ -120,6 +120,7 @@ public class TeamProfileActivity extends AppCompatActivity {
         ibtn_back.setOnClickListener(clickBack());
         ibtn_edit.setOnClickListener(clickEdit());
         tv_announcements.setOnClickListener(clickAnnouncements());
+        tv_reservations.setOnClickListener(clickReservations());
 
         getCurrentUserTeamRole();
         if(!currentUserRole.equals(getString(R.string.role_captain_hint)))ibtn_edit.setVisibility(View.GONE);
@@ -277,6 +278,17 @@ public class TeamProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 intent=new Intent(getApplicationContext(), AnnouncementsActivity.class);
+                intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
+                startActivity(intent);
+            }
+        };
+    }
+
+    private View.OnClickListener clickReservations() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent=new Intent(getApplicationContext(), TeamReservationsActivity.class);
                 intent.putExtra(Constants.CURRENT_TEAM_ID,currentTeam.getId());
                 startActivity(intent);
             }

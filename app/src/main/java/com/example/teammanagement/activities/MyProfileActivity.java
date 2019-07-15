@@ -23,6 +23,7 @@ import com.example.teammanagement.database.JDBCController;
 import com.example.teammanagement.dialogs.BottomDialogReport;
 import com.google.gson.Gson;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -46,14 +47,18 @@ public class MyProfileActivity extends AppCompatActivity
     private TextView tv_userProfile;
     private RatingBar ratingBar;
     private ImageView iv_profilePicture;
+    private RatingBar rb_user;
+    private TextView tv_score;
 
     private Intent intent;
 
     private SportAdapterNoCheckBox adapter;
 
     private User currentUser;
+    private User clickedUser;
     private List<SportUser> lv_list_sportItems = new ArrayList<>();
-    private List<Feedback> list_feedback = new ArrayList<>();
+    List<Feedback> listFeedback = new ArrayList<>();
+    private List<String> listSenderNames = new ArrayList<>();
 
     private Bitmap bitmap;
 
@@ -85,6 +90,8 @@ public class MyProfileActivity extends AppCompatActivity
         tv_userName=findViewById(R.id.myProfile_tv_commentUserName);
         ratingBar=findViewById(R.id.myProfile_rb_userGivenRating);
         iv_profilePicture=findViewById(R.id.myProfile_iv_profileImage);
+        rb_user=findViewById(R.id.myProfile_rb_userRating);
+        tv_score=findViewById(R.id.myProfile_tv_commentStars);
 
 
         ibtn_back.setOnClickListener(clickBack());
@@ -94,9 +101,6 @@ public class MyProfileActivity extends AppCompatActivity
         tv_settings.setOnClickListener(clickSettings());
         tv_moreFeedback.setOnClickListener(clickMoreReviews());
 
-        list_feedback.add(new Feedback("Alexandru Matei","Ionel este o fire competitivă și un bun coechipier.Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. ",4.0f));
-        list_feedback.add(new Feedback("Alexandru Matei","Ionel este o fire competitivă și un bun coechipier. Am jucat cu el acum cateva saptamani si ne-am distrat pe cinste. ",4.0f));
-        randomFeedback();
 
         getCurrentUser();
 
@@ -107,7 +111,30 @@ public class MyProfileActivity extends AppCompatActivity
             lv_sports.setAdapter(adapter);
         }
 
+        selectFeedback();
+        if(listFeedback.size() != 0) {
+            for (int i = 0; i < listFeedback.size(); i++) {
+                selectSenderNames(listFeedback.get(i).getSenderID());
+            }
+            randomFeedback();
+            tv_moreFeedback.setVisibility(View.VISIBLE);
+            float x = averageScore();
+            BigDecimal result;
+            result=round(x,2);
+            tv_score.setText(result.toString());
+            rb_user.setRating(x);
+        }
+        else{
+            rb_user.setVisibility(View.INVISIBLE);
+            tv_score.setVisibility(View.INVISIBLE);
+            tv_userName.setVisibility(View.INVISIBLE);
+            ratingBar.setVisibility(View.INVISIBLE);
+            ibtn_more.setVisibility(View.INVISIBLE);
+            tv_userComment.setText(getString(R.string.profile_nofeedback_hint));
+        }
+
     }
+
 
     public void initData(){
         if(currentUser.getProfilePicture() != null) {
@@ -140,7 +167,7 @@ public class MyProfileActivity extends AppCompatActivity
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        else if(level == 5) getString(R.string.user_sport_level_5);
+        else if(level == 5)return getString(R.string.user_sport_level_5);
         return "-";
     }
 
@@ -149,6 +176,20 @@ public class MyProfileActivity extends AppCompatActivity
         Gson gson = new Gson();
         String json =  sharedPreferences.getString(Constants.CURRENT_USER,"");
         currentUser = gson.fromJson(json,User.class);
+    }
+
+    public int getNumberFeedbacks(){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT COUNT(*) FROM FEEDBACKS WHERE IDRECEPTOR="+currentUser.getIdUser())){
+                if(r.next()){
+                    return r.getInt(1);
+                }
+                return 0;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 
     private View.OnClickListener clickBack(){
@@ -207,14 +248,65 @@ public class MyProfileActivity extends AppCompatActivity
         };
     }
 
+    public void selectFeedback(){
+        int idUser=currentUser.getIdUser();
+        if(clickedUser != null){
+            idUser=clickedUser.getIdUser();
+        }
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT * FROM FEEDBACKS WHERE  IDRECEPTOR="+idUser+ "AND STARE=0")){
+                while(r.next()){
+                    Feedback feedback = new Feedback();
+                    feedback.setFeedbackID(r.getInt(1));
+                    feedback.setReceiverID(r.getInt(2));
+                    feedback.setSenderID(r.getInt(3));
+                    feedback.setComment(r.getString(4));
+                    feedback.setRating(r.getFloat(5));
+                    feedback.setDate(r.getString(6));
+                    feedback.setState(r.getInt(7));
+                    listFeedback.add(feedback);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectSenderNames(int userID){
+        try(Statement s = c.createStatement()){
+            try(ResultSet r = s.executeQuery("SELECT NUMEUTILIZATOR FROM UTILIZATORI WHERE ID="+userID)) {
+                if(r.next()){
+                    listSenderNames.add(r.getString(1));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void randomFeedback(){
         Random rand = new Random();
-        int n=rand.nextInt(list_feedback.size());
-        Feedback shownFeedback = list_feedback.get(n);
+        int n=rand.nextInt(listFeedback.size());
+        Feedback shownFeedback = listFeedback.get(n);
+        String userName = listSenderNames.get(n);
 
-        tv_userName.setText(shownFeedback.getUserName());
+        tv_userName.setText(userName);
         tv_userComment.setText(shownFeedback.getComment());
         ratingBar.setRating(shownFeedback.getRating());
 
+    }
+
+    public float averageScore(){
+        float sum=0.0f;
+        for(int i= 0 ; i<listFeedback.size();i++){
+            sum+=listFeedback.get(i).getRating();
+        }
+        return sum/listFeedback.size();
+    }
+
+    public static BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd;
     }
 }

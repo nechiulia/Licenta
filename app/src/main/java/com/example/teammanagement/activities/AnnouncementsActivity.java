@@ -108,7 +108,7 @@ public class AnnouncementsActivity extends AppCompatActivity implements AddAnnou
 
     public void insertAnnouncement(String message){
         Date date = new Date();
-        try(PreparedStatement s = c.prepareStatement("INSERT INTO ANUNTURI VALUES('"+ Constants.simpleDateFormat.format(date)+"',N'"+message+"',"+current_teamID+","+current_teamID+");",Statement.RETURN_GENERATED_KEYS)){
+        try(PreparedStatement s = c.prepareStatement("INSERT INTO ANUNTURI VALUES('"+ Constants.simpleDateFormat.format(date)+"',N'"+message+"',"+currentUser.getIdUser()+","+current_teamID+");",Statement.RETURN_GENERATED_KEYS)){
             int updatedRows=s.executeUpdate();
             ResultSet r=s.getGeneratedKeys();
             if(r.next()){

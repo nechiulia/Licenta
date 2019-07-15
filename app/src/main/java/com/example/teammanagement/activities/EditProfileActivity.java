@@ -189,7 +189,7 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        else if(level == 5) getString(R.string.user_sport_level_5);
+        else if(level == 5)return getString(R.string.user_sport_level_5);
         return "-";
     }
 
@@ -430,7 +430,7 @@ public class EditProfileActivity extends AppCompatActivity implements AddSportDi
             iet_userName.setError(getString(R.string.register1_nameCapitalLetter_error_hint));
             return false;
         }
-        else if(!iet_userName.getText().toString().matches("^[a-zA-Z_ ]*$")){
+        else if(!iet_userName.getText().toString().matches("^[a-zA-Z_ -]*$")){
             iet_userName.setError(getString(R.string.register1_nameLetters_error_hint));
             return false;
         }

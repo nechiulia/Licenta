@@ -41,6 +41,7 @@ public interface Constants {
     String MAP_LOCATION_POSTALCODE="Location PostalCode";
     String MAP_LONGITUDE ="Longitude";
     String MAP_LATITUDE="Latitude";
+    String CLICKED_USER="ClickedUser";
 
     int ADD_TEAMMATES_CODE =101;
 }

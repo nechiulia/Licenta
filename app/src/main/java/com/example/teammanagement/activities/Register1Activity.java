@@ -312,7 +312,7 @@ public class Register1Activity extends AppCompatActivity {
             iet_username.setError(getString(R.string.register1_nameCapitalLetter_error_hint));
             return false;
         }
-        else if(!iet_username.getText().toString().matches("^[a-zA-Z_ ]*$")){
+        else if(!iet_username.getText().toString().matches("^[a-zA-Z_ -]*$")){
             iet_username.setError(getString(R.string.register1_nameLetters_error_hint));
             return false;
         }

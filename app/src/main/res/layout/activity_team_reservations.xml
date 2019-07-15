@@ -21,8 +21,9 @@
     <ExpandableListView
         android:id="@+id/activity_team_reservations_elv_reservations"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        >
-    </ExpandableListView>
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent">
+</ExpandableListView>
+
 </LinearLayout>
+        <!--android:groupIndicator="@drawable/ic_groupindicator"-->

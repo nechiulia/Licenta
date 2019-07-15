@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_statistics_sports"
+        android:icon="@drawable/ic_sports"
+        android:title="@string/navigation_statistics_sports_hint" />
+
+    <item
+        android:id="@+id/navigation_statistics_ranking"
+        android:icon="@drawable/ic_ranking"
+        android:title="@string/navigation_statistics_ranking_hint" />
+</menu>

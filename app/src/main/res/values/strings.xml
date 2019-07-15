@@ -23,7 +23,7 @@
     <string name="Faq_tv_hint">Intrebări frecvente</string>
     <string name="myProfile_img_profile_hint">Imagine de profil</string>
     <string name="myProfile_tv_userName_hint">Nume utilizator</string>
-    <string name="myProfile_tv_feedback_hint">Feedback</string>
+    <string name="myProfile_tv_feedback_hint">Feedback de la utilizatori</string>
     <string name="myProfile_tv_sports_hint">Sporturi practicate</string>
     <string name="myProfile_tv_userName_comment_hint">Nume utilizator</string>
     <string name="myProfile_tv_comment_hint">Comentariu</string>
@@ -142,22 +142,22 @@
         <item>Culturism</item>
         <item>Dans sportiv</item>
         <item>Darts</item>
-        <item>Echitație</item>
+        <item>Echitatie</item>
         <item>Fitness</item>
         <item>Fotbal</item>
         <item>Golf</item>
         <item>Handbal</item>
         <item>Hochei</item>
-        <item>Înot</item>
+        <item>Inot</item>
         <item>Judo</item>
         <item>Karate</item>
         <item>Kick-Boxing</item>
         <item>Patinaj artistic</item>
         <item>Pescuit</item>
         <item>Polo</item>
-        <item>Scrimă</item>
-        <item>Tenis de câmp</item>
-        <item>Tenis de masă</item>
+        <item>Scrima</item>
+        <item>Tenis de camp</item>
+        <item>Tenis de masa</item>
         <item>Tir cu arcul</item>
         <item>Volei</item>
     </string-array>
@@ -225,12 +225,12 @@
     <string name="teamProfile_tv_title_hint">Profil echipă</string>
     <string name="profile_img_profile_hint">Imagine de profil</string>
     <string name="profile_tv_userName_hint">Nume utilizator</string>
-    <string name="profile_tv_sports_hint">Sport</string>
+    <string name="profile_tv_sports_hint">Sporturi practicate</string>
     <string name="profile_tv_userName_comment_hint">Nume utilizator</string>
     <string name="profile_tv_comment_hint">Feedback</string>
     <string name="profile_tv_moreFeedback_hint">Mai multe</string>
-    <string name="profile_tv_rating_hint">0</string>
-    <string name="profile_tv_feedback_hint">Feedback</string>
+    <string name="profile_tv_rating_hint">0.00</string>
+    <string name="profile_tv_feedback_hint">Feedback de la utilizatori</string>
     <string name="teamProfile_ibtn_back_hint">Înapoi</string>
     <string name="teamProfile_ibtn_edit_hint">Editează</string>
     <string name="myProfile_ibtn_more_hint">Mai multe</string>
@@ -285,7 +285,7 @@
     <string name="add_team1_teamName_lengthError_hint">Numele echipei trebuie să aibă cel puțin 3 litere</string>
     <string name="add_team1_teamName_digitAndLettersOnlyError_hint">Numele echipei nu poate conține decât litere sau cifre</string>
     <string name="search_location_ibtn_back_hint">Înapoi</string>
-    <string name="claimLocation_ck_reservation_hint">Rezervare in aplicatie</string>
+    <string name="claimLocation_ck_reservation_hint">Permite rezervare in aplicatie</string>
     <string name="add_team2_tv_title_hint">Adăugare coechipieri</string>
     <string name="add_team2_alertDialog_title">Echipă incompletă</string>
     <string name="add_team2_alertDialog_message">Nu ați adăugat suficienți jucători pentru a crea o echipă pentru acest sport. Numărul minim pentru a forma o echipă este 2, iar pentru sportul selectat este</string>
@@ -318,7 +318,7 @@
     <string name="list_item_announcements_tv_title_hint">Titlu</string>
     <string name="list_item_announcements_tv_date_hint">Data</string>
     <string name="list_item_announcements_tv_message_hint">Anunț</string>
-    <string name="myProfile_tv_score_initial_hint">0</string>
+    <string name="myProfile_tv_score_initial_hint">0.00</string>
     <string name="announcemenets_ibtn_add_hint">Adaugă</string>
     <string name="role_trainer_hnt">ANTRENOR</string>
     <string name="add_announcement_tv_date_hint">Data</string>
@@ -393,7 +393,7 @@
     <string name="fragment_edit_location_program_more_hint">Mai multe</string>
     <string name="hour_error">Ora trebuie să conțină două caractere</string>
     <string name="minutes_error">Minutele sunt formate din două caractere</string>
-    <string name="line_error_hours">Dacă locația este închisă într-o anumită day, lasați necompletat, în caz contrat completați toată linia cu date corespunzătoare.</string>
+    <string name="line_error_hours">Dacă locația este închisă într-o anumită zi, lasați necompletat, în caz contrar completați toată linia cu date corespunzătoare.</string>
     <string name="edit_location_fragment_alertDialog_save_message">Informațiile introduse au fost salvate cu succes. Acestea pot fi vizualizate în pagina de profil a locației</string>
     <string name="edit_location_fragment_alertDialog_save_title">Salvare informații</string>
     <string name="edit_location_fragment_alertDialog_save_btn">Ok</string>
@@ -411,7 +411,7 @@
     <string name="list_item_location_reservation_dialog_tv_finishHour_hint">00</string>
     <string name="list_item_location_reservation_dialog_tv_separator_hint">-</string>
     <string name="list_item_location_reservation_dialog_tv_userName_hint">Nume utilizator/echipa</string>
-    <string name="reservation_dialog_tv_noOrar_hint">Activitatea selectată nu are loc în această day a săptămânii</string>
+    <string name="reservation_dialog_tv_noOrar_hint">Activitatea selectată nu are loc în această zi a săptămânii</string>
     <string name="location_marker_dialog_btn_reservation_hint">Rezervă</string>
     <string name="location_marker_exit_hint">X</string>
     <string name="location_marker_dialog_tag">LocationMarkerDialog</string>
@@ -426,5 +426,18 @@
     <string name="activity_team_reservations_tv_reservations_hint">Rezervări</string>
     <string name="list_group_activity_team_reservations_date_hint">Data rezervare</string>
     <string name="list_group_activity_team_reservations_tv_hours_hint">Interval orar rezervare</string>
+    <string name="list_item_activity_team_reservations_tv_locationName_hint">Denumire locație</string>
+    <string name="list_item_activity_team_reservations_tv_activityName">Denumire activitate</string>
+    <string name="list_item_activity_team_reservations_tv_bookedDate_hint">Data realizare rezervare</string>
+    <string name="activity_team_reservations_tv_noReservations_hint">Nu există nicio rezervare pentru următoarea perioadă.</string>
+    <string name="navigation_statistics_sports_hint">Sporturi populare</string>
+    <string name="navigation_statistics_ranking_hint">Clasament utilizatori</string>
+    <string name="list_item_ranking_sports_tv_nrcrt_hint">Nr.crt</string>
+    <string name="list_item_ranking_sports_tv_sportName_hint">Denumire sport</string>
+    <string name="list_item_ranking_sports_tv_nrUsers_hint">0</string>
+    <string name="list_item_fragment_ranking_user_tv_score_hint">Scor</string>
+    <string name="list_item_fragment_ranking_users_tv_nrcrt_hint">1.</string>
+    <string name="lv_feedback_tv_date_hint">Date</string>
+    <string name="profile_nofeedback_hint">Utilizatorul nu a primit încă niciun feedback.</string>
 
 </resources>

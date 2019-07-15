@@ -3,42 +3,50 @@ package com.example.teammanagement.Utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Feedback implements Parcelable {
+import java.io.Serializable;
 
-    private String userName;
+public class Feedback implements Serializable {
+
+    private int feedbackID;
+    private int senderID;
+    private int receiverID;
     private String comment;
     private float rating;
+    private String date;
+    private int state;
 
-    public Feedback(String userName, String comment, float rating){
-        this.userName=userName;
-        this.comment=comment;
-        this.rating=rating;
+    public Feedback(){
+        this.feedbackID=-1;
+        this.receiverID=-1;
+        this.senderID=-1;
+        this.comment="";
+        this.date="";
+        this.rating=0.0f;
+        this.state=0;
     }
 
-    protected Feedback(Parcel in) {
-        userName = in.readString();
-        comment=in.readString();
-        rating=in.readFloat();
+    public int getFeedbackID() {
+        return feedbackID;
     }
 
-    public static final Creator<Feedback> CREATOR = new Creator<Feedback>() {
-        @Override
-        public Feedback createFromParcel(Parcel in) {
-            return new Feedback(in);
-        }
-
-        @Override
-        public Feedback[] newArray(int size) {
-            return new Feedback[size];
-        }
-    };
-
-    public String getUserName() {
-        return userName;
+    public void setFeedbackID(int feedbackID) {
+        this.feedbackID = feedbackID;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public int getSenderID() {
+        return senderID;
+    }
+
+    public void setSenderID(int senderID) {
+        this.senderID = senderID;
+    }
+
+    public int getReceiverID() {
+        return receiverID;
+    }
+
+    public void setReceiverID(int receiverID) {
+        this.receiverID = receiverID;
     }
 
     public String getComment() {
@@ -57,15 +65,19 @@ public class Feedback implements Parcelable {
         this.rating = rating;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getDate() {
+        return date;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(userName);
-        dest.writeString(comment);
-        dest.writeDouble(rating);
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 }

@@ -127,7 +127,7 @@ public class LocationProfileFragment extends Fragment {
         else if(level == 2)return getString(R.string.user_sport_level_2);
         else if(level == 3)return getString(R.string.user_sport_level_3);
         else if(level == 4)return getString(R.string.user_sport_level_4);
-        else if(level == 5) getString(R.string.user_sport_level_5);
+        else if(level == 5)return getString(R.string.user_sport_level_5);
         return "-";
     }
 

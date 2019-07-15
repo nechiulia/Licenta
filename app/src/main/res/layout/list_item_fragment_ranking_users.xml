@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/list_item_fragment_ranking_users_tv_nrcrt"
+        android:layout_width="match_parent"
+        android:layout_weight="1.0"
+        android:layout_gravity="center"
+        android:text="@string/list_item_fragment_ranking_users_tv_nrcrt_hint"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:id="@+id/list_item_fragment_ranking_users_iv_userPicture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/woman"
+        android:contentDescription="@string/profile_img_profile_hint" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/list_item_fragment_ranking_user_tv_userName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:text="@string/register1_userName_hint"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/list_item_fragment_ranking_user_tv_score"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:text="@string/list_item_fragment_ranking_user_tv_score_hint"
+        android:textColor="@color/white" />
+
+
+</LinearLayout>
+
+</LinearLayout>
